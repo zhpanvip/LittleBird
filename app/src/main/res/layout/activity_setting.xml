@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_ee"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:text="登录账号:" />
+
+                    <TextView
+                        android:id="@+id/tv_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:text="155****9670"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="9dp"
+                    android:background="@color/grey_ee" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_modify_psw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="修改密码" />
+
+                    <ImageView
+                        android:id="@+id/iv_edit_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/common_jump_right" />
+
+                </RelativeLayout>
+
+
+                <include layout="@layout/item_base_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_remember_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="自动登陆" />
+
+                    <ToggleButton
+                        android:id="@+id/toggle_button_remember_psw"
+                        style="@style/MyToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#00000000"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+
+                <include layout="@layout/item_base_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_task_remind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="任务提醒" />
+
+                    <ToggleButton
+                        android:id="@+id/toggle_button_remind"
+                        style="@style/MyToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="#00000000"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+
+                <include layout="@layout/item_base_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_sign_reming"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="考勤提醒" />
+
+                    <ToggleButton
+                        android:id="@+id/toggle_button_sign_remind"
+                        style="@style/MyToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="#00000000"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="9dp"
+                    android:background="@color/grey_ee" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:text="当前版本:" />
+
+                    <ImageView
+                        android:id="@+id/iv_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/common_jump_right" />
+
+                    <TextView
+                        android:id="@+id/tv_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@id/iv_version"
+                        android:text="1.0.0"
+                        android:textSize="16sp" />
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_base_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_about_us"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/left_text_padding_top_bottom_right_14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:text="关于我们" />
+
+                    <ImageView
+                        android:id="@+id/iv_about_us"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/common_jump_right" />
+                </RelativeLayout>
+
+                <include layout="@layout/item_base_line" />
+                <Button
+                    android:id="@+id/btn_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_login_btn"
+                    android:gravity="center"
+                    android:text="退出"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

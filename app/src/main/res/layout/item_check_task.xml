@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:id="@+id/swipe_menu_layout"
+    android:paddingBottom="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="15dp"
+            android:text="任务1：写代码"
+            android:textColor="@color/grey_66"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="完成度"
+                android:textColor="@color/grey_66"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/view_complete"
+                android:layout_width="200dp"
+                android:layout_height="7dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/background" />
+
+            <TextView
+                android:id="@+id/tv_complete_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="待提交"
+                android:textColor="@color/grey_99"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="质    量"
+                android:textColor="@color/grey_66"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/view_quality"
+                android:layout_width="200dp"
+                android:layout_height="7dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/background" />
+
+            <TextView
+                android:id="@+id/tv_quality_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="待提交"
+                android:textColor="@color/grey_99"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <include layout="@layout/item_base_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_cunt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="倒计时"
+                android:textColor="@color/grey_66" />
+
+            <TextView
+                android:id="@+id/tv_time_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_cunt_time"
+                android:text="05:34:87"
+                android:textColor="@color/orange" />
+
+            <TextView
+                android:id="@+id/tv_check_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="审批人：刘备"
+                android:textColor="@color/grey_66" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- 以下都是侧滑菜单的内容依序排列 -->
+    <Button
+        android:id="@+id/btn_check"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="#ecd50a"
+        android:clickable="true"
+        android:text="审批"
+        android:textColor="@android:color/white"/>
+
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_edit_task"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEFF3"
+    android:orientation="vertical">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="任务类别"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/icon_ir_down" />
+
+            <TextView
+                android:id="@+id/tv_task_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/iv_down"
+                android:text="今日任务"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/item_base_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="审配人"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_check_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="刘备"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+        <include layout="@layout/item_base_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/tv_task_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="任务类别"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/tv_task_name"
+                android:hint="请填写任务名称"
+                android:background="@null"
+                android:layout_marginLeft="15dp"
+                android:maxLength="32"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="开始时间"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:text="2016年11月20日 18:41"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/item_base_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="结束时间"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="2016年11月20日 18:43"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_task_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="任务说明:"
+            android:textColor="@color/grey_33"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_task_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/tv_task_describe"
+            android:maxLength="100"
+            android:paddingTop="15dp"
+            android:background="@null"
+            android:layout_marginLeft="15dp"
+            android:hint="请填写任务说明"
+            android:textColor="@color/grey_33"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</LinearLayout>

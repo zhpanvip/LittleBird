@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_rank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#DDFFFFFF"
+            android:gravity="center"
+            android:text="您当前排名为第1名"
+            android:textColor="@color/grey_33" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/red" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lv_rank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:layout_below="@id/ll_rank"
+        android:scrollbars="none" />
+</RelativeLayout>

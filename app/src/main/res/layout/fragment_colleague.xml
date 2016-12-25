@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/toolbar_colleague_title"
+        layout="@layout/tool_bar_layout"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/lv_colleague_name"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:scrollbars="none"
+            android:layout_weight="1"/>
+
+
+        <project.graduate.zhpan.littlebird.utils.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"/>
+    </LinearLayout>
+
+</LinearLayout>

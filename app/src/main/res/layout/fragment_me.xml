@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/toolbar_me"
+        layout="@layout/tool_bar_layout"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/me_tit_bg">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_me_head_picture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_home_avatar"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="2dp" />
+        <TextView
+            android:id="@+id/iv_me_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_me_head_picture"
+            android:text="张飞"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"/>
+        <LinearLayout
+            android:id="@+id/ll_me_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_me_name"
+            android:layout_toRightOf="@id/iv_me_head_picture"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前等级"/>
+            <ImageView
+                android:id="@+id/iv_me_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前积分17分"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/ll_me_rank"
+            android:layout_toRightOf="@id/iv_me_head_picture"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_ee"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_home_page_line1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_sign"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_qiandao" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="签到" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_task"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginRight="1dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_task" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="任务" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginRight="1dp"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_check" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="审批" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_home_page_line2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_ranking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_ranking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_ranking" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_ranking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="排名" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_project"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginRight="1dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_project" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="项目管理" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_homepage_notice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_marginRight="1dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_homepage_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/index_notice" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="审批" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_66"
+        android:orientation="vertical">
+    <GridView
+        android:id="@+id/gv_me"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="0.5dp"
+        android:horizontalSpacing="0.5dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/grey_66"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,10 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="project.graduate.zhpan.littlebird.fragment.BaseFragment">
+    <include
+        android:id="@+id/toolbar_colleague_title"
+        layout="@layout/tool_bar_layout"/>
+
+</FrameLayout>

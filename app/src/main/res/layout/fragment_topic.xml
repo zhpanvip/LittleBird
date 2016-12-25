@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/apl_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--
+            contentScrim  设置向上滑动后appbar的颜色
+            layout_scrollFlags  设置动态折叠
+            设置的layout_scrollFlags有如下几种选项：
+            scroll: 所有想滚动出屏幕的view都需要设置这个flag- 没有设置这个flag的view将被固定在屏幕顶部。
+            enterAlways: 这个flag让任意向下的滚动都会导致该view变为可见，启用快速“返回模式”。
+            enterAlwaysCollapsed: 当你的视图已经设置minHeight属性又使用此标志时，你的视图只能已最小高度进入，
+            只有当滚动视图到达顶部时才扩大到完整高度。 exitUntilCollapsed: this flag causes the view to scroll off
+            until it is ‘collapsed’ (its minHeight) before exiting。
+            需要注意的是，后面两种模式基本只有在CollapsingToolbarLayout才有用，而前面两种模式基本是需要一起使用的，
+            也就是说，这些flag的使用场景，基本已经固定了。
+
+            【注】：使用CollapsingToolbarLayout时必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上不会显示。即：
+            mCollapsingToolbarLayout.setTitle(" ");
+            该变title的字体颜色：
+            扩张时候的title颜色：mCollapsingToolbarLayout.setExpandedTitleColor();
+            收缩后在Toolbar上显示时的title的颜色：mCollapsingToolbarLayout.setCollapsedTitleTextColor();
+            collapsedTitleTextAppearance
+            -->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/ctl_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginEnd="48dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@style/transparentText"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <!--
+            layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1  （设置0和1均不会显示滚动效果）
+
+            layout_collapseMode (折叠模式) - 有两个值:
+            pin -  设置为这个模式时，当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。
+            parallax - 设置为这个模式时，在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，
+            实现视差滚动效果，通常和layout_collapseParallaxMultiplier(设置视差因子)搭配使用。
+            -->
+
+            <LinearLayout
+                android:id="@+id/ll_main"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/profile_bg"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7">
+
+
+                <!--TextView中可以设置一个ellipsize属性,作用是当文字长度超过textview宽度时的显示方式:
+                例如，"encyclopedia"显示, 只是举例，以实际显示为准：）
+                android:ellipsize=”start”—–省略号显示在开头 "...pedia"
+                android:ellipsize=”end”——省略号显示在结尾  "encyc..."
+                android:ellipsize=”middle”—-省略号显示在中间 "en...dia"
+                android:ellipsize=”marquee”–以横向滚动方式显示(需获得当前焦点时)-->
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/head_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:src="@drawable/ic_home_avatar"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="2dp" />
+
+
+                <TextView
+                    android:id="@+id/tv_main_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLength="24"
+                    android:singleLine="true"
+                    android:text="关羽"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_main_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLength="70"
+                    android:maxLines="2"
+                    android:text="一直被模仿 从未被超越"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tb_main"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <project.graduate.zhpan.littlebird.view.ListViewForScrollView
+                android:id="@+id/lv_topic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:layout_weight="12"
+            android:background="@drawable/bg_edit_text"
+            android:hint="我来说一句..." />
+
+        <TextView
+            android:id="@+id/tv_publish"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/bg_publish"
+            android:gravity="center"
+            android:text="发表" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LittleBird</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_my_base">MyBaseActivity</string>
+    <string name="about_us">\t\t\t\t高效快捷是我们的理念，LittleBird将为您带来更顺畅的工作体验，更便捷的工作管理，更高效的工作规则。</string>
+    <string name="copyright">河南大学软件学院2017届毕业设计\nCopyright©网络工程二班张攀</string>
+</resources>

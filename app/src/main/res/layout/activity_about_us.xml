@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_about_us"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:lineSpacingExtra="8dp"
+        android:textColor="@color/grey_33"
+        android:text="@string/about_us"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:textSize="14sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/grey_33"
+        android:lineSpacingExtra="5dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/copyright" />
+</RelativeLayout>
