@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.adapter.CheckAdapter;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 

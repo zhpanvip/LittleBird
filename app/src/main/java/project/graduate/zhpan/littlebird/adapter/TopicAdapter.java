@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
+import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 
 /**
  * Created by zhpan on 2016/11/5.
@@ -61,7 +61,7 @@ public class TopicAdapter extends LittleBirdAdapter {
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserInfoActivity.start(context,"赵云");
+                UserInfoActivity.start(context,"赵云",new ColleagueBean.EmployeeListBean());
             }
         });
 

@@ -3,14 +3,12 @@ package project.graduate.zhpan.littlebird.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.IntegralBean;
-import project.graduate.zhpan.littlebird.bean.LittleBirldBean;
 
 /**
  * Created by zhpan on 2016/12/18.

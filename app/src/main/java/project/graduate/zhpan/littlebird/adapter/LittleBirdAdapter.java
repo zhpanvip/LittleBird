@@ -4,8 +4,6 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
-import project.graduate.zhpan.littlebird.bean.LittleBirldBean;
-
 /**
  * Created by zhpan on 2016/11/20.
  */

@@ -1,16 +1,13 @@
 package project.graduate.zhpan.littlebird.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
-import project.graduate.zhpan.littlebird.utils.UserInfoTools;
+import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 
 /**
  * Created by zhpan on 2016/10/15.
@@ -26,7 +23,7 @@ public class ColleagueAdapter extends LittleBirdAdapter {
 
     @Override
     public int getCount() {
-        return 30;
+        return mList.size();
     }
 
     @Override
@@ -51,6 +48,8 @@ public class ColleagueAdapter extends LittleBirdAdapter {
         }else {
             holder= (HomeGridViewHolder) convertView.getTag();
         }
+        ColleagueBean.EmployeeListBean colleague = (ColleagueBean.EmployeeListBean) mList.get(position);
+        holder.mTextView.setText(colleague.getEmployeeName());
         return convertView;
     }
 

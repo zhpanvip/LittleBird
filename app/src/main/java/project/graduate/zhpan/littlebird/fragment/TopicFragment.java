@@ -1,12 +1,9 @@
 package project.graduate.zhpan.littlebird.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,23 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
-import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.adapter.TopicAdapter;
+import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.utils.KeyboardWatcher;
 import project.graduate.zhpan.littlebird.view.ListViewForScrollView;
-
-import static android.R.attr.keyHeight;
 
 /**
  * Created by zhpan on 2016/10/15.
@@ -105,7 +95,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_main:
-                UserInfoActivity.start(getActivity(), "个人简介");
+                UserInfoActivity.start(getActivity(), "个人简介",new ColleagueBean.EmployeeListBean());
                 break;
         }
     }

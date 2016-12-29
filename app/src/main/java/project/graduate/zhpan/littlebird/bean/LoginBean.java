@@ -3,7 +3,7 @@ package project.graduate.zhpan.littlebird.bean;
 /**
  * Created by zhangpan on 2016/6/10.
  */
-public class LoginBean extends LittleBirldBean {
+public class LoginBean extends LittleBirdBean {
 
     /**
      * result : 1

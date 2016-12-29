@@ -3,10 +3,13 @@ package project.graduate.zhpan.littlebird.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -21,7 +24,11 @@ public class UserInfoActivity extends BaseActivity {
     private TextView mTvTime;
     private TextView mTvWhere;
     private TextView mTvPart;
+    private ImageView mIvGrade;
     private LinearLayout mActivityUserInfo;
+    private ColleagueBean.EmployeeListBean colleagueBean;
+
+    private  ColleagueBean.EmployeeListBean mColleagueBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +42,46 @@ public class UserInfoActivity extends BaseActivity {
     private void setData() {
         Intent intent = getIntent();
         if (intent != null) {
-            String title = intent.getStringExtra("title");
+            Bundle bundle = intent.getBundleExtra("bundle");
+            String title = bundle.getString("title");
+            colleagueBean = (ColleagueBean.EmployeeListBean) bundle.getSerializable("colleagueBean");
             mTvTitle.setText(title);
+        }
+
+        mTvName.setText(colleagueBean.getEmployeeName());
+        mTvTelNo.setText(colleagueBean.getMobile());
+        mTvEMail.setText(colleagueBean.getEmail());
+        mTvDuties.setText(colleagueBean.getDuty());
+        mTvTime.setText(colleagueBean.getLaborContractBeginTime().substring(0,10));
+        mTvWhere.setText(colleagueBean.getGroupIn());
+        mTvPart.setText(colleagueBean.getPart());
+        mTvIntegral.setText("当前积分"+colleagueBean.getIntegration()+"分");
+        String employeeGrade = colleagueBean.getEmployeeGrade();
+        switch (employeeGrade){
+            case "1":
+                mIvGrade.setImageResource(R.drawable.me_grade_one);
+                break;
+            case "2":
+                mIvGrade.setImageResource(R.drawable.me_grade_two);
+                break;
+            case "3":
+                mIvGrade.setImageResource(R.drawable.me_grade_three);
+                break;
+            case "4":
+                mIvGrade.setImageResource(R.drawable.me_grade_four);
+                break;
+            case "5":
+                mIvGrade.setImageResource(R.drawable.me_grade_five);
+                break;
         }
     }
 
-    public static void start(Context context, String title) {
+    public static void start(Context context,String title, ColleagueBean.EmployeeListBean colleagueBean) {
         Intent intent = new Intent(context, UserInfoActivity.class);
-        intent.putExtra("title", title);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("colleagueBean",colleagueBean);
+        bundle.putString("title",title);
+        intent.putExtra("bundle",bundle);
         context.startActivity(intent);
     }
 
@@ -58,6 +97,7 @@ public class UserInfoActivity extends BaseActivity {
         mTvTime = (TextView) findViewById(R.id.tv_time);
         mTvWhere = (TextView) findViewById(R.id.tv_where);
         mTvPart = (TextView) findViewById(R.id.tv_part);
+        mIvGrade= (ImageView) findViewById(R.id.iv_grade);
         mActivityUserInfo = (LinearLayout) findViewById(R.id.activity_user_info);
     }
 }

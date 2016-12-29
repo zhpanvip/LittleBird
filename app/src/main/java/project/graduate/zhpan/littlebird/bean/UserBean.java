@@ -4,7 +4,7 @@ package project.graduate.zhpan.littlebird.bean;
  * Created by zhpan on 2016/10/16.
  */
 
-public class UserBean extends LittleBirldBean {
+public class UserBean extends LittleBirdBean {
     private String username;
     private String password;
     private String Tel;

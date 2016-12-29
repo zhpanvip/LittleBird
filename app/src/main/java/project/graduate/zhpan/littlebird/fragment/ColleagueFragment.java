@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.utils.JsonFileReader;
 import project.graduate.zhpan.littlebird.utils.SideBar;
 
 /**
@@ -26,7 +29,7 @@ public class ColleagueFragment extends BaseFragment {
     private ListView mListView;
     private SideBar mSideBar;
     private ColleagueAdapter adapter;
-    private List<ColleagueBean> mList;
+    private List<ColleagueBean.EmployeeListBean> mList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +43,10 @@ public class ColleagueFragment extends BaseFragment {
     private void setListener(){
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                UserInfoActivity.start(getActivity(),"张飞");
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                ColleagueBean.EmployeeListBean colleagueBean = (ColleagueBean.EmployeeListBean) (adapter.getmList().get(position));
+                String title = colleagueBean.getEmployeeName();
+                UserInfoActivity.start(getActivity(),title,colleagueBean);
             }
         });
     }
@@ -50,10 +55,16 @@ public class ColleagueFragment extends BaseFragment {
         mIvBack.setVisibility(View.GONE);
         adapter = new ColleagueAdapter(getContext());
         mList = new ArrayList<>();
+        //  获取json数据
+        String colleagueData = JsonFileReader.getJson(getContext(), "Colleague.json");
+        Gson gson=new Gson();
+        ColleagueBean colleague = gson.fromJson(colleagueData, ColleagueBean.class);
+        mList = colleague.getEmployeeList();
         adapter.setList(mList);
         mListView.setAdapter(adapter);
         /*float f= (float) 0.5;
         mSideBar.setAlpha(f);*/
+
     }
 
     private void initView() {

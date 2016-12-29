@@ -10,20 +10,28 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.EncourageActivity;
 import project.graduate.zhpan.littlebird.activity.IntegralActivity;
 import project.graduate.zhpan.littlebird.activity.SettingActivity;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.MeAdapter;
-import project.graduate.zhpan.littlebird.utils.SideBar;
+import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.bean.ProfileBean;
+import project.graduate.zhpan.littlebird.utils.JsonFileReader;
 
 /**
  * Created by zhpan on 2016/10/15.
  */
 
 public class MeFragment extends BaseFragment {
+    private TextView mTvName;
+    private TextView mTvInt;
+    private ImageView mIvGrade;
     private GridView mGridView;
+    private ColleagueBean.EmployeeListBean mProfile;
     private String[] mText = {"资料", "等级", "积分", "奖励", "规划", "设置"};
     private int[] images = {R.drawable.me_data, R.drawable.me_grade, R.drawable.me_integration, R.drawable.me_equity, R.drawable.me_plan, R.drawable.me_set};
     @Override
@@ -41,7 +49,7 @@ public class MeFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
                     case 0:
-                        UserInfoActivity.start(getActivity(),"个人简介");
+                        UserInfoActivity.start(getActivity(),"个人简介",mProfile);
                         break;
                     case 1:
 
@@ -71,11 +79,37 @@ public class MeFragment extends BaseFragment {
         mIvBack.setVisibility(View.GONE);
         MeAdapter adapter = new MeAdapter(getContext(), mText, images);
         mGridView.setAdapter(adapter);
+        String profileJson = JsonFileReader.getJson(getContext(), "profile.json");
+        Gson gson=new Gson();
+        mProfile = gson.fromJson(profileJson, ColleagueBean.EmployeeListBean.class);
+        mTvName.setText(mProfile.getEmployeeName());
+        mTvInt.setText("当前积分"+mProfile.getIntegration()+"分");
+        String employeeGrade = mProfile.getEmployeeGrade();
+        switch (employeeGrade){
+            case "1":
+                mIvGrade.setImageResource(R.drawable.me_grade_one);
+                break;
+            case "2":
+                mIvGrade.setImageResource(R.drawable.me_grade_two);
+                break;
+            case "3":
+                mIvGrade.setImageResource(R.drawable.me_grade_three);
+                break;
+            case "4":
+                mIvGrade.setImageResource(R.drawable.me_grade_four);
+                break;
+            case "5":
+                mIvGrade.setImageResource(R.drawable.me_grade_five);
+                break;
+        }
     }
 
     private void initView() {
         mTvTitle= (TextView) mView.findViewById(R.id.toolbar_title);
         mIvBack= (ImageView) mView.findViewById(R.id.iv_back);
         mGridView = (GridView) mView.findViewById(R.id.gv_me);
+        mTvName= (TextView) mView.findViewById(R.id.tv_name);
+        mTvInt= (TextView) mView.findViewById(R.id.tv_integral);
+        mIvGrade= (ImageView) mView.findViewById(R.id.iv_me_rank);
     }
 }
