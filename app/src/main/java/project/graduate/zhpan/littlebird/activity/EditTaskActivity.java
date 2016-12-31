@@ -3,6 +3,7 @@ package project.graduate.zhpan.littlebird.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
 public class EditTaskActivity extends BaseActivity implements View.OnClickListener, OnDateSetListener {
@@ -41,6 +43,7 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
     private String title="";
     private long startTimeStamp;
     private long endTimeStamp;
+    private TaskBean taskBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,11 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
             mTvTitle.setText(title);
         }
         mTvRight.setVisibility(View.VISIBLE);
+        // 初始化任务实体类
+        taskBean = new TaskBean();
+        taskBean.setStartTime(System.currentTimeMillis());
+        taskBean.setEndTime(System.currentTimeMillis());
+        taskBean.setCheckPerson("李伟");
 
         String currentTime = DateUtils.timeStampToExactlyDate(System.currentTimeMillis());
         startTimeStamp=System.currentTimeMillis();
@@ -133,20 +141,7 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         mActivityEditTask = (LinearLayout) findViewById(R.id.activity_edit_task);
     }
 
-    private void submit() {
-        // validate
-        String task = mEtTask.getText().toString().trim();
-        if (TextUtils.isEmpty(task)) {
-            Toast.makeText(this, "请填写任务名称", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        String describe = mEtTaskDescribe.getText().toString().trim();
-        if (TextUtils.isEmpty(describe)) {
-            Toast.makeText(this, "请填写任务说明", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
 
 
     @Override
@@ -162,20 +157,46 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
                 flag = 2;
                 break;
             case R.id.tv_right:
-                if(startTimeStamp>=endTimeStamp){
-                    Toast.makeText(this, "结束时间应该大于开始时间", Toast.LENGTH_SHORT).show();
-                }
-
+                    submit();
                 break;
         }
     }
 
+    private void submit() {
+        // validate
+        String task = mEtTask.getText().toString().trim();
+        if (TextUtils.isEmpty(task)) {
+            Toast.makeText(this, "请填写任务名称", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String describe = mEtTaskDescribe.getText().toString().trim();
+        if (TextUtils.isEmpty(describe)) {
+            Toast.makeText(this, "请填写任务说明", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(startTimeStamp>=endTimeStamp){
+            Toast.makeText(this, "结束时间应该大于开始时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        saveToDB();
+    }
+
+    private void saveToDB() {
+        taskBean.setTaskName(mEtTask.getText().toString());
+        taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
+        taskBean.save();
+        Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 
     public static void start(Context context, String title) {
         Intent intent = new Intent(context, EditTaskActivity.class);
         intent.putExtra("title", title);
         context.startActivity(intent);
     }
+
 
     /**
      * 时间选择器选择时间后的回调方法
@@ -188,9 +209,11 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         String text = DateUtils.timeStampToExactlyDate(millseconds);
         if (flag == 1) {
             startTimeStamp=millseconds;
+            taskBean.setStartTime(startTimeStamp);
             mTvStartTime.setText(text);
         } else if (flag == 2) {
             endTimeStamp=millseconds;
+            taskBean.setEndTime(endTimeStamp);
             mTvEndTime.setText(text);
         }
 

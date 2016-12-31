@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
+import org.litepal.crud.DataSupport;
 import org.w3c.dom.Text;
 
 import java.util.List;
 
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.EditTaskActivity;
+import project.graduate.zhpan.littlebird.activity.TaskActivity;
+import project.graduate.zhpan.littlebird.bean.TaskBean;
 
 /**
  * Created by zhpan on 2016/11/20.
@@ -23,14 +26,16 @@ import project.graduate.zhpan.littlebird.activity.EditTaskActivity;
 
 public class TaskAdapter extends LittleBirdAdapter {
     private Context context;
+    private TaskActivity taskActivity;
 
     public TaskAdapter(Context context) {
         this.context = context;
+        taskActivity=(TaskActivity)context;
     }
 
     @Override
     public int getCount() {
-        return 20;
+        return mList.size();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class TaskAdapter extends LittleBirdAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         final TaskViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(context,R.layout.item_task,null);
@@ -64,6 +69,18 @@ public class TaskAdapter extends LittleBirdAdapter {
         }else {
             holder= (TaskViewHolder) convertView.getTag();
         }
+        TaskBean taskBean = (TaskBean) mList.get(position);
+        holder.taskName.setText("任务"+(position+1)+":"+taskBean.getTaskName());
+        boolean commit = taskBean.isCommit();
+        if(commit){
+            holder.completeState.setText("已提交");
+            holder.qualityState.setText("已提交");
+            holder.swipeMenuLayout.setSwipeEnable(false);
+        }else {
+            holder.completeState.setText("待提交");
+            holder.qualityState.setText("待提交");
+        }
+        holder.checkPerson.setText("审核人："+taskBean.getCheckPerson());
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +88,7 @@ public class TaskAdapter extends LittleBirdAdapter {
                 //context.startActivity(new Intent(context, EditTaskActivity.class));
                 EditTaskActivity.start(context,"编辑任务");
                 holder.swipeMenuLayout.smoothClose();
+                taskActivity.onEdit(position);
             }
         });
 
@@ -78,6 +96,7 @@ public class TaskAdapter extends LittleBirdAdapter {
             @Override
             public void onClick(View view) {
                 holder.swipeMenuLayout.smoothClose();
+                taskActivity.onCommit(position);
             }
         });
 
@@ -85,6 +104,7 @@ public class TaskAdapter extends LittleBirdAdapter {
             @Override
             public void onClick(View view) {
                 holder.swipeMenuLayout.smoothClose();
+                taskActivity.onDeleteSuccess(position);
             }
         });
         return convertView;
@@ -103,5 +123,6 @@ public class TaskAdapter extends LittleBirdAdapter {
         private Button btnDelete;
         private SwipeMenuLayout swipeMenuLayout;
     }
+
 
 }
