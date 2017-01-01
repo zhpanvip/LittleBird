@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout llEditText;
     private LinearLayout llWriteTask;
     private LinearLayout llQuerySalary;
+    private LinearLayout llAdduser;
     private long mExitTime;
     private LinearLayout mLlMenu;
     private TextView mTvMonth;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llEditText.setOnClickListener(this);
         llQuerySalary.setOnClickListener(this);
         llWriteTask.setOnClickListener(this);
+        llAdduser.setOnClickListener(this);
     }
 
     private void initView() {
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llEditText= (LinearLayout) findViewById(R.id.ll_edit_task);
         llQuerySalary= (LinearLayout) findViewById(R.id.ll_main_payroll);
         llWriteTask= (LinearLayout) findViewById(R.id.ll_main_write_topic);
+        llAdduser= (LinearLayout) findViewById(R.id.ll_add_user);
         mTvMonth= (TextView) findViewById(R.id.tv_month);
         mTvDay= (TextView) findViewById(R.id.tv_day);
         mTvWeek= (TextView) findViewById(R.id.tv_week);
@@ -259,6 +262,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ll_main_write_topic:
                 mImageViewList.get(2).setBackgroundResource(image2[2]);
                 startActivity(new Intent(this,WriteTopicActivity.class));
+                mRlMain.setVisibility(View.GONE);
+                isShow=false;
+                break;
+            case R.id.ll_add_user:
+                mImageViewList.get(2).setBackgroundResource(image2[2]);
+                RegisterActivity.start(this);
                 mRlMain.setVisibility(View.GONE);
                 isShow=false;
                 break;

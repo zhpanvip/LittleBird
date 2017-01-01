@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,9 @@ import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.callback.TaskOptionListener;
 import project.graduate.zhpan.littlebird.constants.Constatns;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
+import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
+import project.graduate.zhpan.littlebird.utils.UserTools;
 
 public class TaskActivity extends BaseActivity implements View.OnClickListener,TaskOptionListener{
 
@@ -30,6 +36,13 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         initData();
         setListener();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void setListener(){
         mTvHistory.setOnClickListener(this);
         mIvRight.setOnClickListener(this);
@@ -41,9 +54,11 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
 
         mTaskAdapter=new TaskAdapter(this);
         mList=new ArrayList<>();
-        mList= DataSupport.findAll(TaskBean.class);
+        mList = DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(), UserInfoTools.getEmail(this)).find(TaskBean.class, true);
+
         mTaskAdapter.setList(mList);
         mLvTask.setAdapter(mTaskAdapter);
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -99,9 +114,10 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         int completePercent= (int) ((useTime/totalTime)*100);
         taskBean.setCompletePercent( completePercent);
         taskBean.setRealStartTime(System.currentTimeMillis());
+        taskBean.setUserEmail(UserInfoTools.getEmail(this));
         taskBean.save();
-        //mList= DataSupport.findAll(TaskBean.class);
-        mList= DataSupport.where("createTime=?", DateUtils.getDate()).find(TaskBean.class);
+
+        mList= DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
         mTaskAdapter.setList(mList);
         mTaskAdapter.notifyDataSetChanged();
         Toast.makeText(this, "任务已提交", Toast.LENGTH_SHORT).show();
@@ -118,6 +134,12 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         taskBean.setRealStartTime(System.currentTimeMillis());
         taskBean.save();
         mList= DataSupport.findAll(TaskBean.class);
+        mTaskAdapter.setList(mList);
+        mTaskAdapter.notifyDataSetChanged();
+    }
+    @Subscribe
+    public void onTaskCreateSuccess(EditTaskActivity.TaskCreateSuccess taskCreateSuccess){
+        mList= DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
         mTaskAdapter.setList(mList);
         mTaskAdapter.notifyDataSetChanged();
     }

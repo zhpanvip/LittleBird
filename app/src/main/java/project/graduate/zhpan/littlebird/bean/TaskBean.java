@@ -8,6 +8,7 @@ import org.litepal.crud.DataSupport;
  */
 
 public class TaskBean extends DataSupport {
+
     private long id;
     @Column(unique = true, defaultValue = "unknown")
     private String taskName;
@@ -21,6 +22,15 @@ public class TaskBean extends DataSupport {
     private long commitTime;
     private long endTime;
     private int taskState;  //  0待开始 1待提交 2已提交\
+    private String userEmail;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
     public long getId() {
         return id;

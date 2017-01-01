@@ -13,9 +13,9 @@ public class UserInfoTools {
     /**
      * 获取用户名
      */
-    public static String getUserName(Context context) {
+    public static String getEmail(Context context) {
         UserBean userInfo = SharedPreferencesUtils.getUserInfo(context);
-        return userInfo.getUsername();
+        return userInfo.getEmail();
     }
 
     /**

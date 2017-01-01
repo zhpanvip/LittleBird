@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
+import static android.content.Context.MODE_APPEND;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -21,7 +22,7 @@ public class SharedPreferencesUtils {
     public static void saveUserInfo(Context context, UserBean userBean ) {
         sp = context.getSharedPreferences("userInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("username",userBean.getUsername());
+        editor.putString("email",userBean.getEmail());
         editor.putString("password",userBean.getPassword());
         editor.commit();
     }
@@ -32,9 +33,9 @@ public class SharedPreferencesUtils {
     public static UserBean getUserInfo(Context context) {
         UserBean userBean=new UserBean();
         sp = context.getSharedPreferences("userInfo", MODE_PRIVATE);
-        String username = sp.getString("username", "");
+        String username = sp.getString("email", "");
         String password=sp.getString("password","");
-        userBean.setUsername(username);
+        userBean.setEmail(username);
         userBean.setPassword(password);
         return userBean;
     }
@@ -147,5 +148,17 @@ public class SharedPreferencesUtils {
         sp = context.getSharedPreferences("isTaskRemind", MODE_PRIVATE);
         boolean isTaskRemind = sp.getBoolean("isTaskRemind", false);
         return isTaskRemind;
+    }
+    public static void setFirstRun(Context context){
+        sp = context.getSharedPreferences("isFirstRun", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putBoolean("isFirstRun", false);
+        edit.commit();
+    }
+
+    public static boolean isFistRun(Context context){
+        sp=context.getSharedPreferences("isFirstRun",MODE_PRIVATE);
+        boolean isFirstRun=sp.getBoolean("isFirstRun",true);
+        return isFirstRun;
     }
 }

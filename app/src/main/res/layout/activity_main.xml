@@ -253,8 +253,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="130dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/ll_edit_task"
@@ -328,6 +327,29 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_add_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_main_add_user"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/write_task"
+                    android:button="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="添加用户"
+                    android:textColor="#333"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
         </LinearLayout>
 

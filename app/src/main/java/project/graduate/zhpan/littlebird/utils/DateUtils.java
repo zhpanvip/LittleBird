@@ -166,5 +166,10 @@ public class DateUtils {
         return simpleDateFormat.format(d);
     }
 
+    public static String getDetailedTime(long timeStamp) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+        Date d = new Date(timeStamp);
+        return simpleDateFormat.format(d);
+    }
 
 }

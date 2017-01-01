@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <include layout="@layout/item_base_line"/>
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入邮箱"
+            android:inputType="textEmailAddress"
+            android:maxLength="30"
+            android:padding="15dp"
+            android:textColorHint="@color/grey_ca"
+            android:textCursorDrawable="@drawable/edit_text_color_cursor" />
+        <EditText
+            android:id="@+id/et_real_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入姓名"
+            android:inputType="textEmailAddress"
+            android:maxLength="30"
+            android:padding="15dp"
+            android:textColorHint="@color/grey_ca"
+            android:textCursorDrawable="@drawable/edit_text_color_cursor" />
+        <include layout="@layout/item_base_line"/>
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输新密码"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:padding="15dp"
+            android:textColorHint="@color/grey_ca"
+            android:textCursorDrawable="@drawable/edit_text_color_cursor" />
+
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey_ca" />-->
+        <include layout="@layout/item_base_line"/>
+        <EditText
+            android:id="@+id/et_confirm_psw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请确认密码"
+            android:maxLength="18"
+            android:inputType="textPassword"
+            android:padding="15dp"
+            android:textColorHint="@color/grey_ca"
+            android:textCursorDrawable="@drawable/edit_text_color_cursor" />
+        <include layout="@layout/item_base_line"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_login_btn"
+        android:text="注册"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</LinearLayout>

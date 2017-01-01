@@ -1,28 +1,97 @@
 package project.graduate.zhpan.littlebird.bean;
 
+import org.litepal.annotation.Column;
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by zhpan on 2016/10/16.
  */
 
-public class UserBean extends LittleBirdBean {
-    private String username;
+public class UserBean extends DataSupport {
+    @Column(unique = true, defaultValue = "unknown")
+    private String email;
     private String password;
+    @Column(unique = true)
+    private long userId;
+    private String realName;
     private String Tel;
     private int integral;
     private int rank;
-    private String email;
     private String job;
     private String entryTime;
     private String projectGroup;
     private String department;
     private String imei;
+    private String personalSign;
+    private boolean isAdmin;
+    private double averageDay;
+    private double averageWeek;
+    private double averageMonth;
+    private double averageQuarter;
+    private double averageYear;
 
-    public String getUsername() {
-        return username;
+    public double getAverageWeek() {
+        return averageWeek;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAverageWeek(double averageWeek) {
+        this.averageWeek = averageWeek;
+    }
+
+    public double getAverageMonth() {
+        return averageMonth;
+    }
+
+    public void setAverageMonth(double averageMonth) {
+        this.averageMonth = averageMonth;
+    }
+
+    public double getAverageQuarter() {
+        return averageQuarter;
+    }
+
+    public void setAverageQuarter(double averageQuarter) {
+        this.averageQuarter = averageQuarter;
+    }
+
+    public double getAverageYear() {
+        return averageYear;
+    }
+
+    public void setAverageYear(double averageYear) {
+        this.averageYear = averageYear;
+    }
+
+    public double getAverageDay() {
+        return averageDay;
+    }
+
+    public void setAverageDay(double averageDay) {
+        this.averageDay = averageDay;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public String getPersonalSign() {
+        return personalSign;
+    }
+
+    public void setPersonalSign(String personalSign) {
+        this.personalSign = personalSign;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getPassword() {
@@ -36,11 +105,17 @@ public class UserBean extends LittleBirdBean {
         return imei;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public void setImei(String imei) {
         this.imei = imei;
     }
-
-
 
     public String getTel() {
         return Tel;

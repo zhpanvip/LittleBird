@@ -56,11 +56,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean autoLogin = UserInfoTools.isAutoLogin(this);
         if (rememberPassword) {
             mBinding.cbRememberPassword.setChecked(true);
-            mBinding.etUsername.setText(UserInfoTools.getUserName(this));
+            mBinding.etUsername.setText(UserInfoTools.getEmail(this));
             mBinding.etPassword.setText(UserInfoTools.getPassWord(this));
         } else {
-            mBinding.etUsername.setText(UserInfoTools.getUserName(this));
-            mBinding.etUsername.setSelection(UserInfoTools.getUserName(this).length());
+            mBinding.etUsername.setText(UserInfoTools.getEmail(this));
+            mBinding.etUsername.setSelection(UserInfoTools.getEmail(this).length());
             mBinding.cbRememberPassword.setChecked(false);
         }
         if (autoLogin) {
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 登陆
      */
     private void login() {
-        userBean.setUsername(mBinding.etUsername.getText().toString());
+        userBean.setEmail(mBinding.etUsername.getText().toString());
         userBean.setPassword(mBinding.etPassword.getText().toString());
         int isLegal = loginPresenter.checkUserInfo(userBean);
         switch (isLegal) {
@@ -104,7 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, "密码长度不能小于6位", Toast.LENGTH_SHORT).show();
                 break;
             case CheckConstants.LEGAL:
-                loginPresenter.login(userBean, this);
+                //loginPresenter.login(userBean, this);
+                loginPresenter.localLogin(userBean,this);
                 saveConfigInfo();
                 break;
         }
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferencesUtils.saveIsRememberPsw(this, true);
             //  保存用户名和密码
             userBean.setPassword(mBinding.etPassword.getText().toString());
-            userBean.setUsername(mBinding.etUsername.getText().toString());
+            userBean.setEmail(mBinding.etUsername.getText().toString());
             SharedPreferencesUtils.saveUserInfo(this, userBean);
         } else {
             //  保存记住密码checkbox选中状态

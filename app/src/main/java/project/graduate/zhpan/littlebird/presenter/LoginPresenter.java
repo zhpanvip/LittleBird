@@ -12,6 +12,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Response;
 import project.graduate.zhpan.littlebird.activity.LoginActivity;
@@ -38,7 +43,7 @@ public class LoginPresenter {
      * 检查用户名密码是否输入正确
      */
     public int checkUserInfo(UserBean user) {
-        if (TextUtils.isEmpty(user.getUsername())) {
+        if (TextUtils.isEmpty(user.getEmail())) {
             return CheckConstants.NUll_USERNAME;    //  用户名为空
         } else if (TextUtils.isEmpty(user.getPassword())) {   //  密码为空
             return CheckConstants.NULL_PASSWORD;
@@ -59,7 +64,7 @@ public class LoginPresenter {
     public void login(final UserBean userBean, final LoginActivity loginActivity) {
         OkHttpUtils.post()
                 .url(UrlConstant.loginUrl)
-                .addParams("username", userBean.getUsername())
+                .addParams("username", userBean.getEmail())
                 .addParams("password", userBean.getPassword())
                 .build()
                 .execute(new Callback<LoginBean>() {
@@ -98,6 +103,25 @@ public class LoginPresenter {
                         }
                     }
                 });
+    }
+
+    public void localLogin(final UserBean userBean, final LoginActivity loginActivity){
+        List<UserBean> userBeens = DataSupport.where("email=? and password=?",userBean.getEmail(), userBean.getPassword()).find(UserBean.class);
+        if(userBeens.size()>0){
+            SharedPreferencesUtils.saveLoginStatus(activity,true);
+            String email = userBeens.get(0).getEmail();
+            String password = userBean.getPassword();
+            Intent intent = new Intent(loginActivity, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("email", email);
+            bundle.putString("password", password);
+            intent.putExtras(bundle);
+            loginActivity.finish();
+            loginActivity.startActivity(intent);
+        }else {
+            loginActivity.onPasswordError();
+        }
+
     }
 
     /**

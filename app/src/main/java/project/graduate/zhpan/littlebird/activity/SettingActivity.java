@@ -1,8 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +12,6 @@ import android.widget.ToggleButton;
 
 import org.greenrobot.eventbus.EventBus;
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.databinding.ActivitySettingBinding;
 import project.graduate.zhpan.littlebird.presenter.SettingPresenter;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
@@ -61,7 +58,7 @@ public class SettingActivity extends BaseActivity  implements View.OnClickListen
         mTvTitle.setText("设置");
 
         //  设置当前登陆账号
-        mTvAccount.setText(UserInfoTools.getUserName(this));
+        mTvAccount.setText(UserInfoTools.getEmail(this));
         //  获取是否自动登陆
         boolean isAutoLogin = SharedPreferencesUtils.isAutoLogin(this);
         mTbRememberPsw.setChecked(isAutoLogin);

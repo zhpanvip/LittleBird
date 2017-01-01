@@ -17,11 +17,14 @@ import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Date;
 
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class EditTaskActivity extends BaseActivity implements View.OnClickListener, OnDateSetListener {
 
@@ -182,13 +185,15 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
 
         saveToDB();
     }
-
+    //  添加任务
     private void saveToDB() {
         taskBean.setTaskName(mEtTask.getText().toString());
         taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
         taskBean.setCreateDate(DateUtils.getDate());
+        taskBean.setUserEmail(UserInfoTools.getEmail(this));
         taskBean.save();
         Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new TaskCreateSuccess() );
         finish();
     }
 
@@ -219,4 +224,6 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         }
 
     }
+
+    public class TaskCreateSuccess{}
 }
