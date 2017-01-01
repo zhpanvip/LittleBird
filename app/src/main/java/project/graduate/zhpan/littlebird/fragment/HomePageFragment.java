@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.CheckActivity;
 import project.graduate.zhpan.littlebird.activity.NoticeActivity;
@@ -18,6 +20,8 @@ import project.graduate.zhpan.littlebird.activity.RankActivity;
 import project.graduate.zhpan.littlebird.activity.SignActivity;
 import project.graduate.zhpan.littlebird.activity.TaskActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
+import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 /**
  * Created by zhpan on 2016/10/15.
@@ -31,18 +35,24 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mLlRank;
     private LinearLayout mLlProject;
     private LinearLayout mLlNotice;
-
+    private TextView mTvInt;
+    private TextView mTvIntYesterDay;
+    private UserBean userBean;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_home_page,null);
 
         initView();
+        initData();
         setData();
         setListener();
         return mView;
 
     }
 
+    private void initData() {
+        userBean= DataSupport.where("email=?", UserInfoTools.getEmail(getContext())).find(UserBean.class).get(0);
+    }
 
 
     private void setListener() {
@@ -58,6 +68,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mTvTitle.setText("LittleBird");
         mIvBack.setVisibility(View.GONE);
         ColleagueAdapter adapter=new ColleagueAdapter(getContext());
+        mTvInt.setText("当前积分"+userBean.getIntegral()+"分");
+        mTvIntYesterDay.setText("昨日积分"+userBean.getYesterdayInt()+"分");
        //mGrideView.setAdapter(adapter);
     }
 
@@ -71,6 +83,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mLlRank= (LinearLayout) mView.findViewById(R.id.ll_homepage_ranking);
         mLlProject= (LinearLayout) mView.findViewById(R.id.ll_homepage_project);
         mLlNotice= (LinearLayout) mView.findViewById(R.id.ll_homepage_notice);
+        mTvInt= (TextView) mView.findViewById(R.id.tv_integral);
+        mTvIntYesterDay= (TextView) mView.findViewById(R.id.tv_integral_yesterday);
     }
 
     @Override

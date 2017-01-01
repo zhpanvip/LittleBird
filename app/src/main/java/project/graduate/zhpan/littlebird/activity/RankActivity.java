@@ -22,7 +22,7 @@ public class RankActivity extends BaseActivity implements View.OnClickListener {
     private RankFragment mDayFragment;
     private RankFragment mMonthFragment;
     private RankFragment mWeekFragment;
-    private RankFragment mSqurterFragment;
+    private RankFragment mQuarterFragment;
     private RankFragment mYearFragment;
 
     private List<RankFragment> mList;
@@ -120,15 +120,20 @@ public class RankActivity extends BaseActivity implements View.OnClickListener {
         mTvTitle.setText("排名");
 
         mDayFragment = new RankFragment();
+        mDayFragment.setRankType(RankFragment.TYPE_DAY);
         mWeekFragment = new RankFragment();
+        mWeekFragment.setRankType(RankFragment.TYPE_WEEK);
         mMonthFragment = new RankFragment();
-        mSqurterFragment = new RankFragment();
+        mMonthFragment.setRankType(RankFragment.TYPE_MONTH);
+        mQuarterFragment = new RankFragment();
+        mQuarterFragment.setRankType(RankFragment.TYPE_QUARTER);
         mYearFragment = new RankFragment();
+        mYearFragment.setRankType(RankFragment.TYPE_YEAR);
 
         mList = new ArrayList<>();
         mTvList = new ArrayList<>();
         mViewList = new ArrayList<>();
-        Collections.addAll(mList, mDayFragment, mWeekFragment, mMonthFragment, mSqurterFragment, mYearFragment);
+        Collections.addAll(mList, mDayFragment, mWeekFragment, mMonthFragment, mQuarterFragment, mYearFragment);
         Collections.addAll(mTvList, mTvDay,mTvWeek,mTvMonth,mTvQuarter,mTvYear);
         Collections.addAll(mViewList,mViewDay,mViewWeek,mViewMonth,mViewQuarter,mViewYear);
 

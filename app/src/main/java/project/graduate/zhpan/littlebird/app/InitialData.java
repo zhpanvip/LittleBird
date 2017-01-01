@@ -25,12 +25,12 @@ public class InitialData {
         userBean.setJob("项目经理");
         userBean.setPersonalSign("一直被模仿 从未被超越");
         userBean.setTel("15515269670");
-        userBean.setRank(1);
+        userBean.setRank(4);
         userBean.setProjectGroup("河南大学软件中心");
         userBean.setAverageWeek(83.0);
         userBean.setAverageMonth(86.2);
         userBean.setAverageQuarter(85.0);
-        userBean.setAverageYear(85.7);
+        userBean.setAverageYear(86.4);
         userBean.save();
 
         UserBean userBean1 = new UserBean();
@@ -46,7 +46,7 @@ public class InitialData {
         userBean1.setJob("HR");
         userBean1.setPersonalSign("一直被模仿 从未被超越");
         userBean1.setTel("15515643648");
-        userBean1.setRank(8);
+        userBean1.setRank(3);
         userBean1.setProjectGroup("河南大学软件中心");
         userBean1.setAverageWeek(19.0);
         userBean1.setAverageMonth(82.2);
@@ -88,12 +88,12 @@ public class InitialData {
         userBean3.setJob("IOS开发工程师");
         userBean3.setPersonalSign("一直被模仿 从未被超越");
         userBean3.setTel("15515269673");
-        userBean3.setRank(3);
+        userBean3.setRank(1);
         userBean3.setProjectGroup("河南大学软件中心");
         userBean3.setAverageWeek(80.1);
         userBean3.setAverageMonth(84.5);
         userBean3.setAverageQuarter(81.6);
-        userBean3.setAverageYear(81.7);
+        userBean3.setAverageYear(0);
         userBean3.save();
 
         UserBean userBean4 = new UserBean();
@@ -109,12 +109,12 @@ public class InitialData {
         userBean4.setJob("项目经理");
         userBean4.setPersonalSign("一直被模仿 从未被超越");
         userBean4.setTel("15515269674");
-        userBean4.setRank(4);
+        userBean4.setRank(1);
         userBean4.setProjectGroup("河南大学软件中心");
         userBean4.setAverageWeek(81.0);
         userBean4.setAverageMonth(79.0);
         userBean4.setAverageQuarter(78.0);
-        userBean4.setAverageYear(80.9);
+        userBean4.setAverageYear(0);
         userBean4.save();
 
         UserBean userBean5 = new UserBean();
@@ -130,7 +130,7 @@ public class InitialData {
         userBean5.setJob("项目经理");
         userBean5.setPersonalSign("一直被模仿 从未被超越");
         userBean5.setTel("15515269675");
-        userBean5.setRank(5);
+        userBean5.setRank(3);
         userBean5.setProjectGroup("河南大学软件中心");
         userBean5.setAverageWeek(84.0);
         userBean5.setAverageMonth(82.6);
@@ -151,12 +151,12 @@ public class InitialData {
         userBean6.setJob("Web前端工程师");
         userBean6.setPersonalSign("一直被模仿 从未被超越");
         userBean6.setTel("15515269670");
-        userBean6.setRank(6);
+        userBean6.setRank(1);
         userBean6.setProjectGroup("河南大学软件中心");
         userBean6.setAverageWeek(82.1);
         userBean6.setAverageMonth(82.4);
-        userBean6.setAverageQuarter(86.0);
-        userBean6.setAverageYear(84.1);
+        userBean6.setAverageQuarter(0);
+        userBean6.setAverageYear(0);
         userBean6.save();
 
         UserBean userBean7 = new UserBean();
@@ -172,12 +172,12 @@ public class InitialData {
         userBean7.setJob("UI设计师");
         userBean7.setPersonalSign("一直被模仿 从未被超越");
         userBean7.setTel("15515269676");
-        userBean7.setRank(6);
+        userBean7.setRank(3);
         userBean7.setProjectGroup("河南大学软件中心");
         userBean7.setAverageWeek(82.0);
         userBean7.setAverageMonth(83.2);
         userBean7.setAverageQuarter(84.0);
-        userBean7.setAverageYear(85.7);
+        userBean7.setAverageYear(82.5);
         userBean7.save();
 
         UserBean userBean8 = new UserBean();
@@ -193,7 +193,7 @@ public class InitialData {
         userBean8.setJob("项目经理");
         userBean8.setPersonalSign("一直被模仿 从未被超越");
         userBean8.setTel("15515269677");
-        userBean8.setRank(7);
+        userBean8.setRank(2);
         userBean8.setProjectGroup("河南大学软件中心");
         userBean8.setAverageWeek(86.0);
         userBean8.setAverageMonth(80.2);
@@ -206,20 +206,20 @@ public class InitialData {
         userBean9.setEmail("lxy@littlebird.com");
         userBean9.setPassword("123456");
         userBean9.setAdmin(false);
-        long registerTime9 = getRegisterTime(8, 9, 7, 2013);
+        long registerTime9 = getRegisterTime(8, 9, 11, 2016);
         userBean9.setUserId(Long.parseLong(DateUtils.getDetailedTime(registerTime9)));
         userBean9.setDepartment("技术部");
-        userBean9.setEntryTime("2013年07月09日");
+        userBean9.setEntryTime("2016年11月09日");
         userBean9.setIntegral(506);
         userBean9.setJob("Web前端工程师");
         userBean9.setPersonalSign("一直被模仿 从未被超越");
         userBean9.setTel("15515269679");
-        userBean9.setRank(9);
+        userBean9.setRank(3);
         userBean9.setProjectGroup("河南大学软件中心");
         userBean9.setAverageWeek(78.0);
         userBean9.setAverageMonth(80.2);
-        userBean9.setAverageQuarter(79.0);
-        userBean9.setAverageYear(80.7);
+        userBean9.setAverageQuarter(0);
+        userBean9.setAverageYear(0);
         userBean9.save();
 
         UserBean userBean10 = new UserBean();
@@ -235,7 +235,7 @@ public class InitialData {
         userBean10.setJob("Android开发工程师");
         userBean10.setPersonalSign("一直被模仿 从未被超越");
         userBean10.setTel("15515269610");
-        userBean10.setRank(10);
+        userBean10.setRank(2);
         userBean10.setProjectGroup("河南大学软件中心");
         userBean10.setAverageWeek(85.0);
         userBean10.setAverageMonth(86.2);
@@ -256,7 +256,7 @@ public class InitialData {
         userBean11.setJob("IOS开发工程师");
         userBean11.setPersonalSign("一直被模仿 从未被超越");
         userBean11.setTel("15515269611");
-        userBean11.setRank(11);
+        userBean11.setRank(2);
         userBean11.setProjectGroup("河南大学软件中心");
         userBean11.setAverageWeek(79.0);
         userBean11.setAverageMonth(81.2);
@@ -277,7 +277,7 @@ public class InitialData {
         userBean12.setJob("java工程师");
         userBean12.setPersonalSign("一直被模仿 从未被超越");
         userBean12.setTel("15515269671");
-        userBean12.setRank(5);
+        userBean12.setRank(3);
         userBean12.setProjectGroup("河南大学软件中心");
         userBean12.setAverageWeek(80.0);
         userBean12.setAverageMonth(82.2);
@@ -298,8 +298,6 @@ public class InitialData {
         cal.add(Calendar.YEAR, year);
         return (cal.getTimeInMillis() / 1000);
     }
-
-
 }
 
 

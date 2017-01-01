@@ -21,9 +21,9 @@ import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText mEtEmal;
+    private EditText mEtE_mall;
     private EditText mEtRealName;
     private EditText mEtPsw;
     private EditText mEtConfirmPsw;
@@ -35,6 +35,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
+        initData();
+        setData();
+
+    }
+
+    private void setData() {
+        mTvTitle.setText("添加用户");
+    }
+
+    private void initData() {
+
     }
 
     public static void start(Context context) {
@@ -42,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        mEtEmal = (EditText) findViewById(R.id.et_email);
+        mEtE_mall = (EditText) findViewById(R.id.et_email);
         mEtRealName= (EditText) findViewById(R.id.et_real_name);
         mEtPsw = (EditText) findViewById(R.id.et_psw);
         mEtConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
@@ -63,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void submit() {
         // validate
-        String email = mEtEmal.getText().toString().trim();
+        String email = mEtE_mall.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
@@ -103,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         List<UserBean> userBeen = DataSupport.where("email=?", email).find(UserBean.class);
         if(userBeen.size()>0){
             Toast.makeText(this, "用户已存在", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         UserBean userBean=new UserBean();

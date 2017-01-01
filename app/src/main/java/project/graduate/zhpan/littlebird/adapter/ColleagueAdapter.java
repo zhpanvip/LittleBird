@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
 
 /**
  * Created by zhpan on 2016/10/15.
@@ -48,8 +49,8 @@ public class ColleagueAdapter extends LittleBirdAdapter {
         }else {
             holder= (HomeGridViewHolder) convertView.getTag();
         }
-        ColleagueBean.EmployeeListBean colleague = (ColleagueBean.EmployeeListBean) mList.get(position);
-        holder.mTextView.setText(colleague.getEmployeeName());
+        UserBean user = (UserBean) mList.get(position);
+        holder.mTextView.setText(user.getRealName());
         return convertView;
     }
 

@@ -3,11 +3,13 @@ package project.graduate.zhpan.littlebird.bean;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 /**
  * Created by zhpan on 2016/10/16.
  */
 
-public class UserBean extends DataSupport {
+public class UserBean extends DataSupport implements Serializable{
     @Column(unique = true, defaultValue = "unknown")
     private String email;
     private String password;
@@ -16,6 +18,7 @@ public class UserBean extends DataSupport {
     private String realName;
     private String Tel;
     private int integral;
+    private int yesterdayInt;
     private int rank;
     private String job;
     private String entryTime;
@@ -29,6 +32,15 @@ public class UserBean extends DataSupport {
     private double averageMonth;
     private double averageQuarter;
     private double averageYear;
+
+
+    public int getYesterdayInt() {
+        return yesterdayInt;
+    }
+
+    public void setYesterdayInt(int yesterdayInt) {
+        this.yesterdayInt = yesterdayInt;
+    }
 
     public double getAverageWeek() {
         return averageWeek;

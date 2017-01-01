@@ -32,4 +32,14 @@
         android:divider="@null"
         android:layout_below="@id/ll_rank"
         android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/grey_33"
+            android:textSize="16sp"
+            android:text="暂无数据"/>
 </RelativeLayout>

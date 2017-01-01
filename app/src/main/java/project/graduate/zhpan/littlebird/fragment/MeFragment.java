@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.litepal.crud.DataSupport;
+
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.EncourageActivity;
 import project.graduate.zhpan.littlebird.activity.IntegralActivity;
@@ -20,7 +22,9 @@ import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.MeAdapter;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.ProfileBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.JsonFileReader;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 /**
  * Created by zhpan on 2016/10/15.
@@ -34,13 +38,39 @@ public class MeFragment extends BaseFragment {
     private ColleagueBean.EmployeeListBean mProfile;
     private String[] mText = {"资料", "等级", "积分", "奖励", "规划", "设置"};
     private int[] images = {R.drawable.me_data, R.drawable.me_grade, R.drawable.me_integration, R.drawable.me_equity, R.drawable.me_plan, R.drawable.me_set};
+    private UserBean userBean;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_me, null);
         initView();
         initData();
+        setData();
         setListener();
         return mView;
+    }
+
+    private void setData() {
+        mTvName.setText(userBean.getRealName());
+        mTvInt.setText("当前积分"+userBean.getIntegral()+"分");
+        int rank = userBean.getRank();
+        switch (rank){
+            case 1:
+                mIvGrade.setImageResource(R.drawable.me_grade_one);
+                break;
+            case 2:
+                mIvGrade.setImageResource(R.drawable.me_grade_two);
+                break;
+            case 3:
+                mIvGrade.setImageResource(R.drawable.me_grade_three);
+                break;
+            case 4:
+                mIvGrade.setImageResource(R.drawable.me_grade_four);
+                break;
+            case 5:
+                mIvGrade.setImageResource(R.drawable.me_grade_five);
+                break;
+        }
+
     }
 
     private void setListener() {
@@ -49,7 +79,7 @@ public class MeFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
                     case 0:
-                        UserInfoActivity.start(getActivity(),"个人简介",mProfile);
+                        UserInfoActivity.start(getActivity(),"个人简介",userBean);
                         break;
                     case 1:
 
@@ -75,6 +105,7 @@ public class MeFragment extends BaseFragment {
 
     }
     private void initData() {
+        userBean= DataSupport.where("email=?", UserInfoTools.getEmail(getContext())).find(UserBean.class).get(0);
         mTvTitle.setText("LittleBird");
         mIvBack.setVisibility(View.GONE);
         MeAdapter adapter = new MeAdapter(getContext(), mText, images);
@@ -82,26 +113,8 @@ public class MeFragment extends BaseFragment {
         String profileJson = JsonFileReader.getJson(getContext(), "profile.json");
         Gson gson=new Gson();
         mProfile = gson.fromJson(profileJson, ColleagueBean.EmployeeListBean.class);
-        mTvName.setText(mProfile.getEmployeeName());
-        mTvInt.setText("当前积分"+mProfile.getIntegration()+"分");
-        String employeeGrade = mProfile.getEmployeeGrade();
-        switch (employeeGrade){
-            case "1":
-                mIvGrade.setImageResource(R.drawable.me_grade_one);
-                break;
-            case "2":
-                mIvGrade.setImageResource(R.drawable.me_grade_two);
-                break;
-            case "3":
-                mIvGrade.setImageResource(R.drawable.me_grade_three);
-                break;
-            case "4":
-                mIvGrade.setImageResource(R.drawable.me_grade_four);
-                break;
-            case "5":
-                mIvGrade.setImageResource(R.drawable.me_grade_five);
-                break;
-        }
+
+
     }
 
     private void initView() {

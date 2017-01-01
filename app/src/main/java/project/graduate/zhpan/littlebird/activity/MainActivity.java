@@ -16,17 +16,20 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.fragment.ColleagueFragment;
 import project.graduate.zhpan.littlebird.fragment.HomePageFragment;
 import project.graduate.zhpan.littlebird.fragment.MeFragment;
 import project.graduate.zhpan.littlebird.fragment.TopicFragment;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -44,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout llEditText;
     private LinearLayout llWriteTask;
     private LinearLayout llQuerySalary;
-    private LinearLayout llAdduser;
+    private LinearLayout llLine2;
+    private LinearLayout llAddUser;
     private long mExitTime;
     private LinearLayout mLlMenu;
     private TextView mTvMonth;
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTvWeek;
     private TextView mLunarMonth;
     private TextView mLunarDay;
+    private UserBean user;
 
 
     @Override
@@ -60,18 +65,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         initData();
+        setData();
         setListener();
     }
 
-    private void initData() {
-
-        EventBus.getDefault().register(this);
-
+    private void setData() {
         mTvMonth.setText(DateUtils.getMonth());
         mTvDay.setText(DateUtils.getDayOfMonth());
         mTvWeek.setText(DateUtils.getDayOfWeek());
         mLunarMonth.setText(DateUtils.getLunarMonth());
         mLunarDay.setText(DateUtils.getLunarDayOfMonth());
+    }
+
+    private void initData() {
+        EventBus.getDefault().register(this);
+        user= DataSupport.where("email=?", UserInfoTools.getEmail(this)).find(UserBean.class).get(0);
+        if(user.isAdmin()){
+            llLine2.setVisibility(View.VISIBLE);
+        }else {
+            llLine2.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -112,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llEditText.setOnClickListener(this);
         llQuerySalary.setOnClickListener(this);
         llWriteTask.setOnClickListener(this);
-        llAdduser.setOnClickListener(this);
+        llAddUser.setOnClickListener(this);
     }
 
     private void initView() {
@@ -144,7 +157,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llEditText= (LinearLayout) findViewById(R.id.ll_edit_task);
         llQuerySalary= (LinearLayout) findViewById(R.id.ll_main_payroll);
         llWriteTask= (LinearLayout) findViewById(R.id.ll_main_write_topic);
-        llAdduser= (LinearLayout) findViewById(R.id.ll_add_user);
+        llAddUser= (LinearLayout) findViewById(R.id.ll_add_user);
+        llLine2 = (LinearLayout) findViewById(R.id.ll_second_line);
         mTvMonth= (TextView) findViewById(R.id.tv_month);
         mTvDay= (TextView) findViewById(R.id.tv_day);
         mTvWeek= (TextView) findViewById(R.id.tv_week);

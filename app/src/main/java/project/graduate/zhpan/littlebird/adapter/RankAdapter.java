@@ -12,20 +12,25 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.RankBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.fragment.RankFragment;
 
 /**
  * Created by zhpan on 2016/12/18.
  */
 
 public class RankAdapter extends LittleBirdAdapter {
-    Context mContext;
+    private Context mContext;
+    private String rankType;
 
-    public RankAdapter(Context mContext) {
+
+    public RankAdapter(Context mContext,String rankType) {
         this.mContext = mContext;
+        this.rankType=rankType;
     }
     @Override
     public int getCount() {
-        return 20;
+        return mList.size();
     }
 
     @Override
@@ -48,6 +53,38 @@ public class RankAdapter extends LittleBirdAdapter {
         }else {
             holder= (ViewHolder) convertView.getTag();
         }
+        if(position==0){
+            holder.mIvRank.setImageResource(R.drawable.icon_rank_1);
+            holder.mIvRank.setVisibility(View.VISIBLE);
+            holder.mTvRank.setVisibility(View.INVISIBLE);
+        }else if(position==1) {
+            holder.mIvRank.setImageResource(R.drawable.icon_rank_2);
+            holder.mIvRank.setVisibility(View.VISIBLE);
+            holder.mTvRank.setVisibility(View.INVISIBLE);
+        }else if(position==2) {
+            holder.mIvRank.setImageResource(R.drawable.icon_rank_3);
+            holder.mIvRank.setVisibility(View.VISIBLE);
+            holder.mTvRank.setVisibility(View.INVISIBLE);
+        }else {
+            holder.mIvRank.setVisibility(View.INVISIBLE);
+            holder.mTvRank.setVisibility(View.VISIBLE);
+            holder.mTvRank.setText(position+1+"");
+        }
+
+        UserBean user = (UserBean) mList.get(position);
+        holder.mTvName.setText(user.getRealName());
+        if(rankType== RankFragment.TYPE_DAY){
+            holder.mTvIntegral.setText(user.getAverageDay()+"");
+        }else if(rankType== RankFragment.TYPE_WEEK){
+            holder.mTvIntegral.setText(user.getAverageWeek()+"");
+        }else if(rankType== RankFragment.TYPE_MONTH){
+            holder.mTvIntegral.setText(user.getAverageMonth()+"");
+        }else if(rankType== RankFragment.TYPE_QUARTER){
+            holder.mTvIntegral.setText(user.getAverageQuarter()+"");
+        }else if(rankType== RankFragment.TYPE_YEAR){
+            holder.mTvIntegral.setText(user.getAverageYear()+"");
+        }
+
 
         return convertView;
     }

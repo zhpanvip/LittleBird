@@ -5,17 +5,23 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class ModifyPswActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mEtOldPsw;
     private EditText mEtNewPsw;
     private EditText mEtConfirmPsw;
-    private Button mBtnComfirm;
+    private Button mBtnConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +39,8 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
         mEtOldPsw = (EditText) findViewById(R.id.et_old_psw);
         mEtNewPsw = (EditText) findViewById(R.id.et_new_psw);
         mEtConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
-        mBtnComfirm = (Button) findViewById(R.id.btn_confirm);
-        mBtnComfirm.setOnClickListener(this);
+        mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
+        mBtnConfirm.setOnClickListener(this);
     }
 
     @Override
@@ -49,7 +55,7 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
     private void submit() {
         String oldPsw = mEtOldPsw.getText().toString().trim();
         if (TextUtils.isEmpty(oldPsw)) {
-            Toast.makeText(this, "请输入原始密码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入原密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -64,8 +70,24 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, "请确认密码", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(!newPsw.equals(confirmPsw)){
+            Toast.makeText(this, "密码不一致", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        List<UserBean> userBeen = DataSupport.where("email=? and password=?", UserInfoTools.getEmail(this), oldPsw).find(UserBean.class);
+        if(userBeen.size()>0){
+            UserBean userBean = userBeen.get(0);
+            userBean.setPassword(newPsw);
+            userBean.save();
+            Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
+            userBean.setPassword("");
+            SharedPreferencesUtils.saveUserInfo(this,userBean);
+            LoginActivity.start(this,true);
+            finish();
+        }else {
+            Toast.makeText(this, "原密码输入有误", Toast.LENGTH_SHORT).show();
+        }
 
-        // TODO validate success, do something
 
 
     }

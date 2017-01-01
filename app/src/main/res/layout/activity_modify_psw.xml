@@ -2,33 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_modify_psw"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/white"
         android:orientation="vertical">
-        <include layout="@layout/item_base_line"/>
+
+        <include layout="@layout/item_base_line" />
+
         <EditText
             android:id="@+id/et_old_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="请输入原始密码"
+            android:inputType="textPassword"
             android:maxLength="30"
             android:padding="15dp"
             android:textColorHint="@color/grey_ca"
             android:textCursorDrawable="@drawable/edit_text_color_cursor" />
-        <include layout="@layout/item_base_line"/>
+
+        <include layout="@layout/item_base_line" />
+
         <EditText
             android:id="@+id/et_new_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="请输入新密码"
+            android:inputType="textPassword"
             android:maxLength="30"
             android:padding="15dp"
             android:textColorHint="@color/grey_ca"
@@ -38,19 +45,21 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/grey_ca" />-->
-        <include layout="@layout/item_base_line"/>
+        <include layout="@layout/item_base_line" />
+
         <EditText
             android:id="@+id/et_confirm_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="请确认密码"
-            android:maxLength="18"
             android:inputType="textPassword"
+            android:maxLength="18"
             android:padding="15dp"
             android:textColorHint="@color/grey_ca"
             android:textCursorDrawable="@drawable/edit_text_color_cursor" />
-        <include layout="@layout/item_base_line"/>
+
+        <include layout="@layout/item_base_line" />
 
     </LinearLayout>
 

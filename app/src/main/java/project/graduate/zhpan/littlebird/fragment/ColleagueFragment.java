@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.JsonFileReader;
 import project.graduate.zhpan.littlebird.utils.SideBar;
 
@@ -29,7 +32,7 @@ public class ColleagueFragment extends BaseFragment {
     private ListView mListView;
     private SideBar mSideBar;
     private ColleagueAdapter adapter;
-    private List<ColleagueBean.EmployeeListBean> mList;
+    private List<UserBean> mList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,9 +47,9 @@ public class ColleagueFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                ColleagueBean.EmployeeListBean colleagueBean = (ColleagueBean.EmployeeListBean) (adapter.getmList().get(position));
-                String title = colleagueBean.getEmployeeName();
-                UserInfoActivity.start(getActivity(),title,colleagueBean);
+                UserBean user = (UserBean) (adapter.getmList().get(position));
+                String title = user.getRealName();
+                UserInfoActivity.start(getActivity(),title,user);
             }
         });
     }
@@ -58,8 +61,9 @@ public class ColleagueFragment extends BaseFragment {
         //  获取json数据
         String colleagueData = JsonFileReader.getJson(getContext(), "Colleague.json");
         Gson gson=new Gson();
-        ColleagueBean colleague = gson.fromJson(colleagueData, ColleagueBean.class);
-        mList = colleague.getEmployeeList();
+        //ColleagueBean colleague = gson.fromJson(colleagueData, ColleagueBean.class);
+        mList= DataSupport.findAll(UserBean.class);
+        //mList = colleague.getEmployeeList();
         adapter.setList(mList);
         mListView.setAdapter(adapter);
         /*float f= (float) 0.5;

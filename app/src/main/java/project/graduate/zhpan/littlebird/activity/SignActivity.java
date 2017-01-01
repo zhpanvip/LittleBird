@@ -97,11 +97,13 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         LinearInterpolator linearInterpolator = new LinearInterpolator();
         mAnimation.setInterpolator(linearInterpolator);
 
-        //  初始化数据库
-        signSaveBean = new SignBean();
-        signSaveBean.setSignDate(DateUtils.getDate());
-        signSaveBean.save();
-
+        List<SignBean> signBeen = DataSupport.where("signDate=?", DateUtils.getDate()).find(SignBean.class);
+        if(signBeen.size()<=0){
+            //  初始化数据库
+            signSaveBean = new SignBean();
+            signSaveBean.setSignDate(DateUtils.getDate());
+            signSaveBean.save();
+        }
         List<SignBean> signBeans = DataSupport.findAll(SignBean.class);
         signState=signBeans.get(0).getSignState();
 
@@ -238,12 +240,13 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         List<TaskBean> taskBeens = DataSupport.where("createDate=?", DateUtils.getDate()).find(TaskBean.class);
         switch (view.getId()) {
             case R.id.iv_sign_btn:
+                long currentStamp = System.currentTimeMillis();
                 if (signState==SIGNED) {   //  签退
                     if(isHaveUnCommitTask(taskBeens)){
                         Toast.makeText(this, "有任务还没完成，请先提交任务", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    signSaveBean.setSignOutTime(System.currentTimeMillis());
+                    signSaveBean.setSignOutTime(currentStamp);
                     signSaveBean.setSignState(SIGN_OUT);
                     signSaveBean.updateAll("signDate=?",DateUtils.getDate());
                     isOutSign = true;
@@ -260,11 +263,16 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                     mTvDescribe.setText("工作计时");
                     mIvSign.setImageResource(R.drawable.sign_anim);
                     //  保存签到时间到数据库
-                    signSaveBean.setSignTime(System.currentTimeMillis());
+                    signSaveBean.setSignTime(currentStamp);
                     signSaveBean.setSignState(SIGNED);
                     signSaveBean.updateAll("signDate=?",DateUtils.getDate());
-
-                    signTime = System.currentTimeMillis() / 1000;
+                    if(currentStamp>DateUtils.getSignTime(9)){  // 迟到
+                        signSaveBean.setLate(true);
+                    }else {
+                        //TODO DataSupport.where("signDate=? and ")
+                    }
+                    signSaveBean.save();
+                    signTime = currentStamp / 1000;
                     setWorkTime(0);
 
                     mIvSign.setImageResource(R.drawable.sign_off_anim);

@@ -19,6 +19,7 @@ import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.TopicAdapter;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.KeyboardWatcher;
 import project.graduate.zhpan.littlebird.view.ListViewForScrollView;
 
@@ -95,7 +96,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_main:
-                UserInfoActivity.start(getActivity(), "个人简介",new ColleagueBean.EmployeeListBean());
+                UserInfoActivity.start(getActivity(), "个人简介",new UserBean());
                 break;
         }
     }

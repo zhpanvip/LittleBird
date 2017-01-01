@@ -16,6 +16,15 @@ public class SignBean extends DataSupport {
     private long signTime;
     private long signOutTime;
     private int signState;  //  签到状态
+    private boolean isLate; //  是否迟到
+
+    public boolean isLate() {
+        return isLate;
+    }
+
+    public void setLate(boolean late) {
+        isLate = late;
+    }
 
     public long getId() {
         return id;
