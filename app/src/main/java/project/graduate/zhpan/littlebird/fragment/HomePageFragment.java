@@ -1,6 +1,7 @@
 package project.graduate.zhpan.littlebird.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
 import org.litepal.crud.DataSupport;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.CheckActivity;
 import project.graduate.zhpan.littlebird.activity.NoticeActivity;
@@ -29,6 +35,7 @@ import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class HomePageFragment extends BaseFragment implements View.OnClickListener{
     private GridView mGrideView;
+    private CircleImageView imageView;
     private LinearLayout mLlSign;
     private LinearLayout mLlTask;
     private LinearLayout mLlCheck;
@@ -38,6 +45,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private TextView mTvInt;
     private TextView mTvIntYesterDay;
     private UserBean userBean;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_home_page,null);
@@ -71,6 +79,12 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mTvInt.setText("当前积分"+userBean.getIntegral()+"分");
         mTvIntYesterDay.setText("昨日积分"+userBean.getYesterdayInt()+"分");
        //mGrideView.setAdapter(adapter);
+
+        Glide.with(getContext())
+                .load(userBean.getHeadPic())
+                .placeholder(R.drawable.ic_home_avatar)
+                .crossFade()
+                .into(imageView);
     }
 
     private void initView() {
@@ -85,6 +99,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mLlNotice= (LinearLayout) mView.findViewById(R.id.ll_homepage_notice);
         mTvInt= (TextView) mView.findViewById(R.id.tv_integral);
         mTvIntYesterDay= (TextView) mView.findViewById(R.id.tv_integral_yesterday);
+        imageView= (CircleImageView) mView.findViewById(R.id.iv_homepage_head_picture);
+
     }
 
     @Override

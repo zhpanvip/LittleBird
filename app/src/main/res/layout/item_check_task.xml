@@ -2,8 +2,10 @@
 <com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:id="@+id/swipe_menu_layout"
+    app:swipeEnable="false"
     android:paddingBottom="1dp">
 
     <LinearLayout
@@ -13,6 +15,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -99,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="倒计时"
+                android:text="倒计时："
                 android:textColor="@color/grey_66" />
 
             <TextView
@@ -118,7 +121,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="审批人：刘备"
+                android:text=""
                 android:textColor="@color/grey_66" />
         </RelativeLayout>
     </LinearLayout>

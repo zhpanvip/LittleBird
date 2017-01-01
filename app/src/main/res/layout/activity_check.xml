@@ -7,4 +7,13 @@
         android:id="@+id/lv_check"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="暂无审核的人员"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:textColor="@color/grey_33"
+        android:gravity="center"/>
 </RelativeLayout>

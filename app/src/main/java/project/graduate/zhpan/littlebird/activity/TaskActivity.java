@@ -113,8 +113,9 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         double totalTime=taskBean.getEndTime()-taskBean.getStartTime();
         int completePercent= (int) ((useTime/totalTime)*100);
         taskBean.setCompletePercent( completePercent);
-        taskBean.setRealStartTime(System.currentTimeMillis());
-        taskBean.setUserEmail(UserInfoTools.getEmail(this));
+        //taskBean.setUserEmail(UserInfoTools.getEmail(this));
+        taskBean.setCommitTime(System.currentTimeMillis());
+        taskBean.setCommit(true);
         taskBean.save();
 
         mList= DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
@@ -132,6 +133,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         TaskBean taskBean = (TaskBean) mTaskAdapter.getmList().get(position);
         taskBean.setTaskState(Constatns.WAIT_COMMIT);
         taskBean.setRealStartTime(System.currentTimeMillis());
+        taskBean.setStart(true);
         taskBean.save();
         mList= DataSupport.findAll(TaskBean.class);
         mTaskAdapter.setList(mList);

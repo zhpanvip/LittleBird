@@ -31,6 +31,7 @@ public class InitialData {
         userBean.setAverageMonth(86.2);
         userBean.setAverageQuarter(85.0);
         userBean.setAverageYear(86.4);
+        userBean.setHeadPic("http://up.qqjia.com/z/04/tu6180_9.jpg");
         userBean.save();
 
         UserBean userBean1 = new UserBean();
@@ -52,6 +53,7 @@ public class InitialData {
         userBean1.setAverageMonth(82.2);
         userBean1.setAverageQuarter(84.0);
         userBean1.setAverageYear(81.8);
+        userBean1.setHeadPic("http://up.qqjia.com/z/23/tu27501_21.jpg");
         userBean1.save();
 
         UserBean userBean2 = new UserBean();
@@ -73,6 +75,7 @@ public class InitialData {
         userBean2.setAverageMonth(82.1);
         userBean2.setAverageQuarter(86.0);
         userBean2.setAverageYear(85.1);
+        userBean2.setHeadPic("http://v1.qzone.cc/avatar/201504/15/21/24/552e66a78ae1e875.jpg%21200x200.jpg");
         userBean2.save();
 
         UserBean userBean3 = new UserBean();
@@ -94,6 +97,7 @@ public class InitialData {
         userBean3.setAverageMonth(84.5);
         userBean3.setAverageQuarter(81.6);
         userBean3.setAverageYear(0);
+        userBean3.setHeadPic("http://i0.hdslb.com/video/97/971b7fa02aaec6ce0c36949af91f07ac.jpg");
         userBean3.save();
 
         UserBean userBean4 = new UserBean();
@@ -115,6 +119,7 @@ public class InitialData {
         userBean4.setAverageMonth(79.0);
         userBean4.setAverageQuarter(78.0);
         userBean4.setAverageYear(0);
+        userBean4.setHeadPic("http://img.pipaw.net/wy/editor/news/2015/05/11/b7e0b829552cbdb22eecf42f3b471cb4.jpg");
         userBean4.save();
 
         UserBean userBean5 = new UserBean();
@@ -136,6 +141,7 @@ public class InitialData {
         userBean5.setAverageMonth(82.6);
         userBean5.setAverageQuarter(81.3);
         userBean5.setAverageYear(84.2);
+        userBean5.setHeadPic("http://im5.tongbu.com/webgames/38d570c0-1.jpg");
         userBean5.save();
 
         UserBean userBean6 = new UserBean();
@@ -157,6 +163,7 @@ public class InitialData {
         userBean6.setAverageMonth(82.4);
         userBean6.setAverageQuarter(0);
         userBean6.setAverageYear(0);
+        userBean6.setHeadPic("http://zyzz.appgame.com/wp-content/uploads/sites/116/2015/12/38.jpg");
         userBean6.save();
 
         UserBean userBean7 = new UserBean();
@@ -178,10 +185,11 @@ public class InitialData {
         userBean7.setAverageMonth(83.2);
         userBean7.setAverageQuarter(84.0);
         userBean7.setAverageYear(82.5);
+        userBean7.setHeadPic("http://img8.d.cn/be/image/1502/j32d0i5w2nuh4.png");
         userBean7.save();
 
         UserBean userBean8 = new UserBean();
-        userBean8.setRealName("郑好");
+        userBean8.setRealName("查尔斯");
         userBean8.setEmail("zhenghao@littlebird.com");
         userBean8.setPassword("123456");
         userBean8.setAdmin(false);
@@ -199,6 +207,7 @@ public class InitialData {
         userBean8.setAverageMonth(80.2);
         userBean8.setAverageQuarter(83.0);
         userBean8.setAverageYear(85.2);
+        userBean8.setHeadPic("http://n.sinaimg.cn/transform/20150918/toqd-fxhytwr2165853.jpg");
         userBean8.save();
 
         UserBean userBean9 = new UserBean();
@@ -220,6 +229,7 @@ public class InitialData {
         userBean9.setAverageMonth(80.2);
         userBean9.setAverageQuarter(0);
         userBean9.setAverageYear(0);
+        userBean9.setHeadPic("http://images.liqucn.com/img/h60/h89/img_localize_1ce1ebe7df3fbf73f170584a226cbb64.png");
         userBean9.save();
 
         UserBean userBean10 = new UserBean();
@@ -241,6 +251,7 @@ public class InitialData {
         userBean10.setAverageMonth(86.2);
         userBean10.setAverageQuarter(82.0);
         userBean10.setAverageYear(85.7);
+        userBean10.setHeadPic("http://h.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=2912885598529822056631c7e2fa57fd/024f78f0f736afc316008bf7bb19ebc4b7451217.jpg");
         userBean10.save();
 
         UserBean userBean11 = new UserBean();
@@ -262,6 +273,7 @@ public class InitialData {
         userBean11.setAverageMonth(81.2);
         userBean11.setAverageQuarter(80.0);
         userBean11.setAverageYear(81.2);
+        userBean11.setHeadPic("http://diy.qqjay.com/u2/2012/0924/7032b10ffcdfc9b096ac46bde0d2925b.jpg");
         userBean11.save();
 
         UserBean userBean12 = new UserBean();
@@ -283,6 +295,7 @@ public class InitialData {
         userBean12.setAverageMonth(82.2);
         userBean12.setAverageQuarter(81.0);
         userBean12.setAverageYear(83.7);
+        userBean12.setHeadPic("http://www.feizl.com/upload2007/2011_04/1104031701511610.jpg");
         userBean12.save();
     }
 

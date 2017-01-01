@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@id/tv_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -100,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="倒计时"
+                android:text="任务用时："
                 android:textColor="@color/grey_66" />
 
             <TextView
@@ -119,7 +120,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="审批人：刘备"
                 android:textColor="@color/grey_66" />
         </RelativeLayout>
     </LinearLayout>
@@ -133,11 +133,11 @@
         <include layout="@layout/item_base_line"/>
         <EditText
             android:id="@+id/et_grade"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="任务评分"
-            android:maxLength="30"
+            android:maxLength="6"
             android:inputType="numberDecimal"
             android:padding="15dp"
             android:textColorHint="@color/grey_ca"

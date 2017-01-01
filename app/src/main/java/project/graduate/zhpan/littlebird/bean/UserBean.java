@@ -32,7 +32,15 @@ public class UserBean extends DataSupport implements Serializable{
     private double averageMonth;
     private double averageQuarter;
     private double averageYear;
+    private String headPic;
 
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
 
     public int getYesterdayInt() {
         return yesterdayInt;

@@ -51,6 +51,7 @@ public class ColleagueAdapter extends LittleBirdAdapter {
         }
         UserBean user = (UserBean) mList.get(position);
         holder.mTextView.setText(user.getRealName());
+
         return convertView;
     }
 

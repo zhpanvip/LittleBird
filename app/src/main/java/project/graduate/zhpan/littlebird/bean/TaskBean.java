@@ -3,11 +3,13 @@ package project.graduate.zhpan.littlebird.bean;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 /**
  * Created by zhpan on 2016/11/20.
  */
 
-public class TaskBean extends DataSupport {
+public class TaskBean extends DataSupport implements Serializable {
 
     private long id;
     @Column(unique = true, defaultValue = "unknown")
@@ -23,6 +25,41 @@ public class TaskBean extends DataSupport {
     private long endTime;
     private int taskState;  //  0待开始 1待提交 2已提交\
     private String userEmail;
+    private boolean isCommit;
+    private boolean isStart;
+    private boolean isCheck;
+    private float grade;
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+    public boolean isStart() {
+        return isStart;
+    }
+
+    public void setStart(boolean start) {
+        isStart = start;
+    }
+
+    public float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
+
+    public boolean isCommit() {
+        return isCommit;
+    }
+
+    public void setCommit(boolean commit) {
+        isCommit = commit;
+    }
 
     public String getUserEmail() {
         return userEmail;

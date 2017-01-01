@@ -1,5 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,14 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.litepal.crud.DataSupport;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.TaskBean;
+import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.utils.DateUtils;
 import project.graduate.zhpan.littlebird.utils.GradeTextWatcher;
 
 public class GradeActivity extends BaseActivity implements View.OnClickListener {
 
     private View mViewComplete;
+    private TextView mTvTaskName;
     private TextView mTvCompleteState;
     private View mViewQuality;
     private TextView mTvQualityState;
@@ -29,6 +39,8 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
     private EditText mEtJudge;
     private Button mBtnSubmit;
     private LinearLayout mActivityGrade;
+    private TaskBean taskBean;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +51,32 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
         setListener();
     }
 
-    private void setListener(){
+    private void setListener() {
         mEtGrade.addTextChangedListener(new GradeTextWatcher(mEtGrade));
     }
+
     private void setData() {
-        mTvTitle.setText("写代码");
+        Intent intent = getIntent();
+        if (intent != null) {
+            bundle = intent.getBundleExtra("bundle");
+            if (bundle != null) {
+                taskBean = (TaskBean) bundle.getSerializable("taskBean");
+            }
+        }
+        List<UserBean> userBeen = DataSupport.where("email=?", taskBean.getUserEmail()).find(UserBean.class);
+        mTvTitle.setText(userBeen.get(0).getRealName() + "的任务");
+
+        mTvTaskName.setText("任务名称：" + taskBean.getTaskName());
+        mTvCheckPerson.setText("审核人：" + taskBean.getCheckPerson());
+        mTvCompleteState.setText("已提交");
+        mTvQualityState.setText("已提交");
+        long userTime = taskBean.getCommitTime() - taskBean.getRealStartTime();
+        mTvTimeCount.setText(DateUtils.timeFormat(userTime / 1000));
     }
 
     private void initView() {
-        mViewComplete = (View) findViewById(R.id.view_complete);
+        mViewComplete = findViewById(R.id.view_complete);
+        mTvTaskName = (TextView) findViewById(R.id.tv_task_name);
         mTvCompleteState = (TextView) findViewById(R.id.tv_complete_state);
         mViewQuality = (View) findViewById(R.id.view_quality);
         mTvQualityState = (TextView) findViewById(R.id.tv_quality_state);
@@ -58,7 +87,6 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
         mEtJudge = (EditText) findViewById(R.id.et_judge);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
         mActivityGrade = (LinearLayout) findViewById(R.id.activity_grade);
-
         mBtnSubmit.setOnClickListener(this);
     }
 
@@ -79,8 +107,15 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
             Toast.makeText(this, "请输入任务评分", Toast.LENGTH_SHORT).show();
             return;
         }
-        // TODO validate success, do something
+        List<TaskBean> taskBeen = DataSupport.where("taskName=?", taskBean.getTaskName()).find(TaskBean.class);
 
+        taskBeen.get(0).setGrade(Float.parseFloat(grade));
+        taskBeen.get(0).setCheck(true);
+        taskBeen.get(0).save();
+        Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().post(new CheckSuccess());
+        finish();
 
     }
+    public class CheckSuccess{}
 }
