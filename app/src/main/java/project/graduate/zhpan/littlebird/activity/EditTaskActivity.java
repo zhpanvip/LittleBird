@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
+
+import java.util.Date;
 
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
@@ -141,9 +144,6 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         mActivityEditTask = (LinearLayout) findViewById(R.id.activity_edit_task);
     }
 
-
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -186,6 +186,7 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
     private void saveToDB() {
         taskBean.setTaskName(mEtTask.getText().toString());
         taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
+        taskBean.setCreateDate(DateUtils.getDate());
         taskBean.save();
         Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
         finish();

@@ -36,7 +36,8 @@ public class DateUtils {
     /**
      * 格式化时间 hh:mm:ss
      */
-    public static String timeFormat(long time) {
+    public static String timeFormat(long timeStamp) {
+        long time=Math.abs(timeStamp);
         int hours = (int) time / 3600;
         String hourStr;
         if (hours < 10) {

@@ -5,7 +5,12 @@ package project.graduate.zhpan.littlebird.constants;
  */
 
 public class Constatns {
-    public static final int PROFILE=1;
+    //  任务待开始
+    public static final int WAIT_START=0;
+    // 任务待提交
+    public static final int WAIT_COMMIT=1;
+    //  任务已提交
+    public static final int HAVE_COMMIT=2;
 
-    public static final int COLLEAGUE=2;
+
 }

@@ -12,15 +12,29 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.Service.LocationService;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
+import project.graduate.zhpan.littlebird.bean.SignBean;
+import project.graduate.zhpan.littlebird.bean.TaskBean;
+import project.graduate.zhpan.littlebird.constants.Constatns;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
 public class SignActivity extends BaseActivity implements View.OnClickListener {
-    private static final int OUT_FOR_WORK = 1;  //  公出
-    private static final int LEAVE = 2;   //  请假
+    public static final int OUT_FOR_WORK = 1;  //  公出
+    public static final int LEAVE = 2;   //  请假
+    public static final int NO_SIGN = 0;
+    public static final int SIGNED = 1;
+    public static final int SIGN_OUT = 2;
+
     private TextView mTvTime;
     private TextView mTvDescribe;
     private TextView mTvSign;
@@ -34,28 +48,28 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     private Animation mAnimation;
     //  是否签到
     private boolean isSign;
+    //  是否签退
+    boolean isOutSign;
+    private int signState;
     //  签到时间戳
     private long signTime;
     //  当前时间戳
     private long currentTime;
     //  动画
     AnimationDrawable animationDrawable;
-    //  是否签退
-    boolean isOutSign;
+
     //  time=signTime-currentTime
     long time;
     private double latitude;
     private double longitude;
-
+    private SignBean signSaveBean;
+    private List<SignBean> signBeenList;
 
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     long time = (long) msg.obj;
-                    if (time < 0) {
-                        time = -time;
-                    }
                     mTvTime.setText(DateUtils.timeFormat(time));
                     break;
                 case 2:
@@ -65,6 +79,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +96,15 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         mAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         LinearInterpolator linearInterpolator = new LinearInterpolator();
         mAnimation.setInterpolator(linearInterpolator);
+
+        //  初始化数据库
+        signSaveBean = new SignBean();
+        signSaveBean.setSignDate(DateUtils.getDate());
+        signSaveBean.save();
+
+        List<SignBean> signBeans = DataSupport.findAll(SignBean.class);
+        signState=signBeans.get(0).getSignState();
+
         //  获取位置
         getLocation();
     }
@@ -95,30 +119,64 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        animationDrawable.stop();
+        if(animationDrawable!=null){
+            animationDrawable.stop();
+        }
     }
 
     private void setData() {
-
         mTvTitle.setText("签到");
-        //  获取当天9点的时间戳
-        signTime = DateUtils.getSignTime(9);
-        currentTime = System.currentTimeMillis() / 1000;
-        time = signTime - currentTime;
-        if (time < 0) {
-            mTvDescribe.setText("已迟到");
+        List<SignBean> signBeans=null;
+        //  设置签到状态
+        switch (signState){
+            case NO_SIGN:   //  未签到
+
+                    mTvSign.setText("签到");
+                    mIvSign.setImageResource(R.drawable.sign_anim);
+                    animationDrawable = (AnimationDrawable) mIvSign.getDrawable();
+                    animationDrawable.start();
+                    //  获取当天9点的时间戳
+                    signTime = DateUtils.getSignTime(9);
+                    currentTime = System.currentTimeMillis() / 1000;
+                    time = signTime - currentTime;
+                    //  设置签到倒计时
+                    if (time < 0) {
+                        mTvDescribe.setText("已迟到");
+                    }else {
+                        mTvDescribe.setText("签到倒计时");
+                    }
+                    //  设置倒计时
+                    setTime((System.currentTimeMillis()/1000-signTime));
+                break;
+
+            case SIGNED:    //  已签到
+                mTvSign.setText("签退");
+                mIvSign.setImageResource(R.drawable.sign_off_anim);
+                animationDrawable = (AnimationDrawable) mIvSign.getDrawable();
+                animationDrawable.start();
+                //  设置工作计时
+                mTvDescribe.setText("工作计时");
+                signBeans = DataSupport.where("signDate=?",DateUtils.getDate()).find(SignBean.class);
+                long workTime=System.currentTimeMillis()-signBeans.get(0).getSignTime();
+                setWorkTime(workTime/1000);
+
+                break;
+
+            case SIGN_OUT: //  签退
+                    mTvSign.setText("已签退");
+                    mIvSign.setImageResource(R.drawable.sign_out_btn);
+                    mIvSign.setClickable(false);
+
+                    //  设置工作计时
+                    mTvDescribe.setText("工作计时");
+                    signBeans = DataSupport.where("signDate=?",DateUtils.getDate()).find(SignBean.class);
+                    long workedTime=signBeans.get(0).getSignOutTime()-signBeans.get(0).getSignTime();
+                    mTvTime.setText(DateUtils.timeFormat(workedTime/1000));
+                break;
         }
-        //  设置倒计时
-        //SignPresenter.setTime(time,handler,isCircle);
-        setTime(time);
-
-        mIvSign.setImageResource(R.drawable.sign_anim);
-        animationDrawable = (AnimationDrawable) mIvSign.getDrawable();
-        animationDrawable.start();
-
     }
 
-
+    //  设置倒计时
     private void setTime(final long time) {
         new Thread() {
             @Override
@@ -177,19 +235,35 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Intent intent;
+        List<TaskBean> taskBeens = DataSupport.where("createDate=?", DateUtils.getDate()).find(TaskBean.class);
         switch (view.getId()) {
             case R.id.iv_sign_btn:
-                if (isSign) {
+                if (signState==SIGNED) {   //  签退
+                    if(isHaveUnCommitTask(taskBeens)){
+                        Toast.makeText(this, "有任务还没完成，请先提交任务", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    signSaveBean.setSignOutTime(System.currentTimeMillis());
+                    signSaveBean.setSignState(SIGN_OUT);
+                    signSaveBean.updateAll("signDate=?",DateUtils.getDate());
                     isOutSign = true;
                     mTvSign.setText("已签退");
                     mIvSign.setImageResource(R.drawable.sign_out_btn);
                     mIvSign.setClickable(false);
-
-                } else {
+                } else if(signState==NO_SIGN) {    //签到
+                    if(taskBeens.size()<3){
+                        Toast.makeText(this, "至少要添加三个任务哦！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     isSign = true;
                     mTvSign.setText("签退");
                     mTvDescribe.setText("工作计时");
+                    mIvSign.setImageResource(R.drawable.sign_anim);
+                    //  保存签到时间到数据库
+                    signSaveBean.setSignTime(System.currentTimeMillis());
+                    signSaveBean.setSignState(SIGNED);
+                    signSaveBean.updateAll("signDate=?",DateUtils.getDate());
+
                     signTime = System.currentTimeMillis() / 1000;
                     setWorkTime(0);
 
@@ -216,7 +290,16 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         }
 
     }
+    private boolean isHaveUnCommitTask(List<TaskBean> taskBeans ){
 
+        for (int i=0;i<taskBeans.size();i++){
+            int taskState = taskBeans.get(i).getTaskState();
+            if(taskState== Constatns.WAIT_COMMIT||taskState==Constatns.WAIT_START){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /***
      * Stop location service

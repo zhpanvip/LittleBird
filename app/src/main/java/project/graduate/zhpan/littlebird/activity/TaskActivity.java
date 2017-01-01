@@ -1,22 +1,20 @@
 package project.graduate.zhpan.littlebird.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.TaskAdapter;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.callback.TaskOptionListener;
+import project.graduate.zhpan.littlebird.constants.Constatns;
+import project.graduate.zhpan.littlebird.utils.DateUtils;
 
 public class TaskActivity extends BaseActivity implements View.OnClickListener,TaskOptionListener{
 
@@ -34,17 +32,19 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
     }
     private void setListener(){
         mTvHistory.setOnClickListener(this);
+        mIvRight.setOnClickListener(this);
+
     }
     private void initData() {
         mTvTitle.setText("我的任务");
+        mIvRight.setVisibility(View.VISIBLE);
+
         mTaskAdapter=new TaskAdapter(this);
         mList=new ArrayList<>();
         mList= DataSupport.findAll(TaskBean.class);
         mTaskAdapter.setList(mList);
         mLvTask.setAdapter(mTaskAdapter);
     }
-
-
 
     private void initView() {
         mLvTask= (ListView) findViewById(R.id.lv_task);
@@ -58,9 +58,16 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
                 Intent  intent=new Intent(this,HistoryTaskActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.iv_right:
+                EditTaskActivity.start(this,"添加任务");
+                break;
         }
     }
 
+    /**
+     * 删除任务成功回调方法
+     * @param position
+     */
     @Override
     public void onDeleteSuccess(int position) {
         TaskBean taskBean = (TaskBean) mTaskAdapter.getmList().get(position);
@@ -70,19 +77,48 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         mTaskAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 编辑任务点击事件
+     * @param position
+     */
     @Override
-    public void onEdit(int position) {
-
+    public void onTaskEdit(int position) {
+        EditTaskActivity.start(this,"编辑任务");
     }
 
+    /**
+     * 提交任务点击事件
+     * @param position
+     */
     @Override
-    public void onCommit(int position) {
+    public void onTaskCommit(int position) {
         TaskBean taskBean = (TaskBean) mTaskAdapter.getmList().get(position);
-        taskBean.setCommit(true);
+        taskBean.setTaskState(Constatns.HAVE_COMMIT);
+        double useTime=System.currentTimeMillis()-taskBean.getRealStartTime();
+        double totalTime=taskBean.getEndTime()-taskBean.getStartTime();
+        int completePercent= (int) ((useTime/totalTime)*100);
+        taskBean.setCompletePercent( completePercent);
+        taskBean.setRealStartTime(System.currentTimeMillis());
+        taskBean.save();
+        //mList= DataSupport.findAll(TaskBean.class);
+        mList= DataSupport.where("createTime=?", DateUtils.getDate()).find(TaskBean.class);
+        mTaskAdapter.setList(mList);
+        mTaskAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "任务已提交", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 开始任务点击事件
+     * @param position
+     */
+    @Override
+    public void onTaskStart(int position) {
+        TaskBean taskBean = (TaskBean) mTaskAdapter.getmList().get(position);
+        taskBean.setTaskState(Constatns.WAIT_COMMIT);
+        taskBean.setRealStartTime(System.currentTimeMillis());
         taskBean.save();
         mList= DataSupport.findAll(TaskBean.class);
         mTaskAdapter.setList(mList);
         mTaskAdapter.notifyDataSetChanged();
-
     }
 }

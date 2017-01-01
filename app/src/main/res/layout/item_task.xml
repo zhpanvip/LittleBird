@@ -38,12 +38,14 @@
                 android:textColor="@color/grey_66"
                 android:textSize="16sp" />
 
-            <View
-                android:id="@+id/view_complete"
+            <ProgressBar
+                android:id="@+id/pb_complete"
                 android:layout_width="200dp"
                 android:layout_height="7dp"
-                android:layout_marginLeft="5dp"
-                android:background="@color/background" />
+                android:max="100"
+                android:progressBackgroundTint="@color/gray_cc"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_marginLeft="5dp" />
 
             <TextView
                 android:id="@+id/tv_complete_state"
@@ -51,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:text="待提交"
+                android:backgroundTint="@color/gray_cc"
                 android:textColor="@color/grey_99"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -71,12 +74,15 @@
                 android:textColor="@color/grey_66"
                 android:textSize="16sp" />
 
-            <View
-                android:id="@+id/view_quality"
+            <ProgressBar
+                android:id="@+id/pb_quality"
                 android:layout_width="200dp"
                 android:layout_height="7dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/background" />
+                android:max="100"
+                android:progressTint="#80B547"
+                android:progressBackgroundTint="@color/gray_cc"
+                style="@android:style/Widget.ProgressBar.Horizontal" />
 
             <TextView
                 android:id="@+id/tv_quality_state"

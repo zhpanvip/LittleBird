@@ -198,11 +198,12 @@
         <EditText
             android:id="@+id/et_task_describe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="15dp"
             android:layout_toRightOf="@id/tv_task_describe"
             android:maxLength="100"
             android:paddingTop="15dp"
+            android:gravity="top"
             android:background="@null"
             android:layout_marginLeft="15dp"
             android:hint="请填写任务说明"

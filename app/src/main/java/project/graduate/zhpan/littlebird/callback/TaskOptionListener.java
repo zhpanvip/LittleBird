@@ -6,7 +6,8 @@ package project.graduate.zhpan.littlebird.callback;
 
 public interface TaskOptionListener {
     void onDeleteSuccess(int postion);
-    void onEdit(int position);
-    void onCommit(int position);
+    void onTaskEdit(int position);
+    void onTaskCommit(int position);
+    void onTaskStart(int position);
 
 }
