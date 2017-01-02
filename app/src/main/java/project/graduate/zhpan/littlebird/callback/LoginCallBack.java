@@ -14,4 +14,9 @@ public interface LoginCallBack {
      * 密码错误
      */
     void onPasswordError();
+
+    /**
+     *  IMEI验证错误
+     */
+    void onIMEIError();
 }

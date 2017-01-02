@@ -10,10 +10,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import org.litepal.crud.DataSupport;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.EncourageActivity;
 import project.graduate.zhpan.littlebird.activity.IntegralActivity;
@@ -25,12 +27,14 @@ import project.graduate.zhpan.littlebird.bean.ProfileBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.JsonFileReader;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
+import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 /**
  * Created by zhpan on 2016/10/15.
  */
 
 public class MeFragment extends BaseFragment {
+    private ImageView imageView;
     private TextView mTvName;
     private TextView mTvInt;
     private ImageView mIvGrade;
@@ -114,7 +118,10 @@ public class MeFragment extends BaseFragment {
         Gson gson=new Gson();
         mProfile = gson.fromJson(profileJson, ColleagueBean.EmployeeListBean.class);
 
-
+        Glide.with(this).load(userBean.getHeadPic())
+                .transform(new GlideCircleTransform(getContext()))
+                .placeholder(R.drawable.ic_home_avatar)
+                .into(imageView);
     }
 
     private void initView() {
@@ -124,5 +131,6 @@ public class MeFragment extends BaseFragment {
         mTvName= (TextView) mView.findViewById(R.id.tv_name);
         mTvInt= (TextView) mView.findViewById(R.id.tv_integral);
         mIvGrade= (ImageView) mView.findViewById(R.id.iv_me_rank);
+        imageView= (ImageView) mView.findViewById(R.id.iv_me_head_picture);
     }
 }

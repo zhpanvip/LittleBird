@@ -67,20 +67,18 @@
                 android:ellipsize=”middle”—-省略号显示在中间 "en...dia"
                 android:ellipsize=”marquee”–以横向滚动方式显示(需获得当前焦点时)-->
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/head_img"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="60dp"
-                    android:src="@drawable/ic_home_avatar"
-                    app:civ_border_color="@color/colorPrimaryDark"
-                    app:civ_border_width="2dp" />
+                    android:src="@drawable/ic_home_avatar" />
 
 
                 <TextView
-                    android:id="@+id/tv_main_start"
+                    android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -93,7 +91,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_main_sign"
+                    android:id="@+id/tv_sign"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

@@ -5,11 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
+import com.bumptech.glide.Glide;
 /**
  * Created by zhpan on 2016/10/15.
  */
@@ -52,6 +53,10 @@ public class ColleagueAdapter extends LittleBirdAdapter {
         UserBean user = (UserBean) mList.get(position);
         holder.mTextView.setText(user.getRealName());
 
+        Glide.with(mContext).load(user.getHeadPic())
+                .transform(new GlideCircleTransform(mContext))
+                .placeholder(R.drawable.ic_home_avatar)
+                .into(holder.mImageView);
         return convertView;
     }
 

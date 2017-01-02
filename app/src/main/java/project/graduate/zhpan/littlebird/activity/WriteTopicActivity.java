@@ -9,7 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.TopicBean;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class WriteTopicActivity extends BaseActivity implements View.OnClickListener {
 
@@ -49,10 +53,23 @@ public class WriteTopicActivity extends BaseActivity implements View.OnClickList
     }
 
     private void submit() {
-        String topic = mTvTopic.getText().toString().trim();
-        if (TextUtils.isEmpty(topic)) {
+        String content = mTvTopic.getText().toString().trim();
+        if (TextUtils.isEmpty(content)) {
             Toast.makeText(this, "写点什么吧...", Toast.LENGTH_SHORT).show();
             return;
         }
+        TopicBean topicBean = new TopicBean();
+        topicBean.setContent(mTvTopic.getText().toString());
+        topicBean.setEmail(UserInfoTools.getEmail(this));
+        topicBean.setDate(System.currentTimeMillis());
+        if(topicBean.save()){
+            Toast.makeText(this, "发表成功", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new TopicSendSuccess());
+            finish();
+        }else {
+            Toast.makeText(this, "发表话题失败，请重试！", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    public class TopicSendSuccess{}
 }

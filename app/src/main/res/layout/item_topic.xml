@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/iv_head_pic"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -77,5 +77,18 @@
             android:layout_toLeftOf="@id/iv_comment"/>
 
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="李逍遥、费奥纳、斯图尔特觉得很赞"
+        android:textColor="#2863AD"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 
 </LinearLayout>

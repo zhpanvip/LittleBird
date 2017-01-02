@@ -20,7 +20,6 @@ import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginCallBack, CompoundButton.OnCheckedChangeListener {
-    private String IMEI;
     private LoginPresenter loginPresenter;
     private ActivityLoginActivityBinding mBinding;
     private UserBean userBean;
@@ -58,9 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             isExit = intent.getBooleanExtra("isExit", false);
         }
         loginPresenter = new LoginPresenter(this);
-        //  获取手机IMEI
-        IMEI = loginPresenter.getIMEI();
-        userBean.setImei(IMEI);
         //  获取是否记住密码
         boolean rememberPassword = SharedPreferencesUtils.isRememberPassword(this);
         //  获取是否自动登陆
@@ -84,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (!isExit) {
                         login();
                     }
-
                 }
             }.start();
         } else {
@@ -190,6 +185,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onPasswordError() {
         Toast.makeText(this, "登陆失败，用户名或密码不正确。", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onIMEIError() {
+        Toast.makeText(this, "请在自己手机上登陆", Toast.LENGTH_SHORT).show();
     }
 
     public static void start(Context context, boolean isExit) {

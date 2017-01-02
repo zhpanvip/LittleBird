@@ -8,11 +8,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.bean.TaskBean;
+import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.utils.DateUtils;
+import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 /**
  * Created by zhpan on 2016/11/5.
@@ -28,7 +39,7 @@ public class TopicAdapter extends LittleBirdAdapter {
 
     @Override
     public int getCount() {
-        return 20;
+        return mList.size();
     }
 
     @Override
@@ -47,7 +58,7 @@ public class TopicAdapter extends LittleBirdAdapter {
         if(convertView==null){
             holder=new TopicViewHolder();
             convertView=View.inflate(context,R.layout.item_topic,null);
-            holder.ivHead= (CircleImageView) convertView.findViewById(R.id.iv_head_pic);
+            holder.ivHead= (ImageView) convertView.findViewById(R.id.iv_head_pic);
             holder.tvName= (TextView) convertView.findViewById(R.id.tv_name);
             holder.tvTime= (TextView) convertView.findViewById(R.id.tv_time);
             holder.tvContent= (TextView) convertView.findViewById(R.id.tv_content);
@@ -59,10 +70,25 @@ public class TopicAdapter extends LittleBirdAdapter {
             holder= (TopicViewHolder) convertView.getTag();
         }
 
+        TopicBean topicBean = (TopicBean) mList.get(position);
+        final List<UserBean> userBeen = DataSupport.where("email=?", topicBean.getEmail()).find(UserBean.class);
+        final UserBean userBean = userBeen.get(0);
+
+        holder.tvContent.setText(topicBean.getContent());
+        holder.tvView.setText("浏览"+topicBean.getView()+"次");
+        holder.tvName.setText(userBean.getRealName());
+        holder.tvTime.setText(DateUtils.formatTopicDate(topicBean.getDate()));
+
+        //  设置用信息
+        Glide.with(context).load(userBeen.get(0).getHeadPic())
+                .transform(new GlideCircleTransform(context))
+                .placeholder(R.drawable.ic_home_avatar)
+                .into(holder.ivHead);
+
         holder.ivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserInfoActivity.start(context,"赵云",new UserBean());
+                UserInfoActivity.start(context,userBean.getRealName(),userBean);
             }
         });
 
@@ -87,7 +113,7 @@ public class TopicAdapter extends LittleBirdAdapter {
     }
 
     static class TopicViewHolder{
-        private CircleImageView ivHead;
+        private ImageView ivHead;
         private TextView tvName;
         private TextView tvTime;
         private TextView tvContent;

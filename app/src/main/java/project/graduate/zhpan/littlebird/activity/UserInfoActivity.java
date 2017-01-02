@@ -7,14 +7,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
+import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 public class UserInfoActivity extends BaseActivity {
 
-    private CircleImageView mIvHeadPic;
+    private ImageView imageView;
     private TextView mTvName;
     private TextView mTvGrade;
     private LinearLayout mLlGrade;
@@ -47,6 +50,12 @@ public class UserInfoActivity extends BaseActivity {
             userBean = (UserBean) bundle.getSerializable("userBean");
             mTvTitle.setText(title);
         }
+
+        //  加载头像
+        Glide.with(this).load(userBean.getHeadPic())
+                .transform(new GlideCircleTransform(this))
+                .placeholder(R.drawable.ic_home_avatar)
+                .into(imageView);
 
         mTvName.setText(userBean.getRealName());
         mTvTelNo.setText(userBean.getTel());
@@ -85,7 +94,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void initView() {
-        mIvHeadPic = (CircleImageView) findViewById(R.id.iv_head_pic);
+        imageView = (ImageView) findViewById(R.id.iv_head_pic);
         mTvName = (TextView) findViewById(R.id.tv_name);
         mTvGrade = (TextView) findViewById(R.id.tv_grade);
         mLlGrade = (LinearLayout) findViewById(R.id.ll_grade);

@@ -19,6 +19,8 @@ public class MainApplication extends Application {
         boolean fistRun = SharedPreferencesUtils.isFistRun(this);
         if(fistRun){
             InitialData.initUser();
+            InitialData.initIntegral();
+            InitialData.initEncourage();
         }
     }
 }

@@ -6,19 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.EncourageBean;
 import project.graduate.zhpan.littlebird.bean.IntegralBean;
 
 /**
  * Created by zhpan on 2016/12/18.
  */
 
-public class IntegralAdapter extends LittleBirdAdapter {
+public class EncourageAdapter extends LittleBirdAdapter {
     Context mContext;
 
-    public IntegralAdapter(Context mContext) {
+    public EncourageAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -47,7 +46,7 @@ public class IntegralAdapter extends LittleBirdAdapter {
         }else {
             holder= (ViewHolder) convertView.getTag();
         }
-        IntegralBean integralBean = (IntegralBean) mList.get(position);
+        EncourageBean integralBean = (EncourageBean) mList.get(position);
         holder.mIvDate.setText(integralBean.getDate());
         if(integralBean.getIntegral()>0){
             holder.mTvCount.setText("+"+integralBean.getIntegral()+"积分");

@@ -33,6 +33,15 @@ public class UserBean extends DataSupport implements Serializable{
     private double averageQuarter;
     private double averageYear;
     private String headPic;
+    private boolean isNotFirstLogin;
+
+    public boolean isNotFirstLogin() {
+        return isNotFirstLogin;
+    }
+
+    public void setNotFirstLogin(boolean notFirstLogin) {
+        isNotFirstLogin = notFirstLogin;
+    }
 
     public String getHeadPic() {
         return headPic;

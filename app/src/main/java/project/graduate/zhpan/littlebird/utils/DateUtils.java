@@ -172,4 +172,10 @@ public class DateUtils {
         return simpleDateFormat.format(d);
     }
 
+    public static String formatTopicDate(long timeStamp){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
+        Date d = new Date(timeStamp);
+        return simpleDateFormat.format(d);
+    }
+
 }

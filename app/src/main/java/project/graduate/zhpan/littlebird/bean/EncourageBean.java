@@ -3,10 +3,10 @@ package project.graduate.zhpan.littlebird.bean;
 import org.litepal.crud.DataSupport;
 
 /**
- * Created by zhpan on 2016/12/18.
+ * Created by zhpan on 2017/1/2.
  */
 
-public class IntegralBean extends DataSupport {
+public class EncourageBean extends DataSupport {
     private String date;
     private int integral;
     private String howGet;

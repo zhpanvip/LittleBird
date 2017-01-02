@@ -1,7 +1,6 @@
 package project.graduate.zhpan.littlebird.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 
 import org.litepal.crud.DataSupport;
 
@@ -28,14 +25,14 @@ import project.graduate.zhpan.littlebird.activity.TaskActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
+import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 /**
  * Created by zhpan on 2016/10/15.
  */
 
 public class HomePageFragment extends BaseFragment implements View.OnClickListener{
-    private GridView mGrideView;
-    private CircleImageView imageView;
+    private ImageView imageView;
     private LinearLayout mLlSign;
     private LinearLayout mLlTask;
     private LinearLayout mLlCheck;
@@ -43,7 +40,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mLlProject;
     private LinearLayout mLlNotice;
     private TextView mTvInt;
-    private TextView mTvIntYesterDay;
+    private TextView mTvIntYesterday;
     private UserBean userBean;
 
     @Override
@@ -77,13 +74,13 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mIvBack.setVisibility(View.GONE);
         ColleagueAdapter adapter=new ColleagueAdapter(getContext());
         mTvInt.setText("当前积分"+userBean.getIntegral()+"分");
-        mTvIntYesterDay.setText("昨日积分"+userBean.getYesterdayInt()+"分");
-       //mGrideView.setAdapter(adapter);
-
-        Glide.with(getContext())
-                .load(userBean.getHeadPic())
+        mTvIntYesterday.setText("昨日积分"+userBean.getYesterdayInt()+"分");
+        //  加载头像
+        Glide.with(getContext()).load(userBean.getHeadPic())
+                .into(imageView);
+        Glide.with(this).load(userBean.getHeadPic())
+                .transform(new GlideCircleTransform(getContext()))
                 .placeholder(R.drawable.ic_home_avatar)
-                .crossFade()
                 .into(imageView);
     }
 
@@ -98,8 +95,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mLlProject= (LinearLayout) mView.findViewById(R.id.ll_homepage_project);
         mLlNotice= (LinearLayout) mView.findViewById(R.id.ll_homepage_notice);
         mTvInt= (TextView) mView.findViewById(R.id.tv_integral);
-        mTvIntYesterDay= (TextView) mView.findViewById(R.id.tv_integral_yesterday);
-        imageView= (CircleImageView) mView.findViewById(R.id.iv_homepage_head_picture);
+        mTvIntYesterday = (TextView) mView.findViewById(R.id.tv_integral_yesterday);
+        imageView= (ImageView) mView.findViewById(R.id.iv_homepage_head_picture);
 
     }
 

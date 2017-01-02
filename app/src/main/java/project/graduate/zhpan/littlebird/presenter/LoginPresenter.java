@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
@@ -57,7 +58,7 @@ public class LoginPresenter {
     }
 
     /**
-     *  登陆请求
+     * 请求远程登陆请求
      * @param userBean
      * @param loginActivity
      */
@@ -85,9 +86,8 @@ public class LoginPresenter {
                     @Override
                     public void onResponse(LoginBean response, int id) {
                         int result = response.getResult();
-
                         if (result == 1) {
-                            SharedPreferencesUtils.saveLoginStatus(activity,true);
+                            SharedPreferencesUtils.saveLoginStatus(activity, true);
                             String userId = response.getData().getId();
                             Toast.makeText(loginActivity, "uid=" + userId, Toast.LENGTH_SHORT).show();
                             String password = userBean.getPassword();
@@ -104,24 +104,39 @@ public class LoginPresenter {
                     }
                 });
     }
-
-    public void localLogin(final UserBean userBean, final LoginActivity loginActivity){
-        List<UserBean> userBeens = DataSupport.where("email=? and password=?",userBean.getEmail(), userBean.getPassword()).find(UserBean.class);
-        if(userBeens.size()>0){
-            SharedPreferencesUtils.saveLoginStatus(activity,true);
-            String email = userBeens.get(0).getEmail();
-            String password = userBean.getPassword();
-            Intent intent = new Intent(loginActivity, MainActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("email", email);
-            bundle.putString("password", password);
-            intent.putExtras(bundle);
-            loginActivity.finish();
-            loginActivity.startActivity(intent);
-        }else {
+    //  通过本地数据库登陆
+    public void localLogin(final UserBean userBean, final LoginActivity loginActivity) {
+        List<UserBean> userBeen = DataSupport.where("email=? and password=?", userBean.getEmail(), userBean.getPassword()).find(UserBean.class);
+        if (userBeen.size() > 0) {  //  用户名密码正确
+            if (userBeen.get(0).isNotFirstLogin()) { //  不是第一次登陆则验证是否是在同一部手机上登陆
+                if (!userBeen.get(0).getImei().equals(getIMEI())) {      // 不是同一部手机
+                    loginActivity.onIMEIError();
+                } else {   //    是同一部手机
+                    startLoginActivity(userBeen, loginActivity);
+                }
+            } else { //  第一次登陆 保存IMEI到数据库
+                userBeen.get(0).setImei(getIMEI());
+                userBeen.get(0).setNotFirstLogin(true);
+                userBeen.get(0).save();
+                startLoginActivity(userBeen, loginActivity);
+            }
+        } else {    //  用户名或密码错误
             loginActivity.onPasswordError();
         }
 
+    }
+    //  验证成功跳转到主页面
+    private void startLoginActivity(List<UserBean> userBeen, LoginActivity loginActivity) {
+        SharedPreferencesUtils.saveLoginStatus(activity, true);
+        String email = userBeen.get(0).getEmail();
+        String password = userBeen.get(0).getPassword();
+        Intent intent = new Intent(loginActivity, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("password", password);
+        intent.putExtras(bundle);
+        loginActivity.finish();
+        loginActivity.startActivity(intent);
     }
 
     /**

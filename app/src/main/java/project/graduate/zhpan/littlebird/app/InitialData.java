@@ -2,6 +2,9 @@ package project.graduate.zhpan.littlebird.app;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import project.graduate.zhpan.littlebird.bean.EncourageBean;
+import project.graduate.zhpan.littlebird.bean.IntegralBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
@@ -35,8 +38,8 @@ public class InitialData {
         userBean.save();
 
         UserBean userBean1 = new UserBean();
-        userBean1.setRealName("李鸣");
-        userBean1.setEmail("liming@littlebird.com");
+        userBean1.setRealName("弥萨");
+        userBean1.setEmail("misa@littlebird.com");
         userBean1.setPassword("123456");
         userBean1.setAdmin(false);
         long registerTime1 = getRegisterTime(8, 12, 6, 2015);
@@ -45,7 +48,7 @@ public class InitialData {
         userBean1.setEntryTime("2015年06月12日");
         userBean1.setIntegral(56);
         userBean1.setJob("HR");
-        userBean1.setPersonalSign("一直被模仿 从未被超越");
+        userBean1.setPersonalSign("在静怡的月光里隔世相望。");
         userBean1.setTel("15515643648");
         userBean1.setRank(3);
         userBean1.setProjectGroup("河南大学软件中心");
@@ -57,8 +60,8 @@ public class InitialData {
         userBean1.save();
 
         UserBean userBean2 = new UserBean();
-        userBean2.setRealName("赵宇");
-        userBean2.setEmail("zhaohong@littlebird.com");
+        userBean2.setRealName("法维安");
+        userBean2.setEmail("fwa@littlebird.com");
         userBean2.setPassword("123456");
         userBean2.setAdmin(false);
         long registerTime2 = getRegisterTime(8, 12, 2, 2013);
@@ -67,7 +70,7 @@ public class InitialData {
         userBean2.setEntryTime("2013年09月01日");
         userBean2.setIntegral(586);
         userBean2.setJob("android开发工程师");
-        userBean2.setPersonalSign("一直被模仿 从未被超越");
+        userBean2.setPersonalSign("断罪之书终将夺回");
         userBean2.setTel("15515269672");
         userBean2.setRank(2);
         userBean2.setProjectGroup("河南大学软件中心");
@@ -89,7 +92,7 @@ public class InitialData {
         userBean3.setEntryTime("2016年03月01日");
         userBean3.setIntegral(389);
         userBean3.setJob("IOS开发工程师");
-        userBean3.setPersonalSign("一直被模仿 从未被超越");
+        userBean3.setPersonalSign("执着于心");
         userBean3.setTel("15515269673");
         userBean3.setRank(1);
         userBean3.setProjectGroup("河南大学软件中心");
@@ -102,7 +105,7 @@ public class InitialData {
 
         UserBean userBean4 = new UserBean();
         userBean4.setRealName("斯图尔特");
-        userBean4.setEmail("stet@littlebird.com");
+        userBean4.setEmail("stewart@littlebird.com");
         userBean4.setPassword("123456");
         userBean4.setAdmin(false);
         long registerTime4 = getRegisterTime(8, 1, 4, 2016);
@@ -111,7 +114,7 @@ public class InitialData {
         userBean4.setEntryTime("2013年04月01日");
         userBean4.setIntegral(103);
         userBean4.setJob("项目经理");
-        userBean4.setPersonalSign("一直被模仿 从未被超越");
+        userBean4.setPersonalSign("冰川，那是我最美丽的遐想。");
         userBean4.setTel("15515269674");
         userBean4.setRank(1);
         userBean4.setProjectGroup("河南大学软件中心");
@@ -133,7 +136,7 @@ public class InitialData {
         userBean5.setEntryTime("2013年5月5日");
         userBean5.setIntegral(686);
         userBean5.setJob("项目经理");
-        userBean5.setPersonalSign("一直被模仿 从未被超越");
+        userBean5.setPersonalSign("海潮降至");
         userBean5.setTel("15515269675");
         userBean5.setRank(3);
         userBean5.setProjectGroup("河南大学软件中心");
@@ -142,10 +145,12 @@ public class InitialData {
         userBean5.setAverageQuarter(81.3);
         userBean5.setAverageYear(84.2);
         userBean5.setHeadPic("http://im5.tongbu.com/webgames/38d570c0-1.jpg");
+        userBean5.setImei("123456789000");
+        userBean5.setNotFirstLogin(true);
         userBean5.save();
 
         UserBean userBean6 = new UserBean();
-        userBean6.setRealName("菲奥娜");
+        userBean6.setRealName("费奥纳");
         userBean6.setEmail("fan@littlebird.com");
         userBean6.setPassword("123456");
         userBean6.setAdmin(false);
@@ -155,7 +160,7 @@ public class InitialData {
         userBean6.setEntryTime("2013年09月01日");
         userBean6.setIntegral(586);
         userBean6.setJob("Web前端工程师");
-        userBean6.setPersonalSign("一直被模仿 从未被超越");
+        userBean6.setPersonalSign("休闲的时刻");
         userBean6.setTel("15515269670");
         userBean6.setRank(1);
         userBean6.setProjectGroup("河南大学软件中心");
@@ -177,7 +182,7 @@ public class InitialData {
         userBean7.setEntryTime("2013年09月01日");
         userBean7.setIntegral(586);
         userBean7.setJob("UI设计师");
-        userBean7.setPersonalSign("一直被模仿 从未被超越");
+        userBean7.setPersonalSign("一杯茶品人生沉浮，平常心越万千世界。");
         userBean7.setTel("15515269676");
         userBean7.setRank(3);
         userBean7.setProjectGroup("河南大学软件中心");
@@ -190,7 +195,7 @@ public class InitialData {
 
         UserBean userBean8 = new UserBean();
         userBean8.setRealName("查尔斯");
-        userBean8.setEmail("zhenghao@littlebird.com");
+        userBean8.setEmail("charles@littlebird.com");
         userBean8.setPassword("123456");
         userBean8.setAdmin(false);
         long registerTime8 = getRegisterTime(8, 2, 7, 2014);
@@ -199,7 +204,7 @@ public class InitialData {
         userBean8.setEntryTime("2013年07月02日");
         userBean8.setIntegral(586);
         userBean8.setJob("项目经理");
-        userBean8.setPersonalSign("一直被模仿 从未被超越");
+        userBean8.setPersonalSign("以我所能尽你所愿");
         userBean8.setTel("15515269677");
         userBean8.setRank(2);
         userBean8.setProjectGroup("河南大学软件中心");
@@ -221,7 +226,7 @@ public class InitialData {
         userBean9.setEntryTime("2016年11月09日");
         userBean9.setIntegral(506);
         userBean9.setJob("Web前端工程师");
-        userBean9.setPersonalSign("一直被模仿 从未被超越");
+        userBean9.setPersonalSign("魔非魔道非道 善恶在我心");
         userBean9.setTel("15515269679");
         userBean9.setRank(3);
         userBean9.setProjectGroup("河南大学软件中心");
@@ -233,8 +238,8 @@ public class InitialData {
         userBean9.save();
 
         UserBean userBean10 = new UserBean();
-        userBean10.setRealName("齐孟尧");
-        userBean10.setEmail("qmy@littlebird.com");
+        userBean10.setRealName("洛克");
+        userBean10.setEmail("locke@littlebird.com");
         userBean10.setPassword("123456");
         userBean10.setAdmin(false);
         long registerTime10 = getRegisterTime(8, 12, 10, 2015);
@@ -243,7 +248,7 @@ public class InitialData {
         userBean10.setEntryTime("2015年09月01日");
         userBean10.setIntegral(586);
         userBean10.setJob("Android开发工程师");
-        userBean10.setPersonalSign("一直被模仿 从未被超越");
+        userBean10.setPersonalSign("没有勇气开始，你将继续等待。");
         userBean10.setTel("15515269610");
         userBean10.setRank(2);
         userBean10.setProjectGroup("河南大学软件中心");
@@ -255,8 +260,8 @@ public class InitialData {
         userBean10.save();
 
         UserBean userBean11 = new UserBean();
-        userBean11.setRealName("郭小鹏");
-        userBean11.setEmail("gxp@littlebird.com");
+        userBean11.setRealName("奥斯卡");
+        userBean11.setEmail("oscar@littlebird.com");
         userBean11.setPassword("123456");
         userBean11.setAdmin(false);
         long registerTime11 = getRegisterTime(8, 1,11, 2015);
@@ -265,7 +270,7 @@ public class InitialData {
         userBean11.setEntryTime("2015年11月01日");
         userBean11.setIntegral(245);
         userBean11.setJob("IOS开发工程师");
-        userBean11.setPersonalSign("一直被模仿 从未被超越");
+        userBean11.setPersonalSign("见证奇迹的时刻");
         userBean11.setTel("15515269611");
         userBean11.setRank(2);
         userBean11.setProjectGroup("河南大学软件中心");
@@ -277,8 +282,8 @@ public class InitialData {
         userBean11.save();
 
         UserBean userBean12 = new UserBean();
-        userBean12.setRealName("王飞龙");
-        userBean12.setEmail("wfl@littlebird.com");
+        userBean12.setRealName("安妮");
+        userBean12.setEmail("anne@littlebird.com");
         userBean12.setPassword("123456");
         userBean12.setAdmin(false);
         long registerTime12 = getRegisterTime(8, 12, 12, 2014);
@@ -287,7 +292,7 @@ public class InitialData {
         userBean12.setEntryTime("2014年12月01日");
         userBean12.setIntegral(286);
         userBean12.setJob("java工程师");
-        userBean12.setPersonalSign("一直被模仿 从未被超越");
+        userBean12.setPersonalSign("All time is no time when it is past.");
         userBean12.setTel("15515269671");
         userBean12.setRank(3);
         userBean12.setProjectGroup("河南大学软件中心");
@@ -297,6 +302,152 @@ public class InitialData {
         userBean12.setAverageYear(83.7);
         userBean12.setHeadPic("http://www.feizl.com/upload2007/2011_04/1104031701511610.jpg");
         userBean12.save();
+    }
+
+    //  初始化积分数据
+    public static void initIntegral(){
+        IntegralBean integralBean=new IntegralBean();
+        integralBean.setEmail("zhpan@littlebird.com");
+        integralBean.setDate("2016/12/19");
+        integralBean.setHowGet("签到获取积分");
+        integralBean.setIntegral(2);
+        integralBean.save();
+
+        IntegralBean integralBean0=new IntegralBean();
+        integralBean0.setEmail("zhpan@littlebird.com");
+        integralBean0.setDate("2016/12/20");
+        integralBean0.setHowGet("签到获取积分");
+        integralBean0.setIntegral(2);
+        integralBean0.save();
+
+        IntegralBean integralBean1=new IntegralBean();
+        integralBean1.setEmail("zhpan@littlebird.com");
+        integralBean1.setDate("2016/12/22");
+        integralBean1.setHowGet("签到获取积分");
+        integralBean1.setIntegral(2);
+        integralBean1.save();
+
+        IntegralBean integralBean2=new IntegralBean();
+        integralBean2.setEmail("zhpan@littlebird.com");
+        integralBean2.setDate("2016/12/22");
+        integralBean2.setHowGet("签到获取积分");
+        integralBean2.setIntegral(2);
+        integralBean2.save();
+
+        IntegralBean integralBean3=new IntegralBean();
+        integralBean3.setEmail("zhpan@littlebird.com");
+        integralBean3.setDate("2016/12/23");
+        integralBean3.setHowGet("签到获取积分");
+        integralBean3.setIntegral(2);
+        integralBean3.save();
+
+        IntegralBean integralBean4=new IntegralBean();
+        integralBean4.setEmail("zhpan@littlebird.com");
+        integralBean4.setDate("2016/12/24");
+        integralBean4.setHowGet("签到获取积分");
+        integralBean4.setIntegral(2);
+        integralBean4.save();
+
+        IntegralBean integralBean5=new IntegralBean();
+        integralBean5.setEmail("zhpan@littlebird.com");
+        integralBean5.setDate("2016/12/25");
+        integralBean5.setHowGet("迟到扣除");
+        integralBean5.setIntegral(-1);
+        integralBean5.save();
+
+        IntegralBean integralBean6=new IntegralBean();
+        integralBean6.setEmail("zhpan@littlebird.com");
+        integralBean6.setDate("2016/12/26");
+        integralBean6.setHowGet("签到获取积分");
+        integralBean6.setIntegral(2);
+        integralBean6.save();
+
+        IntegralBean integralBean7=new IntegralBean();
+        integralBean7.setEmail("zhpan@littlebird.com");
+        integralBean7.setDate("2016/12/27");
+        integralBean7.setHowGet("签到获取积分");
+        integralBean7.setIntegral(2);
+        integralBean7.save();
+
+        IntegralBean integralBean8=new IntegralBean();
+        integralBean8.setEmail("zhpan@littlebird.com");
+        integralBean8.setDate("2016/12/28");
+        integralBean8.setHowGet("签到获取积分");
+        integralBean8.setIntegral(2);
+        integralBean8.save();
+
+        IntegralBean integralBean9=new IntegralBean();
+        integralBean9.setEmail("zhpan@littlebird.com");
+        integralBean9.setDate("2016/12/29");
+        integralBean9.setHowGet("签到获取积分");
+        integralBean9.setIntegral(2);
+        integralBean9.save();
+
+        IntegralBean integralBean10=new IntegralBean();
+        integralBean10.setEmail("zhpan@littlebird.com");
+        integralBean10.setDate("2016/12/30");
+        integralBean10.setHowGet("签到获取积分");
+        integralBean10.setIntegral(2);
+        integralBean10.save();
+
+        IntegralBean integralBean11=new IntegralBean();
+        integralBean11.setEmail("zhpan@littlebird.com");
+        integralBean11.setDate("2016/12/31");
+        integralBean11.setHowGet("迟到扣除");
+        integralBean11.setIntegral(-1);
+        integralBean11.save();
+
+        IntegralBean integralBean12=new IntegralBean();
+        integralBean12.setEmail("zhpan@littlebird.com");
+        integralBean12.setDate("2017/01/01");
+        integralBean12.setHowGet("签到获取积分");
+        integralBean12.setIntegral(2);
+        integralBean12.save();
+
+        IntegralBean integralBean13=new IntegralBean();
+        integralBean13.setEmail("zhpan@littlebird.com");
+        integralBean13.setDate("2017/01/02");
+        integralBean13.setHowGet("签到获取积分");
+        integralBean13.setIntegral(2);
+        integralBean13.save();
+
+    }
+
+    public static void initEncourage(){
+        EncourageBean encourageBean=new EncourageBean();
+        encourageBean.setEmail("zhpan@littlebird.com");
+        encourageBean.setDate("2016年12月");
+        encourageBean.setHowGet("员工之星");
+        encourageBean.setIntegral(200);
+        encourageBean.save();
+
+        EncourageBean encourageBean1=new EncourageBean();
+        encourageBean1.setEmail("zhpan@littlebird.com");
+        encourageBean1.setDate("2016年3月");
+        encourageBean1.setHowGet("全勤奖");
+        encourageBean1.setIntegral(100);
+        encourageBean1.save();
+
+        EncourageBean encourageBean2=new EncourageBean();
+        encourageBean2.setEmail("zhpan@littlebird.com");
+        encourageBean2.setDate("2016年1月");
+        encourageBean2.setHowGet("全勤奖");
+        encourageBean2.setIntegral(100);
+        encourageBean2.save();
+
+        EncourageBean encourageBean3=new EncourageBean();
+        encourageBean3.setEmail("zhpan@littlebird.com");
+        encourageBean3.setDate("2015年7月");
+        encourageBean3.setHowGet("员工之星");
+        encourageBean3.setIntegral(200);
+        encourageBean3.save();
+
+        EncourageBean encourageBean4=new EncourageBean();
+        encourageBean4.setEmail("zhpan@littlebird.com");
+        encourageBean4.setDate("2015年4月");
+        encourageBean4.setHowGet("优秀员工");
+        encourageBean4.setIntegral(300);
+        encourageBean4.save();
     }
 
     private static long getRegisterTime(int hour, int day, int month, int year) {
