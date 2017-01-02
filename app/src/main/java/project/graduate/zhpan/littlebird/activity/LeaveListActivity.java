@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.LeaveAdapter;
 import project.graduate.zhpan.littlebird.bean.LeaveBean;
+import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class LeaveListActivity extends BaseActivity implements View.OnClickListener{
     public static final int OUT_FOR_WORK = 1;  //  公出
@@ -25,8 +28,19 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_list);
         initView();
+        initData();
         setData();
         setListener();
+    }
+
+    private void initData() {
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void setListener(){
@@ -50,6 +64,8 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
         mTvRight.setText("申请");
         mAdapter=new LeaveAdapter(this,type);
         mList=new ArrayList<>();
+
+        mList=DataSupport.where("leaveType=? and email=?",type+"", UserInfoTools.getEmail(this)).find(LeaveBean.class);
         mAdapter.setList(mList);
         mListView.setAdapter(mAdapter);
     }
@@ -69,5 +85,11 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
         }
+    }
+    @Subscribe
+    public void onLeaveSuccess( LeaveActivity.LeaveSuccess leaveSuccess){
+        mList=DataSupport.where("leaveType=? and email=?",type+"", UserInfoTools.getEmail(this)).find(LeaveBean.class);
+        mAdapter.setList(mList);
+        mAdapter.notifyDataSetChanged();
     }
 }

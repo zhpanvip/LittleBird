@@ -31,7 +31,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login_activity);
         initData();
+        setData();
         setListener();
+    }
+
+    private void setData() {
+        if(SharedPreferencesUtils.isFistRun(this)){
+            mBinding.etUsername.setText("zhpan@littlebird.com");
+            mBinding.etUsername.setSelection(mBinding.etUsername.getText().toString().length());
+            mBinding.etPassword.setText("123456");
+            mBinding.etPassword.setSelection(mBinding.etPassword.getText().toString().length());
+        }
+        SharedPreferencesUtils.setFirstRun(this);
     }
 
     private void setListener() {

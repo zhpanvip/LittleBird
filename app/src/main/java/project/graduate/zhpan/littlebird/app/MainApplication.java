@@ -20,6 +20,5 @@ public class MainApplication extends Application {
         if(fistRun){
             InitialData.initUser();
         }
-        SharedPreferencesUtils.setFirstRun(this);
     }
 }

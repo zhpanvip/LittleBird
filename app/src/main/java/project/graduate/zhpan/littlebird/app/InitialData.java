@@ -10,7 +10,7 @@ import project.graduate.zhpan.littlebird.utils.DateUtils;
  */
 //  初始化数据
 public class InitialData {
-
+    //  初始化用户
     public static void initUser() {
         UserBean userBean = new UserBean();
         userBean.setRealName("张攀");
@@ -57,7 +57,7 @@ public class InitialData {
         userBean1.save();
 
         UserBean userBean2 = new UserBean();
-        userBean2.setRealName("赵洪");
+        userBean2.setRealName("赵宇");
         userBean2.setEmail("zhaohong@littlebird.com");
         userBean2.setPassword("123456");
         userBean2.setAdmin(false);

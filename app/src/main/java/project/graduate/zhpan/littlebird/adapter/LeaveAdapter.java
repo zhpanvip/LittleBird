@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.activity.LeaveListActivity;
+import project.graduate.zhpan.littlebird.bean.LeaveBean;
 
 /**
  * Created by zhpan on 2016/12/24.
@@ -23,7 +25,7 @@ public class LeaveAdapter extends LittleBirdAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return mList.size();
     }
 
     @Override
@@ -45,6 +47,31 @@ public class LeaveAdapter extends LittleBirdAdapter {
             convertView.setTag(holder);
         }else {
             holder= (ViewHolder) convertView.getTag();
+        }
+        LeaveBean leaveBean = (LeaveBean) mList.get(position);
+        type=leaveBean.getLeaveType();
+        if(type== LeaveListActivity.OUT_FOR_WORK){
+            holder.mTvOption.setText("公出");
+            holder.mTvOption.setBackgroundResource(R.drawable.bg_out_for_work);
+        }else if(type==LeaveListActivity.LEAVE){
+            holder.mTvOption.setText("请假");
+            holder.mTvOption.setBackgroundResource(R.drawable.bg_leave);
+        }
+
+        holder.mTvReason.setText(leaveBean.getReason());
+
+        int checkResult = leaveBean.getCheckResult();
+        switch (checkResult){
+            case 0:
+                holder.mTvState.setText("待审批");
+
+                break;
+            case 1:
+                holder.mTvState.setText("审批通过");
+                break;
+            case 2:
+                holder.mTvState.setText("已拒绝");
+                break;
         }
         return convertView;
     }

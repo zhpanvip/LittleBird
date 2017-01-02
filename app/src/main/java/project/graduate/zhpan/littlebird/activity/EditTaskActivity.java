@@ -38,8 +38,6 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
     private TextView mTvTaskDescribe;
     private EditText mEtTaskDescribe;
     private LinearLayout mActivityEditTask;
-
-
     private TimePickerDialog mDialogAll;
     private TimePickerDialog mDialogYearMonth;
     private TimePickerDialog mDialogYearMonthDay;

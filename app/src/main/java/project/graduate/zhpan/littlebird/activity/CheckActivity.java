@@ -18,7 +18,7 @@ import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class CheckActivity extends BaseActivity {
+public class CheckActivity extends BaseActivity implements View.OnClickListener {
     private ListView mListView;
     private TextView mTvNoData;
     private ColleagueAdapter mAdapter;
@@ -42,6 +42,7 @@ public class CheckActivity extends BaseActivity {
     }
 
     private void setListener(){
+        mTvRight.setOnClickListener(this);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -63,6 +64,8 @@ public class CheckActivity extends BaseActivity {
     private void setData(){
         mTvTitle.setText("审批");
         if(userBean.isAdmin()){
+            mTvRight.setText("审批请假");
+            mTvRight.setVisibility(View.VISIBLE);
             mList=new ArrayList<>();
             mList=DataSupport.where("email !=?",UserInfoTools.getEmail(this)).find(UserBean.class);
             mAdapter=new ColleagueAdapter(this);
@@ -71,7 +74,14 @@ public class CheckActivity extends BaseActivity {
         }else {
             mTvNoData.setVisibility(View.VISIBLE);
         }
+    }
 
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_right:
+                startActivity(new Intent(this,CheckLeaveActivity.class));
+                break;
+        }
     }
 }

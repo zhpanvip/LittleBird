@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_menu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_apply_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请人：张攀"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/grey_33" />
+        <include layout="@layout/item_base_line" />
+        <RelativeLayout
+            android:id="@+id/rl_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/left_text_padding_top_bottom_right_14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:textColor="@color/grey_33"
+                android:text="开始时间" />
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_33"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="2016年12月29日20:51"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <include layout="@layout/item_base_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/left_text_padding_top_bottom_right_14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:textColor="@color/grey_33"
+                android:text="结束时间" />
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/grey_33"
+                android:layout_marginRight="15dp"
+                android:text="2016年12月29日20:51"
+                android:textSize="16sp" />
+        </RelativeLayout>
+        <include layout="@layout/item_base_line" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/tv_leave_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="公出理由:"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_marginRight="13dp"
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:maxLength="100"
+                android:layout_toRightOf="@id/tv_leave_reason"
+                android:textColor="@color/grey_33"
+                android:textSize="16sp"
+                android:layout_marginEnd="13dp" />
+        </RelativeLayout>
+        <include layout="@layout/item_base_line" />
+        <TextView
+            android:id="@+id/tv_check_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="审批状态：待审批"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/grey_33" />
+    </LinearLayout>
+
+    <!-- 以下都是侧滑菜单的内容依序排列 -->
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="#ecd50a"
+        android:clickable="true"
+        android:text="批准"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="#ff4a57"
+        android:text="拒绝"
+        android:textColor="@android:color/white"/>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

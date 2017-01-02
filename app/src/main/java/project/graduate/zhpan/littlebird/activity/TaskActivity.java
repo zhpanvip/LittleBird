@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
@@ -18,9 +17,7 @@ import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.callback.TaskOptionListener;
 import project.graduate.zhpan.littlebird.constants.Constatns;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
-import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
-import project.graduate.zhpan.littlebird.utils.UserTools;
 
 public class TaskActivity extends BaseActivity implements View.OnClickListener,TaskOptionListener{
 
@@ -55,7 +52,6 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         mTaskAdapter=new TaskAdapter(this);
         mList=new ArrayList<>();
         mList = DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(), UserInfoTools.getEmail(this)).find(TaskBean.class, true);
-
         mTaskAdapter.setList(mList);
         mLvTask.setAdapter(mTaskAdapter);
         EventBus.getDefault().register(this);
@@ -87,9 +83,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
     public void onDeleteSuccess(int position) {
         TaskBean taskBean = (TaskBean) mTaskAdapter.getmList().get(position);
         DataSupport.deleteAll(TaskBean.class, "taskName=  ?" ,( taskBean.getTaskName()));
-        mList= DataSupport.findAll(TaskBean.class);
-        mTaskAdapter.setList(mList);
-        mTaskAdapter.notifyDataSetChanged();
+        refresh();
     }
 
     /**
@@ -117,10 +111,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         taskBean.setCommitTime(System.currentTimeMillis());
         taskBean.setCommit(true);
         taskBean.save();
-
-        mList= DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
-        mTaskAdapter.setList(mList);
-        mTaskAdapter.notifyDataSetChanged();
+        refresh();
         Toast.makeText(this, "任务已提交", Toast.LENGTH_SHORT).show();
     }
 
@@ -135,12 +126,19 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
         taskBean.setRealStartTime(System.currentTimeMillis());
         taskBean.setStart(true);
         taskBean.save();
-        mList= DataSupport.findAll(TaskBean.class);
-        mTaskAdapter.setList(mList);
-        mTaskAdapter.notifyDataSetChanged();
+        refresh();
     }
+
+    /**
+     * 创建任务成功的回调，用于刷新界面
+     * @param taskCreateSuccess
+     */
     @Subscribe
     public void onTaskCreateSuccess(EditTaskActivity.TaskCreateSuccess taskCreateSuccess){
+        refresh();
+    }
+    //  刷新页面
+    private void refresh(){
         mList= DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
         mTaskAdapter.setList(mList);
         mTaskAdapter.notifyDataSetChanged();
