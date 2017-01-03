@@ -9,7 +9,6 @@ import org.litepal.crud.DataSupport;
 
 public class SignBean extends DataSupport {
     private long id;
-    @Column(unique = true, defaultValue = "unknown")
     private String signDate; // 签到日期
     private String signAddress;
     private String workTime;
@@ -17,6 +16,15 @@ public class SignBean extends DataSupport {
     private long signOutTime;
     private int signState;  //  签到状态
     private boolean isLate; //  是否迟到
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public boolean isLate() {
         return isLate;

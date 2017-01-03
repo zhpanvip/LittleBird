@@ -1,7 +1,11 @@
 package project.graduate.zhpan.littlebird.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +47,7 @@ public class MeFragment extends BaseFragment {
     private String[] mText = {"资料", "等级", "积分", "奖励", "规划", "设置"};
     private int[] images = {R.drawable.me_data, R.drawable.me_grade, R.drawable.me_integration, R.drawable.me_equity, R.drawable.me_plan, R.drawable.me_set};
     private UserBean userBean;
+    private SpannableStringBuilder spannable;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_me, null);
@@ -55,7 +60,12 @@ public class MeFragment extends BaseFragment {
 
     private void setData() {
         mTvName.setText(userBean.getRealName());
-        mTvInt.setText("当前积分"+userBean.getIntegral()+"分");
+
+        spannable = new SpannableStringBuilder("当前积分" + userBean.getIntegral() + "分");
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#ff5656"));
+        spannable.setSpan(colorSpan, 4, 4 + (userBean.getIntegral() + "").length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        mTvInt.setText(spannable);
+
         int rank = userBean.getRank();
         switch (rank){
             case 1:

@@ -2,6 +2,7 @@ package project.graduate.zhpan.littlebird.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +14,8 @@ public class TopicBean extends DataSupport {
     private String content;
     private long date;
     private int view;
-    private List<CommentBean> comment;
-    private List<LikeBean> like;
+    private List<CommentBean> comment=new ArrayList<>();
+    private List<LikeBean> like=new ArrayList<>();
 
     public int getView() {
         return view;

@@ -78,17 +78,24 @@
 
     </RelativeLayout>
     <TextView
+        android:id="@+id/tv_likes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="李逍遥、费奥纳、斯图尔特觉得很赞"
+        android:text=""
+        android:layout_marginBottom="10dp"
         android:textColor="#2863AD"
-        android:paddingLeft="15dp"
-        android:paddingBottom="10dp"/>
+        android:paddingLeft="15dp"/>
+    <include
+        android:id="@+id/view_base_line"
+        layout="@layout/item_base_line" />
 
     <LinearLayout
         android:id="@+id/ll_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
         android:orientation="vertical"/>
 
 </LinearLayout>

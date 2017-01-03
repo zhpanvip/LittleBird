@@ -2,6 +2,10 @@ package project.graduate.zhpan.littlebird.utils;
 
 import android.content.Context;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
 /**
@@ -24,6 +28,12 @@ public class UserInfoTools {
     public static String getPassWord(Context context) {
         UserBean userInfo = SharedPreferencesUtils.getUserInfo(context);
         return userInfo.getPassword();
+    }
+
+    public static String getRealName(Context context){
+        List<UserBean> userBeen = DataSupport.where("email=?", getEmail(context)).find(UserBean.class);
+
+        return userBeen.get(0).getRealName();
     }
 
     public static boolean isAutoLogin(Context context) {

@@ -15,12 +15,13 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
-        //  初始化用户
+
         boolean fistRun = SharedPreferencesUtils.isFistRun(this);
-        if(fistRun){
-            InitialData.initUser();
-            InitialData.initIntegral();
-            InitialData.initEncourage();
+        if(fistRun){    //  初次运行 初始化数据库数据
+            InitialData.initUser(); //  初始化用户
+            InitialData.initIntegral(); //  初始化积分
+            InitialData.initEncourage();    //  初始化奖励
+            InitialData.initTopic();    //  初始化话题
         }
     }
 }

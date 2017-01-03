@@ -1,10 +1,15 @@
 package project.graduate.zhpan.littlebird.app;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import project.graduate.zhpan.littlebird.bean.CommentBean;
 import project.graduate.zhpan.littlebird.bean.EncourageBean;
 import project.graduate.zhpan.littlebird.bean.IntegralBean;
+import project.graduate.zhpan.littlebird.bean.LikeBean;
+import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
@@ -448,6 +453,59 @@ public class InitialData {
         encourageBean4.setHowGet("优秀员工");
         encourageBean4.setIntegral(300);
         encourageBean4.save();
+    }
+
+    public static void initTopic(){
+
+        TopicBean topicBean0=new TopicBean();
+        topicBean0.setEmail("stewart@littlebird.com");
+        topicBean0.setContent("冰川，那是我最美丽的遐想。");
+        topicBean0.setDate(System.currentTimeMillis()-24*60*60*1000*4);
+        topicBean0.save();
+
+
+        TopicBean topicBean=new TopicBean();
+
+        LikeBean likeBean=new LikeBean();
+        likeBean.setName("费奥纳");
+        likeBean.setEmail("fan@littlebird.com");
+        likeBean.setTopicBean(topicBean);
+        likeBean.save();
+
+        LikeBean likeBean1=new LikeBean();
+        likeBean1.setName("安妮");
+        likeBean1.setEmail("anne@littlebird.com");
+        likeBean.setTopicBean(topicBean);
+        likeBean1.save();
+
+        LikeBean likeBean2=new LikeBean();
+        likeBean2.setName("洛克");
+        likeBean2.setEmail("locke@littlebird.com");
+        likeBean.setTopicBean(topicBean);
+        likeBean2.save();
+
+        CommentBean commentBean=new CommentBean();
+        commentBean.setContent("哎呀，好文艺！");
+        commentBean.setEmail("fan@littlebird.com");
+        commentBean.setName("费奥纳");
+        commentBean.setTopicBean(topicBean);
+        commentBean.save();
+        CommentBean commentBean2=new CommentBean();
+        commentBean2.setContent("哈哈，赞一个！");
+        commentBean2.setEmail("anne@littlebird.com");
+        commentBean2.setName("安妮");
+        commentBean2.setTopicBean(topicBean);
+        commentBean2.save();
+
+        topicBean.setEmail("hellen@littlebird.com");
+        topicBean.setContent("一杯茶品人生沉浮，平常心越万千世界。");
+        topicBean.setDate(System.currentTimeMillis()-24*60*60*1000*2);
+        topicBean.getLike().add(likeBean);
+        topicBean.getLike().add(likeBean1);
+        topicBean.getLike().add(likeBean2);
+        topicBean.getComment().add(commentBean);
+        topicBean.getComment().add(commentBean2);
+        topicBean.save();
     }
 
     private static long getRegisterTime(int hour, int day, int month, int year) {

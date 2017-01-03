@@ -2,7 +2,11 @@ package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +34,7 @@ public class UserInfoActivity extends BaseActivity {
     private TextView mTvPart;
     private ImageView mIvGrade;
     private LinearLayout mActivityUserInfo;
+    private SpannableStringBuilder spannable;
 
     private  UserBean userBean;
 
@@ -62,8 +67,15 @@ public class UserInfoActivity extends BaseActivity {
         mTvEMail.setText(userBean.getEmail());
         mTvDuties.setText(userBean.getJob());
         mTvTime.setText(userBean.getEntryTime());
-        mTvWhere.setText(userBean.getDepartment());
-        mTvIntegral.setText("当前积分"+ userBean.getIntegral()+"分");
+        mTvWhere.setText(userBean.getProjectGroup());
+        mTvPart.setText(userBean.getDepartment());
+
+        spannable = new SpannableStringBuilder("当前积分" + userBean.getIntegral() + "分");
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#ff5656"));
+        spannable.setSpan(colorSpan, 4, 4 + (userBean.getIntegral() + "").length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        mTvIntegral.setText(spannable);
+
+
         int rank = userBean.getRank();
         switch (rank){
             case 1:
