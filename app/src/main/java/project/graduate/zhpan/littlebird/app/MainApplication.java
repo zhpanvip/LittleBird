@@ -15,5 +15,10 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
+
+
+
+
+
     }
 }
