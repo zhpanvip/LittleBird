@@ -11,6 +11,9 @@ import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
  */
 
 public class MainApplication extends Application {
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
