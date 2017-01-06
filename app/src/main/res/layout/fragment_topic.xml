@@ -125,7 +125,6 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -137,7 +136,6 @@
                 android:id="@+id/lv_topic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:dividerHeight="8dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

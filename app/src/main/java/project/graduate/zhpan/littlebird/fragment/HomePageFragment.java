@@ -50,7 +50,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     private TextView mTvInt;
     private TextView mTvIntYesterday;
     private UserBean userBean;
-    SpannableStringBuilder spannable;
+    private SpannableStringBuilder spannable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

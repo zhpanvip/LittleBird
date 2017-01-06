@@ -3,10 +3,11 @@ package project.graduate.zhpan.littlebird.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.text.Spannable;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -21,74 +22,55 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
-import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.CommentBean;
 import project.graduate.zhpan.littlebird.bean.LikeBean;
-import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
-import project.graduate.zhpan.littlebird.fragment.TopicFragment;
 import project.graduate.zhpan.littlebird.fragment.TopicListFragment;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 /**
- * Created by zhpan on 2016/11/5.
+ * Created by zhpan on 2017/1/4.
  */
 
-public class TopicAdapter extends LittleBirdAdapter {
-    Context context;
+public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.TopicViewHolder> {
+    private LayoutInflater inflater;
+    private List<TopicBean> mList;
+    private Context context;
     Fragment fragment;
+    public List<TopicBean> getList() {
+        return mList;
+    }
 
-    public TopicAdapter(Context context, Fragment fragment) {
-        this.context = context;
-        this.fragment = fragment;
+    public void setList(List<TopicBean> mList) {
+        this.mList = mList;
+    }
+
+    public TopicListAdapter(Context context,Fragment fragment){
+        inflater=LayoutInflater.from(context);
+        this.context=context;
+        this.fragment=fragment;
+
     }
 
     @Override
-    public int getCount() {
-        return mList.size();
+    public TopicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View convertView=inflater.inflate(R.layout.item_topic,parent,false);
+        TopicViewHolder holder=new TopicViewHolder(convertView);
+        return holder;
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        final TopicViewHolder holder;
-        if (convertView == null) {
-            holder = new TopicViewHolder();
-            convertView = View.inflate(context, R.layout.item_topic, null);
-            holder.ivHead = (ImageView) convertView.findViewById(R.id.iv_head_pic);
-            holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
-            holder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
-            holder.tvView = (TextView) convertView.findViewById(R.id.tv_view);
-            holder.ivPraise = (ImageView) convertView.findViewById(R.id.iv_praise);
-            holder.ivComment = (ImageView) convertView.findViewById(R.id.iv_comment);
-            holder.tvLikes = (TextView) convertView.findViewById(R.id.tv_likes);
-            holder.llComment = (LinearLayout) convertView.findViewById(R.id.ll_comment);
-            holder.view = convertView.findViewById(R.id.view_base_line);
-            convertView.setTag(holder);
-        } else {
-            holder = (TopicViewHolder) convertView.getTag();
-        }
-
-        TopicBean topicBean = (TopicBean) mList.get(position);
+    public void onBindViewHolder(final TopicViewHolder holder, final int position) {
+        TopicBean topicBean =  mList.get(position);
         final List<UserBean> userBeen = DataSupport.where("email=?", topicBean.getEmail()).find(UserBean.class);
         final UserBean userBean = userBeen.get(0);
 
         List<LikeBean> likes = topicBean.getLike();
+
         if (likes.size() == 0) {
             holder.view.setVisibility(View.GONE);
         } else {
@@ -131,7 +113,7 @@ public class TopicAdapter extends LittleBirdAdapter {
         holder.tvView.setText("浏览" + topicBean.getView() + "次");
         holder.tvName.setText(userBean.getRealName());
         holder.tvTime.setText(DateUtils.formatTopicDate(topicBean.getDate()));
-        if(((TopicFragment)fragment).isParse(likes)){
+        if(((TopicListFragment)fragment).isParse(likes)){
             holder.ivPraise.setImageResource(R.drawable.av7);
         }else {
             holder.ivPraise.setImageResource(R.drawable.av6);
@@ -152,7 +134,7 @@ public class TopicAdapter extends LittleBirdAdapter {
         holder.ivComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((CommentCallBack) fragment).onCommentBtnClickListener(position);
+                ((TopicAdapter.CommentCallBack) fragment).onCommentBtnClickListener(position);
             }
         });
 
@@ -164,28 +146,41 @@ public class TopicAdapter extends LittleBirdAdapter {
                 Animation animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale);
                 holder.ivPraise.clearAnimation();
                 holder.ivPraise.startAnimation(animation);
-                ((CommentCallBack) fragment).onPraiseClickListener(position);
+                ((TopicAdapter.CommentCallBack) fragment).onPraiseClickListener(position);
             }
         });
-        return convertView;
     }
 
-    static class TopicViewHolder {
-        private ImageView ivHead;
-        private TextView tvName;
-        private TextView tvTime;
-        private TextView tvContent;
-        private TextView tvView;
-        private ImageView ivPraise;
-        private ImageView ivComment;
-        private TextView tvLikes;
-        private LinearLayout llComment;
-        private View view;
+    @Override
+    public int getItemCount() {
+        return mList.size();
     }
 
-    public interface CommentCallBack {
-        void onCommentBtnClickListener(int position);
 
-        void onPraiseClickListener(int position);
+    class TopicViewHolder extends RecyclerView.ViewHolder {
+         ImageView ivHead;
+         TextView tvName;
+         TextView tvTime;
+         TextView tvContent;
+         TextView tvView;
+         ImageView ivPraise;
+         ImageView ivComment;
+         TextView tvLikes;
+         LinearLayout llComment;
+         View view;
+
+        public TopicViewHolder(View convertView) {
+            super(convertView);
+            ivHead = (ImageView) convertView.findViewById(R.id.iv_head_pic);
+            tvName = (TextView) convertView.findViewById(R.id.tv_name);
+            tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+            tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+            tvView = (TextView) convertView.findViewById(R.id.tv_view);
+            ivPraise = (ImageView) convertView.findViewById(R.id.iv_praise);
+            ivComment = (ImageView) convertView.findViewById(R.id.iv_comment);
+            tvLikes = (TextView) convertView.findViewById(R.id.tv_likes);
+            llComment = (LinearLayout) convertView.findViewById(R.id.ll_comment);
+            view = convertView.findViewById(R.id.view_base_line);
+        }
     }
 }

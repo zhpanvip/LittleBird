@@ -80,11 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initData() {
         EventBus.getDefault().register(this);
         user= DataSupport.where("email=?", UserInfoTools.getEmail(this)).find(UserBean.class).get(0);
-        if(user.isAdmin()){
-            llLine2.setVisibility(View.VISIBLE);
-        }else {
-            llLine2.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
@@ -209,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.ll_main_add:
+
                 if(isShow){
                     mImageViewList.get(2).setBackgroundResource(image2[2]);
                     mRlMain.setVisibility(View.GONE);

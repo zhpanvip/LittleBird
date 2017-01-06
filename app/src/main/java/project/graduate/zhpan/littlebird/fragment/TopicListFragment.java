@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -29,7 +28,7 @@ import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.activity.WriteTopicActivity;
 import project.graduate.zhpan.littlebird.adapter.TopicAdapter;
-import project.graduate.zhpan.littlebird.bean.ColleagueBean;
+import project.graduate.zhpan.littlebird.adapter.TopicListAdapter;
 import project.graduate.zhpan.littlebird.bean.CommentBean;
 import project.graduate.zhpan.littlebird.bean.LikeBean;
 import project.graduate.zhpan.littlebird.bean.TopicBean;
@@ -37,35 +36,26 @@ import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.KeyboardWatcher;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
-import project.graduate.zhpan.littlebird.view.ListViewForScrollView;
+import project.graduate.zhpan.littlebird.view.RecyclerViewForScrollView;
 
 /**
- * Created by zhpan on 2016/10/15.
+ * Created by zhpan on 2017/1/5.
  */
 
-public class TopicFragment extends BaseFragment implements View.OnClickListener, TopicAdapter.CommentCallBack, KeyboardWatcher.OnKeyboardToggleListener {
-    private ImageView imageView;
-    private TextView mTvName;
-    private TextView mTvSign;
-    private TopicAdapter adapter;
-    private ListViewForScrollView mListView;
-    private AppBarLayout mAppBarLayout;
-    private Toolbar mToolbar;
-    private LinearLayout mLinearLayout;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+public class TopicListFragment extends BaseFragment implements View.OnClickListener, TopicAdapter.CommentCallBack, KeyboardWatcher.OnKeyboardToggleListener {
+    private TopicListAdapter adapter;
+    private RecyclerView mRecyclerView;
     private LinearLayout mLlComment;
     private EditText mEtComment;
     private TextView mTvComment;
     private InputMethodManager inputManager;
     private KeyboardWatcher keyboardWatcher;
-    private View footerView;
     private List<UserBean> userBeen;
     private List<TopicBean> topicBeen;
     private int commentPosition;    //  评论的topic的position
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_topic, null);
+        mView = inflater.inflate(R.layout.fragment_topic_list, null);
         initView();
         initData();
         setData();
@@ -79,6 +69,32 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
         EventBus.getDefault().unregister(this);
     }
 
+    //  用来获取MallFragment中解析接送得到的对象
+    public static TopicListFragment getInstance() {
+        TopicListFragment fragment = new TopicListFragment();
+        //fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    private void setListener() {
+        mTvComment.setOnClickListener(this);
+    }
+
+    private void setData() {
+        //  适配器
+        /*adapter = new TopicAdapter(getActivity(), this);
+        adapter.setList(topicBeen);
+        mRecyclerView.setAdapter(adapter);*/
+        adapter=new TopicListAdapter(getContext(),this);
+        adapter.setList(topicBeen);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(adapter);
+
+
+        keyboardWatcher = new KeyboardWatcher(getActivity());
+        keyboardWatcher.setListener(this);
+    }
+
     private void initData() {
         userBeen = DataSupport.where("email=?", UserInfoTools.getEmail(getContext())).find(UserBean.class);
         topicBeen = DataSupport.findAll(TopicBean.class, true);
@@ -90,67 +106,16 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
         EventBus.getDefault().register(this);
     }
 
-    private void setListener() {
-        mLinearLayout.setOnClickListener(this);
-        mTvComment.setOnClickListener(this);
-    }
-
-    private void setData() {
-        //  设置用信息
-        Glide.with(this).load(userBeen.get(0).getHeadPic())
-                .transform(new GlideCircleTransform(getContext()))
-                .placeholder(R.drawable.ic_home_avatar)
-                .into(imageView);
-        mTvName.setText(userBeen.get(0).getRealName());
-        mTvSign.setText(userBeen.get(0).getPersonalSign());
-
-        //  适配器
-        adapter = new TopicAdapter(getActivity(), this);
-        adapter.setList(topicBeen);
-        mListView.setAdapter(adapter);
-
-        keyboardWatcher = new KeyboardWatcher(getActivity());
-        keyboardWatcher.setListener(this);
-
-        //  设置ToolBar信息
-        mCollapsingToolbarLayout.setTitle("LittleBird");
-        mCollapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER_HORIZONTAL);
-        mCollapsingToolbarLayout.setExpandedTitleGravity(Gravity.LEFT | Gravity.BOTTOM);
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset <= -(2 * mLinearLayout.getHeight()) / 3) {
-                    mCollapsingToolbarLayout.setTitle("LittleBird");
-                } else {
-                    mCollapsingToolbarLayout.setTitle("");
-                }
-            }
-        });
-        //  给ListView添加footer
-        footerView = View.inflate(getActivity(), R.layout.footer_view, null);
-        mListView.addFooterView(footerView, null, false);
-    }
-
     private void initView() {
-        mListView = (ListViewForScrollView) mView.findViewById(R.id.lv_topic);
-        mAppBarLayout = (AppBarLayout) mView.findViewById(R.id.apl_main);
-        mToolbar = (Toolbar) mView.findViewById(R.id.tb_main);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.lv_topic);
         mLlComment = (LinearLayout) mView.findViewById(R.id.ll_comment);
         mTvComment = (TextView) mView.findViewById(R.id.tv_publish);
         mEtComment = (EditText) mView.findViewById(R.id.et_comment);
-        mLinearLayout = (LinearLayout) mView.findViewById(R.id.ll_main);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) mView.findViewById(R.id.ctl_main);
-        imageView = (ImageView) mView.findViewById(R.id.head_img);
-        mTvName = (TextView) mView.findViewById(R.id.tv_name);
-        mTvSign = (TextView) mView.findViewById(R.id.tv_sign);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_main:
-                UserInfoActivity.start(getActivity(), "个人简介", new UserBean());
-                break;
             case R.id.tv_publish:   //发表评论
                 publishClickListener(mEtComment.getText().toString());
                 break;
@@ -166,7 +131,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onPraiseClickListener(int position) {
-        List<TopicBean> list = adapter.getmList();
+        List<TopicBean> list = adapter.getList();
         TopicBean topicBean = list.get(position);
         List<LikeBean> like = topicBean.getLike();
         if (!isParse(like)) {
@@ -174,19 +139,11 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
             likeBean.setTopicBean(topicBean);
             likeBean.setEmail(UserInfoTools.getEmail(getContext()));
             likeBean.setName(UserInfoTools.getRealName(getContext()));
+
             if (likeBean.save()) {
                 topicBeen = DataSupport.findAll(TopicBean.class, true);
                 adapter.setList(topicBeen);
                 adapter.notifyDataSetChanged();
-                /**
-                 *  隐藏软键盘
-                 */
-                InputMethodManager imm = (InputMethodManager) mEtComment.getContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-
-                if (imm.isActive()) {
-                    imm.hideSoftInputFromWindow(mEtComment.getApplicationWindowToken(), 0);
-                }
             }
         }
 
@@ -197,7 +154,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
      * @param content 评论内容
      */
     public void publishClickListener(String content) {
-        List<TopicBean> list = adapter.getmList();
+        List<TopicBean> list = adapter.getList();
         TopicBean topicBean = topicBeen.get(commentPosition);
         CommentBean commentBean = new CommentBean();
         commentBean.setContent(content);
@@ -205,6 +162,16 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
         commentBean.setTopicBean(topicBean);
         commentBean.setEmail(UserInfoTools.getEmail(getContext()));
         if (commentBean.save()) {
+            mEtComment.setText("");
+            /**
+             *  隐藏软键盘
+             */
+            InputMethodManager imm = (InputMethodManager) mEtComment.getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+
+            if (imm.isActive()) {
+                imm.hideSoftInputFromWindow(mEtComment.getApplicationWindowToken(), 0);
+            }
             topicBeen = DataSupport.findAll(TopicBean.class, true);
             adapter.setList(topicBeen);
             adapter.notifyDataSetChanged();

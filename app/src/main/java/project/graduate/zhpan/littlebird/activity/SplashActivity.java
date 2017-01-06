@@ -18,6 +18,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.app.InitialData;
+import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 
 public class SplashActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayout;
@@ -32,10 +34,31 @@ public class SplashActivity extends AppCompatActivity {
 
         initView();
 
+        initData();
+
         setAnimation();
 
         timerControl();
+
     }
+
+    private void initData() {
+        //  初始化数据库
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                boolean fistRun = SharedPreferencesUtils.isFistRun(SplashActivity.this);
+                if(fistRun){    //  初次运行 初始化数据库数据
+                    InitialData.initUser(); //  初始化用户
+                    InitialData.initIntegral(); //  初始化积分
+                    InitialData.initEncourage();    //  初始化奖励
+                    InitialData.initTopic();    //  初始化话题
+                }
+            }
+        }.start();
+    }
+
 
     //  设置状态栏为透明
     private void setStatusBarTransparent() {

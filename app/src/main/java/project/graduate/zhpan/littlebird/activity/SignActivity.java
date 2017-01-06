@@ -94,7 +94,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         mAnimation.setInterpolator(linearInterpolator);
 
         List<SignBean> signBeen = DataSupport.where("signDate=? and email=?", DateUtils.getDate(), UserInfoTools.getEmail(this)).find(SignBean.class);
-        if(signBeen.size()<=0){ //  还没签到
+        if(signBeen.size()<=0){     //  还没签到
             //  初始化数据库
             signSaveBean = new SignBean();
             signSaveBean.setSignDate(DateUtils.getDate());
