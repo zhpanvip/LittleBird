@@ -137,6 +137,10 @@ public class SplashActivity extends AppCompatActivity {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK )
+        {
+            return true;
+        }
+        return false;
     }
 }
