@@ -68,8 +68,5 @@ public class ResetUserActivity extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, "重置失败", Toast.LENGTH_SHORT).show();
         }
 
-        // TODO validate success, do something
-
-
     }
 }
