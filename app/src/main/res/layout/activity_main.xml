@@ -372,7 +372,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_delete_"
+                    android:id="@+id/ll_delete_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

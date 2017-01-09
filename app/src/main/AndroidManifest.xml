@@ -102,7 +102,9 @@
         <activity android:name=".activity.HistoryTaskActivity" />
         <activity android:name=".activity.GradeActivity" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.CheckLeaveActivity"></activity>
+        <activity android:name=".activity.CheckLeaveActivity" />
+        <activity android:name=".activity.DeleteUserActivity" />
+        <activity android:name=".activity.ResetUserActivity"></activity>
     </application>
 
 </manifest>

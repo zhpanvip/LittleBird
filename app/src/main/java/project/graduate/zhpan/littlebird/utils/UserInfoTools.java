@@ -62,4 +62,13 @@ public class UserInfoTools {
         return SharedPreferencesUtils.isRememberPassword(context);
     }
 
+    public static boolean isAdmin(Context context){
+        List<UserBean> userBeen = DataSupport.where("email=?", getEmail(context)).find(UserBean.class);
+        if(userBeen.size()>0){
+            boolean admin = userBeen.get(0).isAdmin();
+            return admin;
+        }
+        return false;
+    }
+
 }

@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout llQuerySalary;
     private LinearLayout llLine2;
     private LinearLayout llAddUser;
+    private LinearLayout llResetUser;
+    private LinearLayout llDelUser;
     private long mExitTime;
     private LinearLayout mLlMenu;
     private TextView mTvMonth;
@@ -122,6 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llQuerySalary.setOnClickListener(this);
         llWriteTask.setOnClickListener(this);
         llAddUser.setOnClickListener(this);
+        llDelUser.setOnClickListener(this);
+        llResetUser.setOnClickListener(this);
+
     }
 
     private void initView() {
@@ -154,12 +159,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llQuerySalary= (LinearLayout) findViewById(R.id.ll_main_payroll);
         llWriteTask= (LinearLayout) findViewById(R.id.ll_main_write_topic);
         llAddUser= (LinearLayout) findViewById(R.id.ll_add_user);
+        llDelUser= (LinearLayout) findViewById(R.id.ll_rest_user);
+        llResetUser= (LinearLayout) findViewById(R.id.ll_delete_user);
         llLine2 = (LinearLayout) findViewById(R.id.ll_second_line);
         mTvMonth= (TextView) findViewById(R.id.tv_month);
         mTvDay= (TextView) findViewById(R.id.tv_day);
         mTvWeek= (TextView) findViewById(R.id.tv_week);
         mLunarMonth= (TextView) findViewById(R.id.tv_lunar_month);
         mLunarDay= (TextView) findViewById(R.id.tv_lunar_day);
+
+
         mSupportFragmentManager = getSupportFragmentManager();
         HomePageFragment mRecommendFragment = new HomePageFragment();
         FragmentTransaction recomTransaction = mSupportFragmentManager.beginTransaction();
@@ -205,7 +214,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.ll_main_add:
-
+                if(UserInfoTools.isAdmin(this)){
+                    llLine2.setVisibility(View.VISIBLE);
+                }else {
+                    llLine2.setVisibility(View.GONE);
+                }
                 if(isShow){
                     mImageViewList.get(2).setBackgroundResource(image2[2]);
                     mRlMain.setVisibility(View.GONE);
@@ -279,6 +292,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ll_add_user:
                 mImageViewList.get(2).setBackgroundResource(image2[2]);
                 RegisterActivity.start(this);
+                mRlMain.setVisibility(View.GONE);
+                isShow=false;
+                break;
+            case R.id.ll_delete_user:
+                mImageViewList.get(2).setBackgroundResource(image2[2]);
+                DeleteUserActivity.start(this);
+                mRlMain.setVisibility(View.GONE);
+                isShow=false;
+                break;
+            case R.id.ll_rest_user:
+                mImageViewList.get(2).setBackgroundResource(image2[2]);
+                ResetUserActivity.start(this);
                 mRlMain.setVisibility(View.GONE);
                 isShow=false;
                 break;
