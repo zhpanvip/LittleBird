@@ -78,12 +78,16 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
         if(userBeen.size()>0){
             UserBean userBean = userBeen.get(0);
             userBean.setPassword(newPsw);
-            userBean.save();
-            Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
-            userBean.setPassword("");
-            SharedPreferencesUtils.saveUserInfo(this,userBean);
-            LoginActivity.start(this,true);
-            finish();
+            if(userBean.save()){
+                Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
+                userBean.setPassword("");
+                SharedPreferencesUtils.saveUserInfo(this,userBean);
+                LoginActivity.start(this,true);
+                finish();
+            }else {
+                Toast.makeText(this, "密码修改失败", Toast.LENGTH_SHORT).show();
+            }
+
         }else {
             Toast.makeText(this, "原密码输入有误", Toast.LENGTH_SHORT).show();
         }

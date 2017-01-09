@@ -189,10 +189,14 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
         taskBean.setCreateDate(DateUtils.getDate());
         taskBean.setUserEmail(UserInfoTools.getEmail(this));
-        taskBean.save();
-        Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new TaskCreateSuccess() );
-        finish();
+        if(taskBean.save()){
+            Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new TaskCreateSuccess() );
+            finish();
+        }else {
+            Toast.makeText(this, "提交失败", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public static void start(Context context, String title) {

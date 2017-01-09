@@ -253,11 +253,16 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                     signBeen.get(0).setSignOutTime(currentStamp);
                     signBeen.get(0).setSignState(SIGN_OUT);
                     signBeen.get(0).updateAll("signDate=?",DateUtils.getDate());
-                    signBeen.get(0).save();
-                    isOutSign = true;
-                    mTvSign.setText("已签退");
-                    mIvSign.setImageResource(R.drawable.sign_out_btn);
-                    mIvSign.setClickable(false);
+                    //signBeen.get(0).save();
+                    if(signBeen.get(0).save()){
+                        isOutSign = true;
+                        mTvSign.setText("已签退");
+                        mIvSign.setImageResource(R.drawable.sign_out_btn);
+                        mIvSign.setClickable(false);
+                    }else {
+                        Toast.makeText(this, "签退失败", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else if(signState==NO_SIGN) {    //签到
                     if(taskBeen.size()<3){
                         Toast.makeText(this, "至少要添加三个任务哦！", Toast.LENGTH_SHORT).show();
@@ -282,15 +287,16 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                         int totalInt = userBeen.get(0).getIntegral();
                         totalInt=totalInt+2;
                         userBeen.get(0).setIntegral(totalInt);
-                        userBeen.get(0).save();
-
-                        //  添加积分奖励到数据库
-                        IntegralBean integralBean=new IntegralBean();
-                        integralBean.setHowGet("签到奖励");
-                        integralBean.setIntegral(2);
-                        integralBean.setEmail(UserInfoTools.getEmail(this));
-                        integralBean.setDate(DateUtils.getDate());
-                        integralBean.save();
+                        //userBeen.get(0).save();
+                        if(userBeen.get(0).save()){
+                            //  添加积分奖励到数据库
+                            IntegralBean integralBean=new IntegralBean();
+                            integralBean.setHowGet("签到奖励");
+                            integralBean.setIntegral(2);
+                            integralBean.setEmail(UserInfoTools.getEmail(this));
+                            integralBean.setDate(DateUtils.getDate());
+                            integralBean.save();
+                        }
                     }
                     signSaveBean.save();
                    // signTime = currentStamp / 1000;

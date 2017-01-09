@@ -123,9 +123,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         userBean.setPassword(password);
         String detailedTime = DateUtils.getDetailedTime(System.currentTimeMillis());
         userBean.setUserId(Long.parseLong(detailedTime));
-        userBean.save();
-        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-        finish();
+        if(userBean.save()){
+            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

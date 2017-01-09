@@ -3,6 +3,7 @@ package project.graduate.zhpan.littlebird.activity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
@@ -58,15 +59,20 @@ public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListen
     public void onPassListener(int position) {
         LeaveBean leaveBean = (LeaveBean) mAdapter.getmList().get(position);
         leaveBean.setCheckResult(1);
-        leaveBean.save();
-        refresh();
+        if(leaveBean.save()){
+            refresh();
+            Toast.makeText(this, "审批通过", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onRefusedListener(int position) {
         LeaveBean leaveBean = (LeaveBean) mAdapter.getmList().get(position);
         leaveBean.setCheckResult(2);
-        leaveBean.save();
+        if(leaveBean.save()){
+            refresh();
+            Toast.makeText(this, "审批拒绝", Toast.LENGTH_SHORT).show();
+        }
         refresh();
     }
 

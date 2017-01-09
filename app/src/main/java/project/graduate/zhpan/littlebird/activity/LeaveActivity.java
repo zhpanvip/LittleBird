@@ -144,10 +144,14 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
         leaveBean.setEmail(UserInfoTools.getEmail(this));
         List<UserBean> userBeen = DataSupport.where("email=?", UserInfoTools.getEmail(this)).find(UserBean.class);
         leaveBean.setLeavePerson(userBeen.get(0).getRealName());
-        leaveBean.save();
-        Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new LeaveSuccess());
-        finish();
+        if(leaveBean.save()){
+            Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new LeaveSuccess());
+            finish();
+        }else {
+            Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
