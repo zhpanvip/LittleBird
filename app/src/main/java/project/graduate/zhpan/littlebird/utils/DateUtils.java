@@ -104,7 +104,7 @@ public class DateUtils {
     }
 
     /**
-     * 获取星期几
+     *   获取星期几
      */
     public static String getDayOfWeek() {
         Calendar calendar = Calendar.getInstance();
@@ -113,8 +113,8 @@ public class DateUtils {
     }
 
     /**
-     * 获取农历月份
-     * @return
+     *  获取农历月份
+     *  @return
      */
     public static String getLunarMonth() {
         Calendar calendar = Calendar.getInstance();

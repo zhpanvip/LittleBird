@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setData() {
         if(SharedPreferencesUtils.isFistRun(this)){
-            mBinding.etUsername.setText("zhpan@littlebird.com");
+            mBinding.etUsername.setText("admin@littlebird.com");
             mBinding.etUsername.setSelection(mBinding.etUsername.getText().toString().length());
             mBinding.etPassword.setText("123456");
             mBinding.etPassword.setSelection(mBinding.etPassword.getText().toString().length());

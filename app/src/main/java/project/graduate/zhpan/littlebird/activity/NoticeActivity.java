@@ -6,11 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.BaseFragmentAdapter;
+import project.graduate.zhpan.littlebird.bean.NoticeBean;
 import project.graduate.zhpan.littlebird.fragment.BaseFragment;
 import project.graduate.zhpan.littlebird.fragment.NoticeFragment;
 import project.graduate.zhpan.littlebird.fragment.QuestionFragment;

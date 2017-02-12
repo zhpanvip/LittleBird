@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.NoticeBean;
 
 /**
  * Created by zhpan on 2016/12/24.
@@ -20,7 +21,7 @@ public class NoticeAdapter extends LittleBirdAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return mList.size();
     }
 
     @Override
@@ -43,6 +44,9 @@ public class NoticeAdapter extends LittleBirdAdapter {
         }else {
             holder= (ViewHolder) convertView.getTag();
         }
+        NoticeBean noticeBean = (NoticeBean) mList.get(position);
+        holder.mTvContent.setText(noticeBean.getTitle());
+        holder.mTvTime.setText(noticeBean.getDate());
 
         return convertView;
     }

@@ -9,6 +9,7 @@ import project.graduate.zhpan.littlebird.bean.CommentBean;
 import project.graduate.zhpan.littlebird.bean.EncourageBean;
 import project.graduate.zhpan.littlebird.bean.IntegralBean;
 import project.graduate.zhpan.littlebird.bean.LikeBean;
+import project.graduate.zhpan.littlebird.bean.NoticeBean;
 import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
@@ -21,8 +22,8 @@ public class InitialData {
     //  初始化用户
     public static void initUser() {
         UserBean userBean = new UserBean();
-        userBean.setRealName("张攀");
-        userBean.setEmail("zhpan@littlebird.com");
+        userBean.setRealName("Admin");
+        userBean.setEmail("admin@littlebird.com");
         userBean.setPassword("123456");
         userBean.setAdmin(true);
         long registerTime = getRegisterTime(8, 01, 9, 2013);
@@ -308,7 +309,6 @@ public class InitialData {
         userBean12.setHeadPic("http://www.feizl.com/upload2007/2011_04/1104031701511610.jpg");
         userBean12.save();
     }
-
     //  初始化积分数据
     public static void initIntegral(){
         IntegralBean integralBean=new IntegralBean();
@@ -417,7 +417,7 @@ public class InitialData {
         integralBean13.save();
 
     }
-
+    //  初始化奖励
     public static void initEncourage(){
         EncourageBean encourageBean=new EncourageBean();
         encourageBean.setEmail("zhpan@littlebird.com");
@@ -454,7 +454,7 @@ public class InitialData {
         encourageBean4.setIntegral(300);
         encourageBean4.save();
     }
-
+    //  初始化话题
     public static void initTopic(){
 
         TopicBean topicBean0=new TopicBean();
@@ -506,6 +506,71 @@ public class InitialData {
         topicBean.getComment().add(commentBean);
         topicBean.getComment().add(commentBean2);
         topicBean.save();
+    }
+    //  初始化公告数据
+    public static void initNotice(){
+        NoticeBean noticeBean=new NoticeBean();
+        noticeBean.setTitle("2017年春节放假公告");
+        noticeBean.setDate("2017-12-25");
+        noticeBean.setUrl("");
+        noticeBean.save();
+
+        NoticeBean noticeBean1=new NoticeBean();
+        noticeBean1.setTitle("2017年元旦放假通知");
+        noticeBean1.setDate("2017-11-22");
+        noticeBean1.setUrl("");
+        noticeBean1.save();
+        NoticeBean noticeBean2=new NoticeBean();
+        noticeBean2.setTitle("");
+        noticeBean2.setDate("2017-12-25");
+        noticeBean2.setUrl("");
+        noticeBean2.save();
+        NoticeBean noticeBean3=new NoticeBean();
+        noticeBean3.setTitle("表彰公告");
+        noticeBean3.setDate("2017-11-17");
+        noticeBean3.setUrl("");
+        noticeBean3.save();
+        NoticeBean noticeBean4=new NoticeBean();
+        noticeBean4.setTitle("");
+        noticeBean4.setDate("2017-11-08");
+        noticeBean4.setUrl("1017年11月工资发放通知");
+        noticeBean4.save();
+        NoticeBean noticeBean5=new NoticeBean();
+        noticeBean5.setTitle("关于员工餐补通知");
+        noticeBean5.setDate("2017-10-25");
+        noticeBean5.setUrl("");
+        noticeBean5.save();
+        NoticeBean noticeBean6=new NoticeBean();
+        noticeBean6.setTitle("");
+        noticeBean6.setDate("2017-12-25");
+        noticeBean6.setUrl("");
+        noticeBean6.save();
+        NoticeBean noticeBean7=new NoticeBean();
+        noticeBean7.setTitle("");
+        noticeBean7.setDate("2017-12-25");
+        noticeBean7.setUrl("");
+        noticeBean7.save();
+        NoticeBean noticeBean8=new NoticeBean();
+        noticeBean8.setTitle("");
+        noticeBean8.setDate("2017-12-25");
+        noticeBean8.setUrl("");
+        noticeBean8.save();
+        NoticeBean noticeBean9=new NoticeBean();
+        noticeBean9.setTitle("");
+        noticeBean9.setDate("2017-12-25");
+        noticeBean9.setUrl("");
+        noticeBean9.save();
+        NoticeBean noticeBean10=new NoticeBean();
+        noticeBean10.setTitle("");
+        noticeBean10.setDate("2017-12-25");
+        noticeBean10.setUrl("");
+        noticeBean10.save();
+        NoticeBean noticeBean11=new NoticeBean();
+        noticeBean11.setTitle("");
+        noticeBean11.setDate("2017-12-25");
+        noticeBean11.setUrl("");
+        noticeBean11.save();
+
     }
 
     private static long getRegisterTime(int hour, int day, int month, int year) {

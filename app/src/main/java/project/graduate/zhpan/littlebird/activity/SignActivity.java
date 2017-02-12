@@ -147,7 +147,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                         mTvDescribe.setText("签到倒计时");
                     }
                     //  设置倒计时
-                    setTime((System.currentTimeMillis()/1000-signTime));
+                    setTime((signTime-System.currentTimeMillis()/1000));
                 break;
 
             case SIGNED:    //  已签到

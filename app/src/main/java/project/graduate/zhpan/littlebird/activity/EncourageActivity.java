@@ -36,5 +36,4 @@ public class EncourageActivity extends BaseActivity {
     private void initView() {
         mLvEncourage = (ListView) findViewById(R.id.lv_encourage);
     }
-
 }

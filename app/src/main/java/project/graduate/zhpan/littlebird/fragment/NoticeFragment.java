@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class NoticeFragment extends BaseFragment {
 
     private void setData() {
         mList=new ArrayList<>();
+        mList = DataSupport.findAll(NoticeBean.class, false);
         mAdapter=new NoticeAdapter(getContext());
         mAdapter.setList(mList);
         mListView.setAdapter(mAdapter);

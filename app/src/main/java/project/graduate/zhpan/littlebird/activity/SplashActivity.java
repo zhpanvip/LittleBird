@@ -54,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                     InitialData.initIntegral(); //  初始化积分
                     InitialData.initEncourage();    //  初始化奖励
                     InitialData.initTopic();    //  初始化话题
+                    InitialData.initNotice();   //  初始化公告
                 }
             }
         }.start();
@@ -141,6 +142,6 @@ public class SplashActivity extends AppCompatActivity {
         {
             return true;
         }
-        return false;
+        return super.onKeyDown(keyCode,event);
     }
 }
