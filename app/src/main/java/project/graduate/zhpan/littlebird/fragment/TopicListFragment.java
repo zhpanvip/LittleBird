@@ -53,14 +53,18 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
     private List<UserBean> userBeen;
     private List<TopicBean> topicBeen;
     private int commentPosition;    //  评论的topic的position
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_topic_list, null);
+    protected int getLayoutId() {
+        return R.layout.fragment_topic_list;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
         setListener();
-        return mView;
     }
 
     @Override

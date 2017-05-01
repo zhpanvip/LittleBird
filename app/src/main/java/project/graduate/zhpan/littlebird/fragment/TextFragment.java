@@ -13,10 +13,14 @@ import project.graduate.zhpan.littlebird.R;
 
 public class TextFragment extends BaseFragment {
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_topic,null);
-        return mView;
+    protected int getLayoutId() {
+        return R.layout.fragment_topic;
+    }
+
+    @Override
+    protected void init() {
 
     }
 }

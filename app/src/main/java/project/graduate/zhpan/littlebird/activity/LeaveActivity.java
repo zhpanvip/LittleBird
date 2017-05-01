@@ -48,10 +48,14 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
     private long endTimeStamp;
     private LeaveBean leaveBean;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leave);
+    protected int getLayoutId() {
+        return R.layout.activity_leave;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
@@ -142,7 +146,9 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
         leaveBean.setReason(describe);
         leaveBean.setLeaveType(type);
         leaveBean.setEmail(UserInfoTools.getEmail(this));
-        List<UserBean> userBeen = DataSupport.where("email=?", UserInfoTools.getEmail(this)).find(UserBean.class);
+        List<UserBean> userBeen = DataSupport
+                .where("email=?", UserInfoTools.getEmail(this))
+                .find(UserBean.class);
         leaveBean.setLeavePerson(userBeen.get(0).getRealName());
         if(leaveBean.save()){
             Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
@@ -151,7 +157,6 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
         }else {
             Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

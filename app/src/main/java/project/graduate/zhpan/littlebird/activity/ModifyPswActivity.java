@@ -24,9 +24,12 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
     private Button mBtnConfirm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_psw);
+    protected int getLayoutId() {
+        return R.layout.activity_modify_psw;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

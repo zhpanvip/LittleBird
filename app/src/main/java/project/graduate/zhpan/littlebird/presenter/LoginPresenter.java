@@ -107,7 +107,9 @@ public class LoginPresenter {
     }
     //  通过本地数据库登陆
     public void localLogin(final UserBean userBean, final LoginActivity loginActivity) {
-        List<UserBean> userBeen = DataSupport.where("email=? and password=?", userBean.getEmail(), userBean.getPassword()).find(UserBean.class);
+        List<UserBean> userBeen = DataSupport
+                .where("email=? and password=?", userBean.getEmail(), userBean.getPassword())
+                .find(UserBean.class);
         if (userBeen.size() > 0) {  //  用户名密码正确
             if (userBeen.get(0).isNotFirstLogin()) { //  不是第一次登陆则验证是否是在同一部手机上登陆
                 if (!userBeen.get(0).getImei().equals(getIMEI())) {      // 不是同一部手机

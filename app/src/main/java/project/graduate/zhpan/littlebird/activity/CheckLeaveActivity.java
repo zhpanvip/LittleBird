@@ -24,9 +24,12 @@ public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListen
     private CheckLeaveAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_leave);
+    protected int getLayoutId() {
+        return R.layout.activity_check_leave;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();

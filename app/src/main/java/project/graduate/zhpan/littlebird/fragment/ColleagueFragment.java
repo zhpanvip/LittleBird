@@ -1,25 +1,17 @@
 package project.graduate.zhpan.littlebird.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
-
 import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
-import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.JsonFileReader;
 import project.graduate.zhpan.littlebird.utils.SideBar;
@@ -34,15 +26,6 @@ public class ColleagueFragment extends BaseFragment {
     private ColleagueAdapter adapter;
     private List<UserBean> mList;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_colleague, null);
-        initView();
-        setData();
-        setListener();
-        return mView;
-
-    }
     private void setListener(){
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,5 +59,17 @@ public class ColleagueFragment extends BaseFragment {
         mIvBack = (ImageView) mView.findViewById(R.id.iv_back);
         mListView = (ListView) mView.findViewById(R.id.lv_colleague_name);
         mSideBar = (SideBar) mView.findViewById(R.id.sidrbar);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_colleague;
+    }
+
+    @Override
+    protected void init() {
+        initView();
+        setData();
+        setListener();
     }
 }

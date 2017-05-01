@@ -1,6 +1,5 @@
 package project.graduate.zhpan.littlebird.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -8,9 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import org.greenrobot.eventbus.EventBus;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
@@ -23,9 +20,12 @@ public class WriteTopicActivity extends BaseActivity implements View.OnClickList
     private LinearLayout mActivityWriteTopic;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_topic);
+    protected int getLayoutId() {
+        return R.layout.activity_write_topic;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

@@ -50,15 +50,18 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
     private long endTimeStamp;
     private TaskBean taskBean;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_task);
+    protected int getLayoutId() {
+        return R.layout.activity_edit_task;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
         setListener();
     }
-
 
 
     private void setData() {
@@ -192,7 +195,7 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
         taskBean.setCreateDate(DateUtils.getDate());
         taskBean.setUserEmail(UserInfoTools.getEmail(this));
-        if(taskBean.save()){
+        if(taskBean.save()){    //  保存到数据库
             Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(new TaskCreateSuccess() );
             finish();

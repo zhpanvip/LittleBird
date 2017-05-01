@@ -23,11 +23,14 @@ public class QuestionFragment extends BaseFragment {
     private List<QuestionBean> mList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_question,null);
+    protected int getLayoutId() {
+        return R.layout.fragment_question;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
-        return mView;
     }
 
     private void setData() {
@@ -40,4 +43,5 @@ public class QuestionFragment extends BaseFragment {
         mAdapter.setList(mList);
         mListView.setAdapter(mAdapter);
     }
+
 }

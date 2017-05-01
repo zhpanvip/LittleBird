@@ -2,18 +2,14 @@ package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import org.litepal.crud.DataSupport;
-
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
@@ -24,9 +20,12 @@ public class ResetUserActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout mActivityResetUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_user);
+    protected int getLayoutId() {
+        return R.layout.activity_reset_user;
+    }
+
+    @Override
+    protected void init() {
         initView();
     }
 

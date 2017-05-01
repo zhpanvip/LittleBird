@@ -26,10 +26,15 @@ public class NoticeActivity extends BaseActivity {
     private BaseFragmentAdapter mFragmentAdapter;
     private int prePosition=0;
     private List<TextView> mTextViewList;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice);
+    protected int getLayoutId() {
+        return R.layout.activity_notice;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
         setListener();

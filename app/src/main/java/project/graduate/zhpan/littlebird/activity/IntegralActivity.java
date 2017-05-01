@@ -17,10 +17,14 @@ public class IntegralActivity extends BaseActivity {
     private ListView mLvIntegral;
     private IntegralAdapter mAdapter;
     private List<IntegralBean> mList;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_integral);
+    protected int getLayoutId() {
+        return R.layout.activity_integral;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

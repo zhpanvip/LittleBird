@@ -6,4 +6,12 @@
     <string name="title_activity_my_base">MyBaseActivity</string>
     <string name="about_us">\t\t\t\t高效快捷是我们的理念，LittleBird将为您带来更顺畅的工作体验，更便捷的工作管理，更高效的工作规则。</string>
     <string name="copyright">河南大学软件学院2017届毕业设计\nCopyright©网络工程二班张攀</string>
+
+    <string name="connect_error">网络连接失败,请检查网络</string>
+    <string name="connect_timeout">连接超时,请稍后再试</string>
+    <string name="bad_network">服务器异常</string>
+    <string name="parse_error">解析服务器响应数据失败</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="response_return_error">服务器返回数据失败</string>
+
 </resources>

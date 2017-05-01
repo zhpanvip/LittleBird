@@ -18,13 +18,18 @@ public class EncourageActivity extends BaseActivity {
     private ListView mLvEncourage;
     private EncourageAdapter mAdapter;
     private List<EncourageBean> mList;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_encourage);
+    protected int getLayoutId() {
+        return R.layout.activity_encourage;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }
+
     private void setData() {
         mTvTitle.setText("奖励");
         mAdapter=new EncourageAdapter(this);

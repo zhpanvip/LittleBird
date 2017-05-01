@@ -28,14 +28,19 @@ public class CheckTaskActivity extends BaseActivity implements View.OnClickListe
     private String userEmail;
     private String userName;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_task);
+    protected int getLayoutId() {
+        return R.layout.activity_check_task;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setListener();
     }
+
     private void setListener(){
         mTvHistory.setOnClickListener(this);
     }
@@ -49,13 +54,15 @@ public class CheckTaskActivity extends BaseActivity implements View.OnClickListe
         mTvTitle.setText(userName+"的任务");
         mTaskAdapter=new CheckTaskAdapter(this);
         mList=new ArrayList<>();
-        mList= DataSupport.where("userEmail=? and createDate=?",userEmail, DateUtils.getDate()).find(TaskBean.class);
+        mList= DataSupport
+                .where("userEmail=? and createDate=?",userEmail, DateUtils.getDate())
+                .find(TaskBean.class);
         mTaskAdapter.setList(mList);
         mLvTask.setAdapter(mTaskAdapter);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

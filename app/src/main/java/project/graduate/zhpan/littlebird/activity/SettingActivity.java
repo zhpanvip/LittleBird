@@ -1,7 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -9,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import org.greenrobot.eventbus.EventBus;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.presenter.SettingPresenter;
@@ -25,10 +23,14 @@ public class SettingActivity extends BaseActivity  implements View.OnClickListen
     private ToggleButton mTbSignRemind;
     private TextView mTvAccount;
     private TextView mTvVersion;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+    protected int getLayoutId() {
+        return R.layout.activity_setting;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setListener();

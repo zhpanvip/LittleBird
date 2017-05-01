@@ -1,7 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +11,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
-
 import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.app.InitialData;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;

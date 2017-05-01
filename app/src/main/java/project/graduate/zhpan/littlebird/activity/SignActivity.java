@@ -1,7 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -78,9 +77,12 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign);
+    protected int getLayoutId() {
+        return R.layout.activity_sign;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
@@ -93,7 +95,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
         LinearInterpolator linearInterpolator = new LinearInterpolator();
         mAnimation.setInterpolator(linearInterpolator);
 
-        List<SignBean> signBeen = DataSupport.where("signDate=? and email=?", DateUtils.getDate(), UserInfoTools.getEmail(this)).find(SignBean.class);
+        List<SignBean> signBeen = DataSupport
+                .where("signDate=? and email=?", DateUtils.getDate(), UserInfoTools.getEmail(this))
+                .find(SignBean.class);
         if(signBeen.size()<=0){     //  还没签到
             //  初始化数据库
             signSaveBean = new SignBean();
@@ -238,7 +242,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         //  获取今天的任务
-        List<TaskBean> taskBeen = DataSupport.where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this)).find(TaskBean.class);
+        List<TaskBean> taskBeen = DataSupport
+                .where("createDate=? and userEmail=?", DateUtils.getDate(),UserInfoTools.getEmail(this))
+                .find(TaskBean.class);
         List<SignBean> signBeans = DataSupport.findAll(SignBean.class);
         signState=signBeans.get(0).getSignState();
         switch (view.getId()) {
@@ -249,7 +255,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                         Toast.makeText(this, "有任务还没完成，请先提交任务", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    List<SignBean> signBeen = DataSupport.where("signDate=? and email=?", DateUtils.getDate(), UserInfoTools.getEmail(this)).find(SignBean.class);
+                    List<SignBean> signBeen = DataSupport
+                            .where("signDate=? and email=?", DateUtils.getDate(), UserInfoTools.getEmail(this))
+                            .find(SignBean.class);
                     signBeen.get(0).setSignOutTime(currentStamp);
                     signBeen.get(0).setSignState(SIGN_OUT);
                     signBeen.get(0).updateAll("signDate=?",DateUtils.getDate());
@@ -283,7 +291,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                     }else { //  没有迟到则增加2个积分并保存获得积分到数据库
 
                         //  增加2个总积分
-                        List<UserBean> userBeen = DataSupport.where("email=?", UserInfoTools.getEmail(this)).find(UserBean.class);
+                        List<UserBean> userBeen = DataSupport
+                                .where("email=?", UserInfoTools.getEmail(this))
+                                .find(UserBean.class);
                         int totalInt = userBeen.get(0).getIntegral();
                         totalInt=totalInt+2;
                         userBeen.get(0).setIntegral(totalInt);
@@ -343,14 +353,14 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
      * Stop location service
      */
     @Override
-    protected void onStop() {
+    public void onStop() {
         locationService.unregisterListener(mListener); //注销掉监听
         locationService.stop(); //停止定位服务
         super.onStop();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
     }
 
@@ -375,7 +385,10 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     };
 
     public void getLocation() {
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        /**
+         * 获取locationservice实例，建议应用中只初始化1个location实例
+         *  然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+         */
         locationService = new LocationService(getApplicationContext());
         locationService.registerListener(mListener);
         //注册监听

@@ -48,14 +48,18 @@ public class MeFragment extends BaseFragment {
     private int[] images = {R.drawable.me_data, R.drawable.me_grade, R.drawable.me_integration, R.drawable.me_equity, R.drawable.me_plan, R.drawable.me_set};
     private UserBean userBean;
     private SpannableStringBuilder spannable;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_me, null);
+    protected int getLayoutId() {
+        return R.layout.fragment_me;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
         setListener();
-        return mView;
     }
 
     private void setData() {
@@ -143,4 +147,6 @@ public class MeFragment extends BaseFragment {
         mIvGrade= (ImageView) mView.findViewById(R.id.iv_me_rank);
         imageView= (ImageView) mView.findViewById(R.id.iv_me_head_picture);
     }
+
+
 }

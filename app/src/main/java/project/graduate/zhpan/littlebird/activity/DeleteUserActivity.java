@@ -23,10 +23,14 @@ public class DeleteUserActivity extends BaseActivity implements View.OnClickList
     private Button mBtnConfirm;
     private LinearLayout mActivityDeleteUser;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_user);
+    protected int getLayoutId() {
+        return R.layout.activity_delete_user;
+    }
+
+    @Override
+    protected void init() {
         initView();
     }
 

@@ -25,12 +25,16 @@ public class NoticeFragment extends BaseFragment {
     private ListView mListView;
     private List<NoticeBean> mList;
     private NoticeAdapter mAdapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_notice,null);
+    protected int getLayoutId() {
+        return R.layout.fragment_notice;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
-        return mView;
     }
 
     private void setData() {
@@ -45,4 +49,6 @@ public class NoticeFragment extends BaseFragment {
         mListView= (ListView) mView.findViewById(R.id.lv_notice);
 
     }
+
+
 }

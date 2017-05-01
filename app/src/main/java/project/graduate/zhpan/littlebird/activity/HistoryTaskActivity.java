@@ -6,9 +6,12 @@ import project.graduate.zhpan.littlebird.R;
 public class HistoryTaskActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_task);
+    protected int getLayoutId() {
+        return R.layout.activity_history_task;
+    }
+
+    @Override
+    protected void init() {
         setData();
     }
 

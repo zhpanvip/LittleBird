@@ -1,7 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,17 +24,21 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener,T
     private TextView mTvHistory;
     private TaskAdapter mTaskAdapter;
     private List<TaskBean> mList;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task);
+    protected int getLayoutId() {
+        return R.layout.activity_task;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setListener();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

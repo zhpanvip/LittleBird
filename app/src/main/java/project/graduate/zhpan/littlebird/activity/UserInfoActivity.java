@@ -10,12 +10,8 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.bean.ColleagueBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
@@ -39,12 +35,14 @@ public class UserInfoActivity extends BaseActivity {
     private  UserBean userBean;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_info);
+    protected int getLayoutId() {
+        return R.layout.activity_user_info;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
-
     }
 
     private void setData() {

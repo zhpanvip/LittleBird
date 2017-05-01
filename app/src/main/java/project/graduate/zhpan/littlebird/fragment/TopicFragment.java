@@ -64,13 +64,16 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener,
     private int commentPosition;    //  评论的topic的position
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_topic, null);
+    protected int getLayoutId() {
+        return R.layout.fragment_topic;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
         setListener();
-        return mView;
     }
 
     @Override

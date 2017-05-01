@@ -1,18 +1,15 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.BaseFragmentAdapter;
 import project.graduate.zhpan.littlebird.fragment.RankFragment;
@@ -49,10 +46,14 @@ public class RankActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mVpRank;
     private LinearLayout mActivityRank;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rank);
+    protected int getLayoutId() {
+        return R.layout.activity_rank;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

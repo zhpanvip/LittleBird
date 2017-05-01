@@ -43,11 +43,14 @@ public class RankFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_rank, null);
+    protected int getLayoutId() {
+        return R.layout.fragment_rank;
+    }
+
+    @Override
+    protected void init() {
         initView(mView);
         setData();
-        return mView;
     }
 
     private void setData() {
@@ -67,4 +70,6 @@ public class RankFragment extends BaseFragment {
         lv_rank = (ListView) mView.findViewById(R.id.lv_rank);
         mTvNoData= (TextView) mView.findViewById(R.id.tv_no_data);
     }
+
+
 }

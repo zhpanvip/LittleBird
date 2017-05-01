@@ -2,23 +2,16 @@ package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.greenrobot.eventbus.EventBus;
 import org.litepal.crud.DataSupport;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
@@ -43,9 +36,12 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
     private Bundle bundle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grade);
+    protected int getLayoutId() {
+        return R.layout.activity_grade;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
         setListener();
@@ -107,7 +103,9 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
             Toast.makeText(this, "请输入任务评分", Toast.LENGTH_SHORT).show();
             return;
         }
-        List<TaskBean> taskBeen = DataSupport.where("taskName=?", taskBean.getTaskName()).find(TaskBean.class);
+        List<TaskBean> taskBeen = DataSupport
+                .where("taskName=?", taskBean.getTaskName())
+                .find(TaskBean.class);
 
         taskBeen.get(0).setGrade(Float.parseFloat(grade));
         taskBeen.get(0).setCheck(true);

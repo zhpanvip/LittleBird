@@ -23,10 +23,15 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     private ListView mListView;
     private LeaveAdapter mAdapter;
     private List<LeaveBean> mList;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leave_list);
+    protected int getLayoutId() {
+        return R.layout.activity_leave_list;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
@@ -38,7 +43,7 @@ public class LeaveListActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

@@ -15,10 +15,14 @@ public class ProjectActivity extends BaseActivity {
     private ListView mListView;
     private List<ProjectBean> mList;
     private ProjectAdapter mAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project);
+    protected int getLayoutId() {
+        return R.layout.activity_project;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

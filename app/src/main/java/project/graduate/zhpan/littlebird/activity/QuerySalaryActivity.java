@@ -1,12 +1,8 @@
 package project.graduate.zhpan.littlebird.activity;
 
-import android.os.Bundle;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.SalaryAdapter;
 import project.graduate.zhpan.littlebird.bean.SalaryBean;
@@ -16,10 +12,14 @@ public class QuerySalaryActivity extends BaseActivity {
     private SalaryAdapter mAdapter;
     private List<SalaryBean> mGroupdList;
     private List<List<SalaryBean>> mChildList;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_query_salary);
+    protected int getLayoutId() {
+        return R.layout.activity_query_salary;
+    }
+
+    @Override
+    protected void init() {
         initView();
         setData();
     }

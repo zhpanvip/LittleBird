@@ -27,10 +27,14 @@ public class CheckActivity extends BaseActivity implements View.OnClickListener 
     private List<UserBean> mList;
     private UserBean userBean;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check);
+    protected int getLayoutId() {
+        return R.layout.activity_check;
+    }
+
+    @Override
+    protected void init() {
         initView();
         initData();
         setData();
