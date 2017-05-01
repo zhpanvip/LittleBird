@@ -69,22 +69,11 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
         if(mBaseImpl!=null)
         mBaseImpl.dismissProgress();
 
-        if(response.getStatus()==0){
+        if(response.getStatus().equalsIgnoreCase("success")){
             onSuccess(response);
         }else {
             onFail(response);
         }
-
-        /*if(!response.isError()){
-            onSuccess(response);
-        }else {
-            onFail(response);
-        }*/
-        /*if (response.getCode() == 200) {
-            onSuccess(response);
-        } else {
-            onFail(response);
-        }*/
     }
 
     @Override

@@ -5,7 +5,7 @@ package project.graduate.zhpan.littlebird.net;
  */
 public class BasicResponse<T> {
 
-    private int status;
+    private String status;
     private String message;
     private String errMsg;
 
@@ -21,11 +21,11 @@ public class BasicResponse<T> {
 
     private T results;
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
