@@ -25,4 +25,10 @@ public class UrlConstant {
     //  图片地址
     public static String  PicUrl="http://139.129.19.51/story/Uploads/";
 
+    /**
+     *  百度地图地址转经纬度接口
+     *  http://api.map.baidu.com/telematics/v3/geocoding?keyWord=北京市上地十街十号百度大厦&cityName=131&out_coord_type=gcj02&ak=E4805d16520de693a3fe707cdc962045
+     */
+    public static String location="http://api.map.baidu.com/telematics/v3/geocoding";
+
 }

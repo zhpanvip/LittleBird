@@ -1,5 +1,6 @@
 package project.graduate.zhpan.littlebird.net;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -35,10 +36,15 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     private BaseImpl mBaseImpl;
     //  Activity 是否在执行onStop()时取消订阅
     private boolean isAddInStop = false;
+    private Context context;
 
     public DefaultObserver(BaseImpl baseImpl) {
         mBaseImpl = baseImpl;
         mBaseImpl.showProgress();
+    }
+
+    public DefaultObserver(Context context) {
+       this.context=context;
     }
 
     public DefaultObserver(BaseImpl baseImpl, boolean isShowLoading) {
@@ -50,21 +56,30 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
 
     @Override
     public void onSubscribe(Disposable d) {
-        if (isAddInStop) {    //  在onStop中取消订阅
+        if (isAddInStop&&mBaseImpl!=null) {    //  在onStop中取消订阅
             mBaseImpl.addRxStop(d);
         } else { //  在onDestroy中取消订阅
+            if(mBaseImpl!=null)
             mBaseImpl.addRxDestroy(d);
         }
     }
 
     @Override
     public void onNext(T response) {
+        if(mBaseImpl!=null)
         mBaseImpl.dismissProgress();
-        if(!response.isError()){
+
+        if(response.getStatus()==0){
             onSuccess(response);
         }else {
             onFail(response);
         }
+
+        /*if(!response.isError()){
+            onSuccess(response);
+        }else {
+            onFail(response);
+        }*/
         /*if (response.getCode() == 200) {
             onSuccess(response);
         } else {
@@ -75,7 +90,7 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
     @Override
     public void onError(Throwable e) {
         LogUtils.e("Retrofit", e.getMessage());
-
+        if(mBaseImpl!=null)
         mBaseImpl.dismissProgress();
         if (e instanceof HttpException) {     //   HTTP错误
             onException(BAD_NETWORK);
@@ -121,6 +136,7 @@ public abstract class DefaultObserver<T extends BasicResponse> implements Observ
      * @param reason
      */
     public void onException(ExceptionReason reason) {
+        if(mBaseImpl!=null)
         mBaseImpl.dismissProgress();
         switch (reason) {
             case CONNECT_ERROR:

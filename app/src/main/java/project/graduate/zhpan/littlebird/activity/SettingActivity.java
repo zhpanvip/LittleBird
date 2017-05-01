@@ -43,10 +43,9 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         initData();
     }
 
-
-
     private void initData() {
         mTvTitle.setText("设置");
+        mTbRememberPsw.setOnCheckedChangeListener(this);
 
         //  设置当前登陆账号
         mTvAccount.setText(UserInfoTools.getEmail(this));

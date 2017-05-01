@@ -2,51 +2,64 @@ package project.graduate.zhpan.littlebird.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.callback.LoginCallBack;
 import project.graduate.zhpan.littlebird.constants.CheckConstants;
-import project.graduate.zhpan.littlebird.databinding.ActivityLoginActivityBinding;
 import project.graduate.zhpan.littlebird.presenter.LoginPresenter;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginCallBack, CompoundButton.OnCheckedChangeListener {
+    @BindView(R.id.et_username)
+    EditText mEtUsername;
+    @BindView(R.id.et_password)
+    EditText mEtPassword;
+    @BindView(R.id.cb_remember_password)
+    CheckBox mCbRememberPassword;
+    @BindView(R.id.cb_auto_login)
+    CheckBox mCbAutoLogin;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
     private LoginPresenter loginPresenter;
-    private ActivityLoginActivityBinding mBinding;
     private UserBean userBean;
     private boolean isExit; //  是否是退出登陆后进入登陆界面
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login_activity);
+        setContentView(R.layout.activity_login_activity);
+        ButterKnife.bind(this);
         initData();
         setData();
         setListener();
     }
 
     private void setData() {
-        if(SharedPreferencesUtils.isFistRun(this)){
-            mBinding.etUsername.setText("admin@littlebird.com");
-            mBinding.etUsername.setSelection(mBinding.etUsername.getText().toString().length());
-            mBinding.etPassword.setText("123456");
-            mBinding.etPassword.setSelection(mBinding.etPassword.getText().toString().length());
+        if (SharedPreferencesUtils.isFistRun(this)) {
+            mEtUsername.setText("admin@littlebird.com");
+            mEtUsername.setSelection(mEtUsername.getText().toString().length());
+            mEtPassword.setText("123456");
+            mEtPassword.setSelection(mEtPassword.getText().toString().length());
         }
         SharedPreferencesUtils.setFirstRun(this);
     }
 
     private void setListener() {
-        mBinding.btnLogin.setOnClickListener(this);
-        mBinding.cbRememberPassword.setOnCheckedChangeListener(this);
-        mBinding.cbAutoLogin.setOnCheckedChangeListener(this);
+        mBtnLogin.setOnClickListener(this);
+        mCbRememberPassword.setOnCheckedChangeListener(this);
+        mCbAutoLogin.setOnCheckedChangeListener(this);
     }
 
     private void initData() {
@@ -60,17 +73,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean rememberPassword = SharedPreferencesUtils.isRememberPassword(this);
         //  获取是否自动登陆
         boolean autoLogin = UserInfoTools.isAutoLogin(this);
+        mCbRememberPassword.setChecked(rememberPassword);
+        mCbAutoLogin.setChecked(autoLogin);
+
         if (rememberPassword) {
-            mBinding.cbRememberPassword.setChecked(true);
-            mBinding.etUsername.setText(UserInfoTools.getEmail(this));
-            mBinding.etPassword.setText(UserInfoTools.getPassWord(this));
+            mEtUsername.setText(UserInfoTools.getEmail(this));
+            mEtPassword.setText(UserInfoTools.getPassWord(this));
         } else {
-            mBinding.etUsername.setText(UserInfoTools.getEmail(this));
-            mBinding.etUsername.setSelection(UserInfoTools.getEmail(this).length());
-            mBinding.cbRememberPassword.setChecked(false);
+            mEtUsername.setText(UserInfoTools.getEmail(this));
+            mEtUsername.setSelection(UserInfoTools.getEmail(this).length());
         }
         if (autoLogin) {
-            mBinding.cbAutoLogin.setChecked(true);
             new Thread() {
                 @Override
                 public void run() {
@@ -81,8 +94,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             }.start();
-        } else {
-            mBinding.cbAutoLogin.setChecked(false);
         }
     }
 
@@ -95,8 +106,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 登陆
      */
     private void login() {
-        userBean.setEmail(mBinding.etUsername.getText().toString());
-        userBean.setPassword(mBinding.etPassword.getText().toString());
+        userBean.setEmail(mEtUsername.getText().toString());
+        userBean.setPassword(mEtPassword.getText().toString());
         int isLegal = loginPresenter.checkUserInfo(userBean);
         switch (isLegal) {
             case CheckConstants.NUll_USERNAME:
@@ -110,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case CheckConstants.LEGAL:
                 //loginPresenter.login(userBean, this);
-                loginPresenter.localLogin(userBean,this);
+                loginPresenter.localLogin(userBean, this);
                 saveConfigInfo();
                 break;
         }
@@ -118,12 +129,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //  保存登陆状态的配置信息
     private void saveConfigInfo() {
-        if (mBinding.cbRememberPassword.isChecked()) {
+        if (mCbRememberPassword.isChecked()) {
             //  保存记住密码选中状态
             SharedPreferencesUtils.saveIsRememberPsw(this, true);
             //  保存用户名和密码
-            userBean.setPassword(mBinding.etPassword.getText().toString());
-            userBean.setEmail(mBinding.etUsername.getText().toString());
+            userBean.setPassword(mEtPassword.getText().toString());
+            userBean.setEmail(mEtUsername.getText().toString());
             SharedPreferencesUtils.saveUserInfo(this, userBean);
         } else {
             //  保存记住密码checkbox选中状态
@@ -132,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userBean.setPassword("");
             SharedPreferencesUtils.saveUserInfo(this, userBean);
         }
-        if (mBinding.cbAutoLogin.isChecked()) {
+        if (mCbAutoLogin.isChecked()) {
             //  保存自动登录选中状态
             SharedPreferencesUtils.saveIsAutoLogin(this, true);
             SharedPreferencesUtils.saveIsRememberPsw(this, true);
@@ -161,16 +172,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (compoundButton.getId()) {
             case R.id.cb_remember_password:
                 if (isChecked) {
-                    mBinding.cbRememberPassword.setChecked(true);
+                    mCbRememberPassword.setChecked(true);
                 } else {
-                    mBinding.cbAutoLogin.setChecked(false);
+                    mCbAutoLogin.setChecked(false);
                 }
                 break;
             case R.id.cb_auto_login:
                 if (isChecked) {
-                    mBinding.cbRememberPassword.setChecked(true);
+                    mCbRememberPassword.setChecked(true);
                 } else {
-                    mBinding.cbAutoLogin.setChecked(false);
+                    mCbAutoLogin.setChecked(false);
                 }
                 break;
         }

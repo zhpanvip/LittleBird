@@ -122,8 +122,6 @@ public class SignActivity extends BaseActivity{
         getLocation();
     }
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -271,8 +269,6 @@ public class SignActivity extends BaseActivity{
                 } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
                     // 运营商信息
                     mTvAddress.setText(location.getCity() + location.getDistrict() + location.getStreet());
-                } else {
-                    mTvAddress.setText("获取位置失败，请检查网络");
                 }
             }
             mIvRefresh.clearAnimation();
@@ -393,9 +389,8 @@ public class SignActivity extends BaseActivity{
 
                 break;
             case R.id.iv_sign_refresh:  //  刷新位置
-                mIvRefresh.startAnimation(mAnimation);
-                mTvAddress.setText("正在获取位置...");
-                locationService.start();
+                //  获取位置
+                getLocation();
                 break;
         }
     }

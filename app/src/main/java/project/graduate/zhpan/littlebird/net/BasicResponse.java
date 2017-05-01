@@ -5,20 +5,28 @@ package project.graduate.zhpan.littlebird.net;
  */
 public class BasicResponse<T> {
 
-    private int code;
+    private int status;
     private String message;
     private String errMsg;
 
     private boolean error;
 
-    private T content;
-
-    public T getContent() {
-        return content;
+    public T getResults() {
+        return results;
     }
 
-    public void setContent(T content) {
-        this.content = content;
+    public void setResults(T results) {
+        this.results = results;
+    }
+
+    private T results;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public boolean isError() {
@@ -33,13 +41,6 @@ public class BasicResponse<T> {
         return errMsg;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public String getMessage() {
         return message;
