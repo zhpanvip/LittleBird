@@ -6,32 +6,39 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.greenrobot.eventbus.EventBus;
 import org.litepal.crud.DataSupport;
+
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 import project.graduate.zhpan.littlebird.utils.GradeTextWatcher;
 
-public class GradeActivity extends BaseActivity implements View.OnClickListener {
+public class GradeActivity extends BaseActivity {
 
-    private View mViewComplete;
-    private TextView mTvTaskName;
-    private TextView mTvCompleteState;
-    private View mViewQuality;
-    private TextView mTvQualityState;
-    private TextView mTvCuntTime;
-    private TextView mTvTimeCount;
-    private TextView mTvCheckPerson;
-    private EditText mEtGrade;
-    private EditText mEtJudge;
-    private Button mBtnSubmit;
-    private LinearLayout mActivityGrade;
+    @BindView(R.id.tv_task_name)
+    TextView mTvTaskName;
+    @BindView(R.id.tv_complete_state)
+    TextView mTvCompleteState;
+    @BindView(R.id.tv_quality_state)
+    TextView mTvQualityState;
+    @BindView(R.id.tv_cunt_time)
+    TextView mTvTimeCount;
+    @BindView(R.id.tv_check_person)
+    TextView mTvCheckPerson;
+    @BindView(R.id.et_grade)
+    EditText mEtGrade;
+    @BindView(R.id.btn_submit)
+    Button mBtnSubmit;
     private TaskBean taskBean;
     private Bundle bundle;
 
@@ -71,28 +78,13 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        mViewComplete = findViewById(R.id.view_complete);
         mTvTaskName = (TextView) findViewById(R.id.tv_task_name);
         mTvCompleteState = (TextView) findViewById(R.id.tv_complete_state);
-        mViewQuality = (View) findViewById(R.id.view_quality);
         mTvQualityState = (TextView) findViewById(R.id.tv_quality_state);
-        mTvCuntTime = (TextView) findViewById(R.id.tv_cunt_time);
         mTvTimeCount = (TextView) findViewById(R.id.tv_time_count);
         mTvCheckPerson = (TextView) findViewById(R.id.tv_check_person);
         mEtGrade = (EditText) findViewById(R.id.et_grade);
-        mEtJudge = (EditText) findViewById(R.id.et_judge);
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
-        mActivityGrade = (LinearLayout) findViewById(R.id.activity_grade);
-        mBtnSubmit.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_submit:
-                submit();
-                break;
-        }
     }
 
 
@@ -115,5 +107,16 @@ public class GradeActivity extends BaseActivity implements View.OnClickListener 
         finish();
 
     }
-    public class CheckSuccess{}
+
+    @OnClick({R.id.et_grade, R.id.btn_submit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_submit:
+                submit();
+                break;
+        }
+    }
+
+    public class CheckSuccess {
+    }
 }

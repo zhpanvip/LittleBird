@@ -1,5 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -7,17 +8,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import org.greenrobot.eventbus.EventBus;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class WriteTopicActivity extends BaseActivity implements View.OnClickListener {
+public class WriteTopicActivity extends BaseActivity {
 
-    private EditText mTvTopic;
-    private ImageView mIvAddPic;
-    private Button mBtnPublish;
-    private LinearLayout mActivityWriteTopic;
+    @BindView(R.id.tv_topic)
+    EditText mTvTopic;
+    @BindView(R.id.iv_add_pic)
+    ImageView mIvAddPic;
+    @BindView(R.id.btn_publish)
+    Button mBtnPublish;
+
 
     @Override
     protected int getLayoutId() {
@@ -26,30 +35,11 @@ public class WriteTopicActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void init() {
-        initView();
         setData();
     }
 
     private void setData() {
         mTvTitle.setText("发话题");
-    }
-
-    private void initView() {
-        mTvTopic = (EditText) findViewById(R.id.tv_topic);
-        mIvAddPic = (ImageView) findViewById(R.id.iv_add_pic);
-        mBtnPublish = (Button) findViewById(R.id.btn_publish);
-        mActivityWriteTopic = (LinearLayout) findViewById(R.id.activity_write_topic);
-
-        mBtnPublish.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_publish:
-                submit();
-                break;
-        }
     }
 
     private void submit() {
@@ -62,14 +52,21 @@ public class WriteTopicActivity extends BaseActivity implements View.OnClickList
         topicBean.setContent(mTvTopic.getText().toString());
         topicBean.setEmail(UserInfoTools.getEmail(this));
         topicBean.setDate(System.currentTimeMillis());
-        if(topicBean.save()){
+        if (topicBean.save()) {
             Toast.makeText(this, "发表成功", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(new TopicSendSuccess());
             finish();
-        }else {
+        } else {
             Toast.makeText(this, "发表话题失败，请重试！", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public class TopicSendSuccess{}
+
+    @OnClick(R.id.btn_publish)
+    public void onViewClicked() {
+        submit();
+    }
+
+    public class TopicSendSuccess {
+    }
 }

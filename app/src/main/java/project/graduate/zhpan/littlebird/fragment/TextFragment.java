@@ -12,8 +12,6 @@ import project.graduate.zhpan.littlebird.R;
  */
 
 public class TextFragment extends BaseFragment {
-
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_topic;

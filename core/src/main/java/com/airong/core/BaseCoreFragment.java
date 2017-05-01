@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.airong.core.view.CustomProgressDialog;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseCoreFragment extends Fragment implements BaseImpl{
     public View mView;
@@ -22,6 +23,7 @@ public abstract class BaseCoreFragment extends Fragment implements BaseImpl{
 
     //  加载进度的dialog
     private CustomProgressDialog mProgressDialog;
+    private Unbinder bind;
 
     @Nullable
     @Override
@@ -32,7 +34,7 @@ public abstract class BaseCoreFragment extends Fragment implements BaseImpl{
         mProgressDialog.setCanceledOnTouchOutside(false);
         if (mView == null) {
             mView = inflater.inflate(this.getLayoutId(), container, false);
-            ButterKnife.bind(this, mView);
+            bind = ButterKnife.bind(this, mView);
             init();
         }
         ViewGroup parent = (ViewGroup) mView.getParent();
@@ -40,6 +42,12 @@ public abstract class BaseCoreFragment extends Fragment implements BaseImpl{
             parent.removeView(mView);
         }
         return mView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
     }
 
     /**

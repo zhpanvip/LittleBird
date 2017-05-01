@@ -7,22 +7,24 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
-public class DeleteUserActivity extends BaseActivity implements View.OnClickListener {
+public class DeleteUserActivity extends BaseActivity{
 
-    private EditText mEtEmail;
-    private Button mBtnConfirm;
-    private LinearLayout mActivityDeleteUser;
-
+    @BindView(R.id.et_email)
+    EditText mEtEmail;
+    @BindView(R.id.btn_confirm)
+    Button mBtnConfirm;
 
     @Override
     protected int getLayoutId() {
@@ -41,18 +43,6 @@ public class DeleteUserActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         mEtEmail = (EditText) findViewById(R.id.et_email);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
-        mActivityDeleteUser = (LinearLayout) findViewById(R.id.activity_delete_user);
-
-        mBtnConfirm.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_confirm:
-                submit();
-                break;
-        }
     }
 
     private void submit() {
@@ -63,17 +53,26 @@ public class DeleteUserActivity extends BaseActivity implements View.OnClickList
         }
 
         List<UserBean> userBeen = DataSupport.where("email=?", email).find(UserBean.class);
-        if(userBeen.size()>0){
+        if (userBeen.size() > 0) {
             DataSupport.deleteAll(UserBean.class, "email=?", email);
             List<UserBean> userBeen2 = DataSupport.where("email=?", email).find(UserBean.class);
-            if(userBeen2.size()==0){
+            if (userBeen2.size() == 0) {
                 Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
                 finish();
-            }else {
+            } else {
                 Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
             }
-        }else {
+        } else {
             Toast.makeText(this, "该用户不存在", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btn_confirm)
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_confirm:
+                submit();
+                break;
         }
     }
 }

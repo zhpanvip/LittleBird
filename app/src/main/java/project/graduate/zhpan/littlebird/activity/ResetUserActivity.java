@@ -3,21 +3,19 @@ package project.graduate.zhpan.littlebird.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import org.litepal.crud.DataSupport;
 import java.util.List;
+import butterknife.BindView;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
-public class ResetUserActivity extends BaseActivity implements View.OnClickListener {
+public class ResetUserActivity extends BaseActivity{
 
-    private EditText mEtEmail;
-    private Button mBtnConfirm;
-    private LinearLayout mActivityResetUser;
+    @BindView(R.id.et_email)
+    EditText mEtEmail;
 
     @Override
     protected int getLayoutId() {
@@ -26,28 +24,10 @@ public class ResetUserActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void init() {
-        initView();
     }
 
     public static void start(Context context) {
         context.startActivity(new Intent(context, ResetUserActivity.class));
-    }
-
-    private void initView() {
-        mEtEmail = (EditText) findViewById(R.id.et_email);
-        mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
-        mActivityResetUser = (LinearLayout) findViewById(R.id.activity_reset_user);
-
-        mBtnConfirm.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_confirm:
-                submit();
-                break;
-        }
     }
 
     private void submit() {
@@ -60,12 +40,17 @@ public class ResetUserActivity extends BaseActivity implements View.OnClickListe
 
         List<UserBean> userBeen = DataSupport.where("email=?", email).find(UserBean.class);
         userBeen.get(0).setPassword("123456");
-        if(userBeen.get(0).save()){
+        if (userBeen.get(0).save()) {
             Toast.makeText(this, "重置成功", Toast.LENGTH_SHORT).show();
             finish();
-        }else {
+        } else {
             Toast.makeText(this, "重置失败", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @OnClick(R.id.btn_confirm)
+    public void onViewClicked() {
+        submit();
     }
 }

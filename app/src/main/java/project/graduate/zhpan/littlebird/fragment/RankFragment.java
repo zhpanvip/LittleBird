@@ -12,9 +12,11 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.RankAdapter;
-import project.graduate.zhpan.littlebird.bean.RankBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 
 /**
@@ -22,16 +24,18 @@ import project.graduate.zhpan.littlebird.bean.UserBean;
  */
 
 public class RankFragment extends BaseFragment {
-    public static final String TYPE_DAY="averageDay";
-    public static final String TYPE_WEEK="averageWEEK";
-    public static final String TYPE_QUARTER="averageQuarter";
-    public static final String TYPE_MONTH="averageMonth";
-    public static final String TYPE_YEAR="averageYear";
-    private TextView tv_rank;
-    private ListView lv_rank;
+    public static final String TYPE_DAY = "averageDay";
+    public static final String TYPE_WEEK = "averageWEEK";
+    public static final String TYPE_QUARTER = "averageQuarter";
+    public static final String TYPE_MONTH = "averageMonth";
+    public static final String TYPE_YEAR = "averageYear";
+
+    @BindView(R.id.lv_rank)
+    ListView lv_rank;
+    @BindView(R.id.tv_no_data)
+    TextView tv_no_data;
     private RankAdapter mAdapter;
     private List<UserBean> mList;
-    private TextView mTvNoData;
     private String rankType;
 
     public String getRankType() {
@@ -49,27 +53,18 @@ public class RankFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        initView(mView);
         setData();
     }
 
     private void setData() {
-        mList=new ArrayList<>();
+        mList = new ArrayList<>();
         //mList= DataSupport.order(rankType+"desc").find(UserBean.class);
-        mList= DataSupport.where(rankType+">0").order(rankType+"desc").find(UserBean.class);
-        mAdapter=new RankAdapter(getContext(),rankType);
+        mList = DataSupport.where(rankType + ">0").order(rankType + "desc").find(UserBean.class);
+        mAdapter = new RankAdapter(getContext(), rankType);
         mAdapter.setList(mList);
         lv_rank.setAdapter(mAdapter);
-        if(mList.size()<=0){
-            mTvNoData.setVisibility(View.VISIBLE);
+        if (mList.size() <= 0) {
+            tv_no_data.setVisibility(View.VISIBLE);
         }
     }
-
-    private void initView(View mView) {
-        tv_rank = (TextView) mView.findViewById(R.id.tv_rank);
-        lv_rank = (ListView) mView.findViewById(R.id.lv_rank);
-        mTvNoData= (TextView) mView.findViewById(R.id.tv_no_data);
-    }
-
-
 }

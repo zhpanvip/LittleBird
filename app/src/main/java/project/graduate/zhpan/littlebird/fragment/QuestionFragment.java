@@ -1,13 +1,10 @@
 package project.graduate.zhpan.littlebird.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.QuestionAdapter;
 import project.graduate.zhpan.littlebird.bean.QuestionBean;
@@ -17,8 +14,8 @@ import project.graduate.zhpan.littlebird.bean.QuestionBean;
  */
 
 public class QuestionFragment extends BaseFragment {
-    private View mView;
-    private ListView mListView;
+    @BindView(R.id.lv_question)
+    ListView mListView;
     private QuestionAdapter mAdapter;
     private List<QuestionBean> mList;
 
@@ -29,19 +26,12 @@ public class QuestionFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        initView();
         setData();
     }
 
     private void setData() {
-
-    }
-
-    private void initView() {
-        mListView= (ListView) mView.findViewById(R.id.lv_question);
-        mAdapter=new QuestionAdapter(getContext());
+        mAdapter = new QuestionAdapter(getContext());
         mAdapter.setList(mList);
         mListView.setAdapter(mAdapter);
     }
-
 }

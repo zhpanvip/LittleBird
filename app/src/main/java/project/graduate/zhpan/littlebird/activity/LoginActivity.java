@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.callback.LoginCallBack;

@@ -3,7 +3,6 @@ package project.graduate.zhpan.littlebird.activity;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,29 +14,33 @@ import android.widget.TextView;
 import com.airong.core.BaseRxActivity;
 import com.airong.core.view.CustomDialog;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.graduate.zhpan.littlebird.R;
 
 public abstract class BaseActivity extends BaseRxActivity {
+    @BindView(R.id.iv_back) ImageView mIvBack;
+    @BindView(R.id.toolbar_title) TextView mTvTitle;
+    @BindView(R.id.tv_item1) TextView mTvItem1;
+    @BindView(R.id.tv_item2) TextView mTvItem2;
+    @BindView(R.id.iv_right) ImageView mIvRight;
+    @BindView(R.id.tv_right) TextView mTvRight;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.ll_select) LinearLayout mLinearLayout;
+
     private LinearLayout parentLinearLayout;//把父类activity和子类activity的view都add到这里
-    public ImageView mIvBack;
-    public TextView mTvTitle;
-    public ImageView mIvRight;
-    public TextView mTvRight;
-    public Toolbar mToolbar;
-    public LinearLayout mLinearLayout;
-    public TextView mTvItem1;
-    public TextView mTvItem2;
 
     //  custom dialog
     private CustomDialog dialog;
     //  the view of dialog
     private View dialogView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initContentView(R.layout.tool_bar_layout);
         setContentView(getLayoutId());
-        findView();
+        ButterKnife.bind(this);
         setListener();
         init();
     }
@@ -53,17 +56,6 @@ public abstract class BaseActivity extends BaseRxActivity {
                 finish();
             }
         });
-    }
-
-    private void findView() {
-        mIvBack= (ImageView) findViewById(R.id.iv_back);
-        mTvTitle= (TextView) findViewById(R.id.toolbar_title);
-        mToolbar= (Toolbar) findViewById(R.id.toolbar);
-        mIvRight= (ImageView) findViewById(R.id.iv_right);
-        mTvRight= (TextView) findViewById(R.id.tv_right);
-        mLinearLayout= (LinearLayout) findViewById(R.id.ll_select);
-        mTvItem1= (TextView) findViewById(R.id.tv_item1);
-        mTvItem2= (TextView) findViewById(R.id.tv_item2);
     }
 
     /**
@@ -163,6 +155,7 @@ public abstract class BaseActivity extends BaseRxActivity {
     /**
      * create custom dialog
      * 可以定制任意的dialog样式
+     *
      * @param dialogLayoutRes    dialog布局资源文件
      * @param cancelTouchOutside 点击外部是否可以取消
      * @return

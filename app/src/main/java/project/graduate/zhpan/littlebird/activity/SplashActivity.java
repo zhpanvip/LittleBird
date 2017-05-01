@@ -3,8 +3,8 @@ package project.graduate.zhpan.littlebird.activity;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -14,22 +14,26 @@ import android.widget.RelativeLayout;
 import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.app.InitialData;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 
 public class SplashActivity extends AppCompatActivity {
-    private RelativeLayout mRelativeLayout;
+    @BindView(R.id.activity_splash)
+    RelativeLayout mRelativeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setStatusBarTransparent();
-        setMeizuStatusBarDarkIcon(this,true);
+        setMeizuStatusBarDarkIcon(this, true);
         setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
 
 
-        initView();
 
         initData();
 
@@ -41,12 +45,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void initData() {
         //  初始化数据库
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 boolean fistRun = SharedPreferencesUtils.isFistRun(SplashActivity.this);
-                if(fistRun){    //  初次运行 初始化数据库数据
+                if (fistRun) {    //  初次运行 初始化数据库数据
                     InitialData.initUser(); //  初始化用户
                     InitialData.initIntegral(); //  初始化积分
                     InitialData.initEncourage();    //  初始化奖励
@@ -61,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
     //  设置状态栏为透明
     private void setStatusBarTransparent() {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -103,13 +107,9 @@ public class SplashActivity extends AppCompatActivity {
         return result;
     }
 
-    private void initView() {
-        mRelativeLayout= (RelativeLayout) findViewById(R.id.activity_splash);
-    }
-
     //  设置Splash动画 透明渐变
     private void setAnimation() {
-        AlphaAnimation animation=new AlphaAnimation(0.3f,1.0f);
+        AlphaAnimation animation = new AlphaAnimation(0.3f, 1.0f);
         animation.setDuration(3000);
         mRelativeLayout.setAnimation(animation);
     }
@@ -120,7 +120,7 @@ public class SplashActivity extends AppCompatActivity {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                LoginActivity.start(SplashActivity.this,false);
+                LoginActivity.start(SplashActivity.this, false);
                 finish();
             }
         };
@@ -129,16 +129,16 @@ public class SplashActivity extends AppCompatActivity {
 
     /**
      * 设置splash界面中按返回键不作反应
+     *
      * @param keyCode
      * @param event
      * @return
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK )
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             return true;
         }
-        return super.onKeyDown(keyCode,event);
+        return super.onKeyDown(keyCode, event);
     }
 }

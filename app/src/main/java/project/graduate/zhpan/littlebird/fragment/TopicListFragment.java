@@ -2,21 +2,15 @@ package project.graduate.zhpan.littlebird.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,8 +18,10 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import project.graduate.zhpan.littlebird.R;
-import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.activity.WriteTopicActivity;
 import project.graduate.zhpan.littlebird.adapter.TopicAdapter;
 import project.graduate.zhpan.littlebird.adapter.TopicListAdapter;
@@ -35,19 +31,21 @@ import project.graduate.zhpan.littlebird.bean.TopicBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.KeyboardWatcher;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
-import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
-import project.graduate.zhpan.littlebird.view.RecyclerViewForScrollView;
 
 /**
  * Created by zhpan on 2017/1/5.
  */
 
 public class TopicListFragment extends BaseFragment implements View.OnClickListener, TopicAdapter.CommentCallBack, KeyboardWatcher.OnKeyboardToggleListener {
+    @BindView(R.id.lv_topic)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.et_comment)
+    EditText mEtComment;
+    @BindView(R.id.tv_publish)
+    TextView mTvComment;
+    @BindView(R.id.ll_comment)
+    LinearLayout mLlComment;
     private TopicListAdapter adapter;
-    private RecyclerView mRecyclerView;
-    private LinearLayout mLlComment;
-    private EditText mEtComment;
-    private TextView mTvComment;
     private InputMethodManager inputManager;
     private KeyboardWatcher keyboardWatcher;
     private List<UserBean> userBeen;
@@ -61,7 +59,6 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void init() {
-        initView();
         initData();
         setData();
         setListener();
@@ -89,7 +86,7 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
         /*adapter = new TopicAdapter(getActivity(), this);
         adapter.setList(topicBeen);
         mRecyclerView.setAdapter(adapter);*/
-        adapter=new TopicListAdapter(getContext(),this);
+        adapter = new TopicListAdapter(getContext(), this);
         adapter.setList(topicBeen);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(adapter);
@@ -108,13 +105,6 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
             topicBeen.get(i).save();
         }
         EventBus.getDefault().register(this);
-    }
-
-    private void initView() {
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.lv_topic);
-        mLlComment = (LinearLayout) mView.findViewById(R.id.ll_comment);
-        mTvComment = (TextView) mView.findViewById(R.id.tv_publish);
-        mEtComment = (EditText) mView.findViewById(R.id.et_comment);
     }
 
     @Override
@@ -155,6 +145,7 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
 
     /**
      * 发表评论
+     *
      * @param content 评论内容
      */
     public void publishClickListener(String content) {
@@ -226,4 +217,5 @@ public class TopicListFragment extends BaseFragment implements View.OnClickListe
         adapter.setList(topicBeen);
         adapter.notifyDataSetChanged();
     }
+
 }

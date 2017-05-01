@@ -1,28 +1,22 @@
 package project.graduate.zhpan.littlebird.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-
 import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import butterknife.BindView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.NoticeAdapter;
 import project.graduate.zhpan.littlebird.bean.NoticeBean;
-import project.graduate.zhpan.littlebird.view.ListViewForScrollView;
 
 /**
  * Created by zhpan on 2016/12/22.
  */
 
 public class NoticeFragment extends BaseFragment {
-    private View mView;
-    private ListView mListView;
+    @BindView(R.id.lv_notice)
+    ListView mListView;
     private List<NoticeBean> mList;
     private NoticeAdapter mAdapter;
 
@@ -33,22 +27,14 @@ public class NoticeFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        initView();
         setData();
     }
 
     private void setData() {
-        mList=new ArrayList<>();
+        mList = new ArrayList<>();
         mList = DataSupport.findAll(NoticeBean.class, false);
-        mAdapter=new NoticeAdapter(getContext());
+        mAdapter = new NoticeAdapter(getContext());
         mAdapter.setList(mList);
         mListView.setAdapter(mAdapter);
     }
-
-    private void initView() {
-        mListView= (ListView) mView.findViewById(R.id.lv_notice);
-
-    }
-
-
 }

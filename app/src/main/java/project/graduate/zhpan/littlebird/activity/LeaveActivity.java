@@ -19,6 +19,9 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.LeaveAdapter;
 import project.graduate.zhpan.littlebird.bean.LeaveBean;
@@ -26,18 +29,26 @@ import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class LeaveActivity extends BaseActivity implements View.OnClickListener, OnDateSetListener {
+public class LeaveActivity extends BaseActivity implements OnDateSetListener {
+    @BindView(R.id.tv_check_person)
+    TextView mTvCheckPerson;
+    @BindView(R.id.tv_start_time)
+    TextView mTvStartTime;
+    @BindView(R.id.rl_start_time)
+    RelativeLayout mRlStartTime;
+    @BindView(R.id.tv_end_time)
+    TextView mTvEndTime;
+    @BindView(R.id.rl_end_time)
+    RelativeLayout mRlEndTime;
+    @BindView(R.id.tv_leave_reason)
+    TextView mTvLeaveReason;
+    @BindView(R.id.et_task_describe)
+    EditText mEtTaskDescribe;
+    @BindView(R.id.activity_leave2)
+    LinearLayout mActivityLeave2;
     private LeaveAdapter mAdapter;
     private List<LeaveBean> mList;
     private int type;
-    private TextView mTvCheckPerson;
-    private TextView mTvStartTime;
-    private RelativeLayout mRlStartTime;
-    private TextView mTvEndTime;
-    private RelativeLayout mRlEndTime;
-    private TextView mTvLeaveReason;
-    private EditText mEtTaskDescribe;
-    private LinearLayout mActivityLeave2;
     private TimePickerDialog mDialogAll;
     private TimePickerDialog mDialogYearMonth;
     private TimePickerDialog mDialogYearMonthDay;
@@ -56,7 +67,6 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void init() {
-        initView();
         initData();
         setData();
     }
@@ -119,20 +129,6 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
         mTvRight.setVisibility(View.VISIBLE);
     }
 
-    private void initView() {
-        mTvCheckPerson = (TextView) findViewById(R.id.tv_check_person);
-        mTvStartTime = (TextView) findViewById(R.id.tv_start_time);
-        mRlStartTime = (RelativeLayout) findViewById(R.id.rl_start_time);
-        mTvEndTime = (TextView) findViewById(R.id.tv_end_time);
-        mRlEndTime = (RelativeLayout) findViewById(R.id.rl_end_time);
-        mTvLeaveReason = (TextView) findViewById(R.id.tv_leave_reason);
-        mEtTaskDescribe = (EditText) findViewById(R.id.et_task_describe);
-        mActivityLeave2 = (LinearLayout) findViewById(R.id.activity_leave2);
-        mTvRight.setOnClickListener(this);
-        mTvEndTime.setOnClickListener(this);
-        mTvStartTime.setOnClickListener(this);
-    }
-
     private void submit() {
         // validate
         String describe = mEtTaskDescribe.getText().toString().trim();
@@ -150,30 +146,12 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
                 .where("email=?", UserInfoTools.getEmail(this))
                 .find(UserBean.class);
         leaveBean.setLeavePerson(userBeen.get(0).getRealName());
-        if(leaveBean.save()){
+        if (leaveBean.save()) {
             Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(new LeaveSuccess());
             finish();
-        }else {
+        } else {
             Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_right:
-                submit();
-                break;
-            case R.id.tv_start_time:
-                mDialogAll.show(getSupportFragmentManager(), "all");
-                flag = 1;
-                break;
-
-            case R.id.tv_end_time:
-                mDialogAll.show(getSupportFragmentManager(), "all");
-                flag = 2;
-                break;
         }
     }
 
@@ -181,13 +159,28 @@ public class LeaveActivity extends BaseActivity implements View.OnClickListener,
     public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
         String text = DateUtils.timeStampToExactlyDate(millseconds);
         if (flag == 1) {
-            startTimeStamp=millseconds;
+            startTimeStamp = millseconds;
             mTvStartTime.setText(text);
         } else if (flag == 2) {
-            endTimeStamp=millseconds;
+            endTimeStamp = millseconds;
             mTvEndTime.setText(text);
         }
     }
 
-    public class LeaveSuccess{}
+    @OnClick({R.id.tv_start_time, R.id.tv_end_time, R.id.tv_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_right:
+                submit();
+                break;
+            case R.id.tv_start_time:
+                break;
+            case R.id.tv_end_time:
+                break;
+
+        }
+    }
+
+    public class LeaveSuccess {
+    }
 }

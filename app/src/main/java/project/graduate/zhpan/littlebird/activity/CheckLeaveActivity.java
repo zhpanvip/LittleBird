@@ -10,16 +10,20 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.CheckLeaveAdapter;
 import project.graduate.zhpan.littlebird.bean.LeaveBean;
 import project.graduate.zhpan.littlebird.callback.CheckLeaveListener;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListener{
+public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListener {
 
-    private ListView mIvLv;
-    private TextView mTvNoData;
+    @BindView(R.id.iv_lv)
+    ListView mIvLv;
+    @BindView(R.id.tv_no_data)
+    TextView mTvNoData;
     private List<LeaveBean> mList;
     private CheckLeaveAdapter mAdapter;
 
@@ -30,7 +34,6 @@ public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListen
 
     @Override
     protected void init() {
-        initView();
         initData();
         setData();
         setListener();
@@ -46,23 +49,18 @@ public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListen
 
     private void initData() {
         mTvTitle.setText("审批请假/公出");
-        mList=new ArrayList<>();
-        mList=DataSupport.where("email !=?", UserInfoTools.getEmail(this)).find(LeaveBean.class);
-        mAdapter=new CheckLeaveAdapter(this);
+        mList = new ArrayList<>();
+        mList = DataSupport.where("email !=?", UserInfoTools.getEmail(this)).find(LeaveBean.class);
+        mAdapter = new CheckLeaveAdapter(this);
         mAdapter.setList(mList);
         mIvLv.setAdapter(mAdapter);
-    }
-
-    private void initView() {
-        mIvLv = (ListView) findViewById(R.id.iv_lv);
-        mTvNoData = (TextView) findViewById(R.id.tv_no_data);
     }
 
     @Override
     public void onPassListener(int position) {
         LeaveBean leaveBean = (LeaveBean) mAdapter.getmList().get(position);
         leaveBean.setCheckResult(1);
-        if(leaveBean.save()){
+        if (leaveBean.save()) {
             refresh();
             Toast.makeText(this, "审批通过", Toast.LENGTH_SHORT).show();
         }
@@ -72,15 +70,15 @@ public class CheckLeaveActivity extends BaseActivity implements CheckLeaveListen
     public void onRefusedListener(int position) {
         LeaveBean leaveBean = (LeaveBean) mAdapter.getmList().get(position);
         leaveBean.setCheckResult(2);
-        if(leaveBean.save()){
+        if (leaveBean.save()) {
             refresh();
             Toast.makeText(this, "审批拒绝", Toast.LENGTH_SHORT).show();
         }
         refresh();
     }
 
-    private void refresh(){
-        mList=DataSupport.where("email !=?", UserInfoTools.getEmail(this)).find(LeaveBean.class);
+    private void refresh() {
+        mList = DataSupport.where("email !=?", UserInfoTools.getEmail(this)).find(LeaveBean.class);
         mAdapter.setList(mList);
         mAdapter.notifyDataSetChanged();
     }

@@ -8,31 +8,38 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
+import com.airong.core.utils.ImageLoaderUtil;
+import butterknife.BindView;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
-import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
 
 public class UserInfoActivity extends BaseActivity {
 
-    private ImageView imageView;
-    private TextView mTvName;
-    private TextView mTvGrade;
-    private LinearLayout mLlGrade;
-    private TextView mTvIntegral;
-    private TextView mTvTelNo;
-    private TextView mTvEMail;
-    private TextView mTvDuties;
-    private TextView mTvTime;
-    private TextView mTvWhere;
-    private TextView mTvPart;
-    private ImageView mIvGrade;
-    private LinearLayout mActivityUserInfo;
+    @BindView(R.id.iv_head_pic)
+    ImageView imageView;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.iv_grade)
+    ImageView mIvGrade;
+    @BindView(R.id.tv_integral)
+    TextView mTvIntegral;
+    @BindView(R.id.tv_tel_no)
+    TextView mTvTelNo;
+    @BindView(R.id.tv_e_mail)
+    TextView mTvEMail;
+    @BindView(R.id.tv_duties)
+    TextView mTvDuties;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_where)
+    TextView mTvWhere;
+    @BindView(R.id.tv_part)
+    TextView mTvPart;
+
     private SpannableStringBuilder spannable;
 
-    private  UserBean userBean;
+    private UserBean userBean;
 
     @Override
     protected int getLayoutId() {
@@ -41,7 +48,6 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        initView();
         setData();
     }
 
@@ -55,10 +61,7 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         //  加载头像
-        Glide.with(this).load(userBean.getHeadPic())
-                .transform(new GlideCircleTransform(this))
-                .placeholder(R.drawable.ic_home_avatar)
-                .into(imageView);
+        ImageLoaderUtil.loadCircleImg(imageView,userBean.getHeadPic());
 
         mTvName.setText(userBean.getRealName());
         mTvTelNo.setText(userBean.getTel());
@@ -75,7 +78,7 @@ public class UserInfoActivity extends BaseActivity {
 
 
         int rank = userBean.getRank();
-        switch (rank){
+        switch (rank) {
             case 1:
                 mIvGrade.setImageResource(R.drawable.me_grade_one);
                 break;
@@ -96,26 +99,11 @@ public class UserInfoActivity extends BaseActivity {
 
     public static void start(Context context, String title, UserBean userBean) {
         Intent intent = new Intent(context, UserInfoActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("userBean",userBean);
-        bundle.putString("title",title);
-        intent.putExtra("bundle",bundle);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userBean", userBean);
+        bundle.putString("title", title);
+        intent.putExtra("bundle", bundle);
         context.startActivity(intent);
     }
 
-    private void initView() {
-        imageView = (ImageView) findViewById(R.id.iv_head_pic);
-        mTvName = (TextView) findViewById(R.id.tv_name);
-        mTvGrade = (TextView) findViewById(R.id.tv_grade);
-        mLlGrade = (LinearLayout) findViewById(R.id.ll_grade);
-        mTvIntegral = (TextView) findViewById(R.id.tv_integral);
-        mTvTelNo = (TextView) findViewById(R.id.tv_tel_no);
-        mTvEMail = (TextView) findViewById(R.id.tv_e_mail);
-        mTvDuties = (TextView) findViewById(R.id.tv_duties);
-        mTvTime = (TextView) findViewById(R.id.tv_time);
-        mTvWhere = (TextView) findViewById(R.id.tv_where);
-        mTvPart = (TextView) findViewById(R.id.tv_part);
-        mIvGrade= (ImageView) findViewById(R.id.iv_grade);
-        mActivityUserInfo = (LinearLayout) findViewById(R.id.activity_user_info);
-    }
 }

@@ -13,16 +13,20 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.adapter.CheckTaskAdapter;
-import project.graduate.zhpan.littlebird.adapter.TaskAdapter;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 
-public class CheckTaskActivity extends BaseActivity implements View.OnClickListener{
+public class CheckTaskActivity extends BaseActivity{
 
-    private ListView mLvTask;
-    private TextView mTvHistory;
+    @BindView(R.id.tv_history_task)
+    TextView mTvHistory;
+    @BindView(R.id.lv_task)
+    ListView mLvTask;
     private CheckTaskAdapter mTaskAdapter;
     private List<TaskBean> mList;
     private String userEmail;
@@ -36,26 +40,22 @@ public class CheckTaskActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void init() {
-        initView();
         initData();
-        setListener();
     }
 
-    private void setListener(){
-        mTvHistory.setOnClickListener(this);
-    }
+
     private void initData() {
         EventBus.getDefault().register(this);
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
             userEmail = intent.getStringExtra("email");
             userName = intent.getStringExtra("userName");
         }
-        mTvTitle.setText(userName+"的任务");
-        mTaskAdapter=new CheckTaskAdapter(this);
-        mList=new ArrayList<>();
-        mList= DataSupport
-                .where("userEmail=? and createDate=?",userEmail, DateUtils.getDate())
+        mTvTitle.setText(userName + "的任务");
+        mTaskAdapter = new CheckTaskAdapter(this);
+        mList = new ArrayList<>();
+        mList = DataSupport
+                .where("userEmail=? and createDate=?", userEmail, DateUtils.getDate())
                 .find(TaskBean.class);
         mTaskAdapter.setList(mList);
         mLvTask.setAdapter(mTaskAdapter);
@@ -67,24 +67,20 @@ public class CheckTaskActivity extends BaseActivity implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
-    private void initView() {
-        mLvTask= (ListView) findViewById(R.id.lv_task);
-        mTvHistory= (TextView) findViewById(R.id.tv_history_task);
+    @Subscribe
+    public void onCheckSuccess(GradeActivity.CheckSuccess checkSuccess) {
+        mList = DataSupport.where("userEmail=? and createDate=?", userEmail, DateUtils.getDate()).find(TaskBean.class);
+        mTaskAdapter.setList(mList);
+        mLvTask.setAdapter(mTaskAdapter);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
+    @OnClick(R.id.tv_history_task)
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
             case R.id.tv_history_task:
-                Intent  intent=new Intent(this,HistoryTaskActivity.class);
+                Intent intent = new Intent(this, HistoryTaskActivity.class);
                 startActivity(intent);
                 break;
         }
-    }
-    @Subscribe
-    public  void onCheckSuccess(GradeActivity.CheckSuccess checkSuccess){
-        mList= DataSupport.where("userEmail=? and createDate=?",userEmail, DateUtils.getDate()).find(TaskBean.class);
-        mTaskAdapter.setList(mList);
-        mLvTask.setAdapter(mTaskAdapter);
     }
 }

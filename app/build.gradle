@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -26,6 +26,11 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -35,5 +40,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'org.greenrobot:eventbus:3.0.0'
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+    compile 'com.jakewharton:butterknife:8.5.1'
     compile project(':core')
 }

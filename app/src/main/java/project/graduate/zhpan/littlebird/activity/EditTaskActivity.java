@@ -1,12 +1,9 @@
 package project.graduate.zhpan.littlebird.activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,32 +17,43 @@ import com.jzxiang.pickerview.listener.OnDateSetListener;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Date;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.TaskBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class EditTaskActivity extends BaseActivity implements View.OnClickListener, OnDateSetListener {
+public class EditTaskActivity extends BaseActivity implements OnDateSetListener {
 
-    private ImageView mIvDown;
-    private TextView mTvTaskType;
-    private TextView mTvCheckPerson;
-    private TextView mTvTaskName;
-    private EditText mEtTask;
-    private TextView mTvStartTime;
-    private TextView mTvEndTime;
-    private TextView mTvTaskDescribe;
-    private EditText mEtTaskDescribe;
-    private LinearLayout mActivityEditTask;
+    @BindView(R.id.iv_down)
+    ImageView mIvDown;
+    @BindView(R.id.tv_task_type)
+    TextView mTvTaskType;
+    @BindView(R.id.tv_check_person)
+    TextView mTvCheckPerson;
+    @BindView(R.id.tv_task_name)
+    TextView mTvTaskName;
+    @BindView(R.id.et_task)
+    EditText mEtTask;
+    @BindView(R.id.tv_start_time)
+    TextView mTvStartTime;
+    @BindView(R.id.tv_end_time)
+    TextView mTvEndTime;
+    @BindView(R.id.tv_task_describe)
+    TextView mTvTaskDescribe;
+    @BindView(R.id.et_task_describe)
+    EditText mEtTaskDescribe;
+    @BindView(R.id.activity_edit_task)
+    LinearLayout mActivityEditTask;
     private TimePickerDialog mDialogAll;
     private TimePickerDialog mDialogYearMonth;
     private TimePickerDialog mDialogYearMonthDay;
     private TimePickerDialog mDialogMonthDayHourMinute;
     private TimePickerDialog mDialogHourMinute;
     private int flag = 0; //  标志哪一个时间选择其
-    private String title="";
+    private String title = "";
     private long startTimeStamp;
     private long endTimeStamp;
     private TaskBean taskBean;
@@ -58,11 +66,8 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void init() {
-        initView();
         setData();
-        setListener();
     }
-
 
     private void setData() {
         Intent intent = getIntent();
@@ -78,8 +83,8 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
         taskBean.setCheckPerson("李伟");
 
         String currentTime = DateUtils.timeStampToExactlyDate(System.currentTimeMillis());
-        startTimeStamp=System.currentTimeMillis();
-        endTimeStamp=System.currentTimeMillis();
+        startTimeStamp = System.currentTimeMillis();
+        endTimeStamp = System.currentTimeMillis();
         if (title.equals("添加任务")) {
             mTvStartTime.setText(currentTime);
             mTvEndTime.setText(currentTime);
@@ -132,43 +137,6 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
                 .build();
     }
 
-    private void setListener() {
-        mTvStartTime.setOnClickListener(this);
-        mTvEndTime.setOnClickListener(this);
-        mTvRight.setOnClickListener(this);
-    }
-
-    private void initView() {
-        mIvDown = (ImageView) findViewById(R.id.iv_down);
-        mTvTaskType = (TextView) findViewById(R.id.tv_task_type);
-        mTvCheckPerson = (TextView) findViewById(R.id.tv_check_person);
-        mTvTaskName = (TextView) findViewById(R.id.tv_task_name);
-        mEtTask = (EditText) findViewById(R.id.et_task);
-        mTvStartTime = (TextView) findViewById(R.id.tv_start_time);
-        mTvEndTime = (TextView) findViewById(R.id.tv_end_time);
-        mTvTaskDescribe = (TextView) findViewById(R.id.tv_task_describe);
-        mEtTaskDescribe = (EditText) findViewById(R.id.et_task_describe);
-        mActivityEditTask = (LinearLayout) findViewById(R.id.activity_edit_task);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_start_time:
-
-                mDialogAll.show(getSupportFragmentManager(), "all");
-                flag = 1;
-                break;
-            case R.id.tv_end_time:
-                mDialogAll.show(getSupportFragmentManager(), "all");
-                flag = 2;
-                break;
-            case R.id.tv_right:
-                    submit();
-                break;
-        }
-    }
-
     private void submit() {
         // validate
         String task = mEtTask.getText().toString().trim();
@@ -182,24 +150,25 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "请填写任务说明", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(startTimeStamp>=endTimeStamp){
+        if (startTimeStamp >= endTimeStamp) {
             Toast.makeText(this, "结束时间应该大于开始时间", Toast.LENGTH_SHORT).show();
             return;
         }
 
         saveToDB();
     }
+
     //  添加任务
     private void saveToDB() {
         taskBean.setTaskName(mEtTask.getText().toString());
         taskBean.setTaskDescribe(mEtTaskDescribe.getText().toString());
         taskBean.setCreateDate(DateUtils.getDate());
         taskBean.setUserEmail(UserInfoTools.getEmail(this));
-        if(taskBean.save()){    //  保存到数据库
+        if (taskBean.save()) {    //  保存到数据库
             Toast.makeText(this, "提交成功", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(new TaskCreateSuccess() );
+            EventBus.getDefault().post(new TaskCreateSuccess());
             finish();
-        }else {
+        } else {
             Toast.makeText(this, "提交失败", Toast.LENGTH_SHORT).show();
         }
 
@@ -222,16 +191,36 @@ public class EditTaskActivity extends BaseActivity implements View.OnClickListen
     public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
         String text = DateUtils.timeStampToExactlyDate(millseconds);
         if (flag == 1) {
-            startTimeStamp=millseconds;
+            startTimeStamp = millseconds;
             taskBean.setStartTime(startTimeStamp);
             mTvStartTime.setText(text);
         } else if (flag == 2) {
-            endTimeStamp=millseconds;
+            endTimeStamp = millseconds;
             taskBean.setEndTime(endTimeStamp);
             mTvEndTime.setText(text);
         }
 
     }
 
-    public class TaskCreateSuccess{}
+
+    @OnClick({R.id.tv_start_time, R.id.tv_end_time,R.id.tv_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_start_time:
+
+                mDialogAll.show(getSupportFragmentManager(), "all");
+                flag = 1;
+                break;
+            case R.id.tv_end_time:
+                mDialogAll.show(getSupportFragmentManager(), "all");
+                flag = 2;
+                break;
+            case R.id.tv_right:
+                submit();
+                break;
+        }
+    }
+
+    public class TaskCreateSuccess {
+    }
 }

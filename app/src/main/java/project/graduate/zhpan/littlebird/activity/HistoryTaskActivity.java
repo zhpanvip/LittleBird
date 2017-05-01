@@ -1,6 +1,5 @@
 package project.graduate.zhpan.littlebird.activity;
 
-import android.os.Bundle;
 import project.graduate.zhpan.littlebird.R;
 
 public class HistoryTaskActivity extends BaseActivity {

@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
+import butterknife.BindView;
+import butterknife.Unbinder;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.UserInfoActivity;
 import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
@@ -21,21 +23,28 @@ import project.graduate.zhpan.littlebird.utils.SideBar;
  */
 
 public class ColleagueFragment extends BaseFragment {
-    private ListView mListView;
-    private SideBar mSideBar;
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+    @BindView(R.id.toolbar_title)
+    TextView mTvTitle;
+    @BindView(R.id.lv_colleague_name)
+    ListView mListView;
+    @BindView(R.id.sidrbar)
+    SideBar mSideBar;
     private ColleagueAdapter adapter;
     private List<UserBean> mList;
 
-    private void setListener(){
+    private void setListener() {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 UserBean user = (UserBean) (adapter.getmList().get(position));
                 String title = user.getRealName();
-                UserInfoActivity.start(getActivity(),title,user);
+                UserInfoActivity.start(getActivity(), title, user);
             }
         });
     }
+
     private void setData() {
         mTvTitle.setText("LittleBird");
         mIvBack.setVisibility(View.GONE);
@@ -43,9 +52,9 @@ public class ColleagueFragment extends BaseFragment {
         mList = new ArrayList<>();
         //  获取json数据
         String colleagueData = JsonFileReader.getJson(getContext(), "Colleague.json");
-        Gson gson=new Gson();
+        Gson gson = new Gson();
         //ColleagueBean colleague = gson.fromJson(colleagueData, ColleagueBean.class);
-        mList= DataSupport.findAll(UserBean.class);
+        mList = DataSupport.findAll(UserBean.class);
         //mList = colleague.getEmployeeList();
         adapter.setList(mList);
         mListView.setAdapter(adapter);
@@ -54,12 +63,12 @@ public class ColleagueFragment extends BaseFragment {
 
     }
 
-    private void initView() {
+/*    private void initView() {
         mTvTitle = (TextView) mView.findViewById(R.id.toolbar_title);
         mIvBack = (ImageView) mView.findViewById(R.id.iv_back);
         mListView = (ListView) mView.findViewById(R.id.lv_colleague_name);
         mSideBar = (SideBar) mView.findViewById(R.id.sidrbar);
-    }
+    }*/
 
     @Override
     protected int getLayoutId() {
@@ -68,7 +77,7 @@ public class ColleagueFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        initView();
+       // initView();
         setData();
         setListener();
     }

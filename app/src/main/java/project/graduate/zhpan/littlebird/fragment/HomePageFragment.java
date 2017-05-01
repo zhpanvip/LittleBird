@@ -9,18 +9,20 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airong.core.utils.ImageLoaderUtil;
 import com.bumptech.glide.Glide;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.activity.CheckActivity;
 import project.graduate.zhpan.littlebird.activity.NoticeActivity;
@@ -28,7 +30,6 @@ import project.graduate.zhpan.littlebird.activity.ProjectActivity;
 import project.graduate.zhpan.littlebird.activity.RankActivity;
 import project.graduate.zhpan.littlebird.activity.SignActivity;
 import project.graduate.zhpan.littlebird.activity.TaskActivity;
-import project.graduate.zhpan.littlebird.adapter.ColleagueAdapter;
 import project.graduate.zhpan.littlebird.bean.IntegralBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
@@ -40,18 +41,20 @@ import project.graduate.zhpan.littlebird.view.GlideCircleTransform;
  */
 
 public class HomePageFragment extends BaseFragment implements View.OnClickListener {
-    private ImageView imageView;
-    private LinearLayout mLlSign;
-    private LinearLayout mLlTask;
-    private LinearLayout mLlCheck;
-    private LinearLayout mLlRank;
-    private LinearLayout mLlProject;
-    private LinearLayout mLlNotice;
-    private TextView mTvInt;
-    private TextView mTvIntYesterday;
+    @BindView(R.id.iv_back) ImageView mIvBack;
+    @BindView(R.id.toolbar_title) TextView mTvTitle;
+    @BindView(R.id.tv_integral) TextView mTvInt;
+    @BindView(R.id.tv_integral_yesterday) TextView mTvYesterday;
+    @BindView(R.id.ll_homepage_sign) LinearLayout mLlSign;
+    @BindView(R.id.ll_homepage_task) LinearLayout mLlTask;
+    @BindView(R.id.ll_homepage_check) LinearLayout mLlCheck;
+    @BindView(R.id.ll_homepage_ranking) LinearLayout mLlRanking;
+    @BindView(R.id.ll_homepage_project) LinearLayout mLlProject;
+    @BindView(R.id.ll_homepage_notice) LinearLayout mLlNotice;
+    @BindView(R.id.iv_homepage_head_picture) ImageView imageView;
+
     private UserBean userBean;
     private SpannableStringBuilder spannable;
-
 
     @Override
     protected int getLayoutId() {
@@ -60,7 +63,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void init() {
-        initView();
         initData();
         setData();
         setListener();
@@ -75,7 +77,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mLlSign.setOnClickListener(this);
         mLlTask.setOnClickListener(this);
         mLlCheck.setOnClickListener(this);
-        mLlRank.setOnClickListener(this);
+        mLlRanking.setOnClickListener(this);
         mLlProject.setOnClickListener(this);
         mLlNotice.setOnClickListener(this);
     }
@@ -90,35 +92,15 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mTvInt.setText(spannable);
 
         //  获取昨日积分实体类
-        long timeStamp=System.currentTimeMillis()-24*60*60*1000;
+        long timeStamp = System.currentTimeMillis() - 24 * 60 * 60 * 1000;
         List<IntegralBean> integralBeen = DataSupport.where("date=? and email=?", DateUtils.stampToDate(timeStamp), UserInfoTools.getEmail(getContext())).find(IntegralBean.class);
-        int integral=integralBeen.size()>0 ? integralBeen.get(0).getIntegral():0;
+        int integral = integralBeen.size() > 0 ? integralBeen.get(0).getIntegral() : 0;
         spannable = new SpannableStringBuilder("昨日积分" + integral + "分");
 
         spannable.setSpan(colorSpan, 4, 4 + (userBean.getYesterdayInt() + "").length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        mTvIntYesterday.setText(spannable);
+        mTvYesterday.setText(spannable);
         //  加载头像
-        Glide.with(getContext()).load(userBean.getHeadPic())
-                .into(imageView);
-        Glide.with(this).load(userBean.getHeadPic())
-                .transform(new GlideCircleTransform(getContext()))
-                .placeholder(R.drawable.ic_home_avatar)
-                .into(imageView);
-    }
-
-    private void initView() {
-        mTvTitle = (TextView) mView.findViewById(R.id.toolbar_title);
-        mIvBack = (ImageView) mView.findViewById(R.id.iv_back);
-        //mGrideView= (GridView) mView.findViewById(R.id.gv_home_page);
-        mLlSign = (LinearLayout) mView.findViewById(R.id.ll_homepage_sign);
-        mLlTask = (LinearLayout) mView.findViewById(R.id.ll_homepage_task);
-        mLlCheck = (LinearLayout) mView.findViewById(R.id.ll_homepage_check);
-        mLlRank = (LinearLayout) mView.findViewById(R.id.ll_homepage_ranking);
-        mLlProject = (LinearLayout) mView.findViewById(R.id.ll_homepage_project);
-        mLlNotice = (LinearLayout) mView.findViewById(R.id.ll_homepage_notice);
-        mTvInt = (TextView) mView.findViewById(R.id.tv_integral);
-        mTvIntYesterday = (TextView) mView.findViewById(R.id.tv_integral_yesterday);
-        imageView = (ImageView) mView.findViewById(R.id.iv_homepage_head_picture);
+        ImageLoaderUtil.loadCircleImg(imageView,userBean.getHeadPic());
     }
 
     @Override
@@ -151,6 +133,4 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 break;
         }
     }
-
-
 }

@@ -5,23 +5,31 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class ModifyPswActivity extends BaseActivity implements View.OnClickListener {
+public class ModifyPswActivity extends BaseActivity{
 
-    private EditText mEtOldPsw;
-    private EditText mEtNewPsw;
-    private EditText mEtConfirmPsw;
-    private Button mBtnConfirm;
+    @BindView(R.id.et_old_psw)
+    EditText mEtOldPsw;
+    @BindView(R.id.et_new_psw)
+    EditText mEtNewPsw;
+    @BindView(R.id.et_confirm_psw)
+    EditText mEtConfirmPsw;
+    @BindView(R.id.btn_confirm)
+    Button mBtnConfirm;
 
     @Override
     protected int getLayoutId() {
@@ -30,7 +38,6 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void init() {
-        initView();
         setData();
     }
 
@@ -38,15 +45,7 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
         mTvTitle.setText("修改密码");
     }
 
-    private void initView() {
-        mEtOldPsw = (EditText) findViewById(R.id.et_old_psw);
-        mEtNewPsw = (EditText) findViewById(R.id.et_new_psw);
-        mEtConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
-        mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
-        mBtnConfirm.setOnClickListener(this);
-    }
-
-    @Override
+    @OnClick(R.id.btn_confirm)
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
@@ -73,28 +72,27 @@ public class ModifyPswActivity extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, "请确认密码", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!newPsw.equals(confirmPsw)){
+        if (!newPsw.equals(confirmPsw)) {
             Toast.makeText(this, "密码不一致", Toast.LENGTH_SHORT).show();
             return;
         }
         List<UserBean> userBeen = DataSupport.where("email=? and password=?", UserInfoTools.getEmail(this), oldPsw).find(UserBean.class);
-        if(userBeen.size()>0){
+        if (userBeen.size() > 0) {
             UserBean userBean = userBeen.get(0);
             userBean.setPassword(newPsw);
-            if(userBean.save()){
+            if (userBean.save()) {
                 Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
                 userBean.setPassword("");
-                SharedPreferencesUtils.saveUserInfo(this,userBean);
-                LoginActivity.start(this,true);
+                SharedPreferencesUtils.saveUserInfo(this, userBean);
+                LoginActivity.start(this, true);
                 finish();
-            }else {
+            } else {
                 Toast.makeText(this, "密码修改失败", Toast.LENGTH_SHORT).show();
             }
 
-        }else {
+        } else {
             Toast.makeText(this, "原密码输入有误", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
