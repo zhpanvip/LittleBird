@@ -24,7 +24,7 @@ public class SharedPreferencesUtils {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("email",userBean.getEmail());
         editor.putString("password",userBean.getPassword());
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -160,5 +160,26 @@ public class SharedPreferencesUtils {
         sp=context.getSharedPreferences("isFirstRun",MODE_PRIVATE);
         boolean isFirstRun=sp.getBoolean("isFirstRun",true);
         return isFirstRun;
+    }
+
+    //  存储公司经纬度
+    public static void saveLocation(Context context,double lat,double lng){
+        sp = context.getSharedPreferences("LittleBird", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putFloat("lat", (float) lat);
+        edit.putFloat("lng", (float) lng);
+        edit.apply();
+    }
+    //  获取维度
+    public static double getLat(Context context){
+        sp = context.getSharedPreferences("LittleBird", MODE_PRIVATE);
+        float lat = sp.getFloat("lat", 0);
+        return lat;
+    }
+    //  获取经度
+    public static double getLng(Context context){
+        sp = context.getSharedPreferences("LittleBird", MODE_PRIVATE);
+        float lng = sp.getFloat("lng", 0);
+        return lng;
     }
 }

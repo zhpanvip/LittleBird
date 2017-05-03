@@ -4,24 +4,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import project.graduate.zhpan.littlebird.R;
+import project.graduate.zhpan.littlebird.bean.BaiduLocation;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.callback.LoginCallBack;
 import project.graduate.zhpan.littlebird.constants.CheckConstants;
+import project.graduate.zhpan.littlebird.constants.Constatns;
+import project.graduate.zhpan.littlebird.net.BasicResponse;
+import project.graduate.zhpan.littlebird.net.DefaultObserver;
+import project.graduate.zhpan.littlebird.net.IdeaApi;
 import project.graduate.zhpan.littlebird.presenter.LoginPresenter;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, LoginCallBack, CompoundButton.OnCheckedChangeListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginCallBack, CompoundButton.OnCheckedChangeListener {
     @BindView(R.id.et_username)
     EditText mEtUsername;
     @BindView(R.id.et_password)
@@ -35,12 +49,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginPresenter loginPresenter;
     private UserBean userBean;
     private boolean isExit; //  是否是退出登陆后进入登陆界面
+    private long ANIMATION_DURATION = 1000;
+    private boolean autoLogin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_activity);
-        ButterKnife.bind(this);
+    protected int getLayoutId() {
+        return R.layout.activity_login_activity;
+    }
+
+    @Override
+    protected void init() {
         initData();
         setData();
         setListener();
@@ -63,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initData() {
+        mToolbar.setVisibility(View.GONE);
         userBean = new UserBean();
         Intent intent = getIntent();
         if (intent != null) {
@@ -72,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //  获取是否记住密码
         boolean rememberPassword = SharedPreferencesUtils.isRememberPassword(this);
         //  获取是否自动登陆
-        boolean autoLogin = UserInfoTools.isAutoLogin(this);
+        autoLogin = UserInfoTools.isAutoLogin(this);
         mCbRememberPassword.setChecked(rememberPassword);
         mCbAutoLogin.setChecked(autoLogin);
 
@@ -83,19 +102,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mEtUsername.setText(UserInfoTools.getEmail(this));
             mEtUsername.setSelection(UserInfoTools.getEmail(this).length());
         }
-        if (autoLogin) {
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    SystemClock.sleep(1000);
-                    if (!isExit) {
-                        login();
-                    }
-                }
-            }.start();
-        }
+        finishActivity();
     }
+
+    private void finishActivity() {
+        getObservable().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver());
+    }
+
+    private Observable<Long> getObservable() {
+        return Observable.timer(ANIMATION_DURATION, TimeUnit.MILLISECONDS);
+    }
+
+    private Observer<Long> getObserver() {
+
+        return new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addRxDestroy(d);
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                if (autoLogin&&!isExit) {
+                        login();
+                }
+            }
+        };
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -121,8 +167,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case CheckConstants.LEGAL:
                 //loginPresenter.login(userBean, this);
-                loginPresenter.localLogin(userBean, this);
                 saveConfigInfo();
+                loginPresenter.localLogin(userBean, this);
                 break;
         }
     }
@@ -200,6 +246,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onIMEIError() {
         Toast.makeText(this, "请在自己手机上登陆", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loginSuccess() {
+        UserBean user = getUser();
+        //  获取公司经纬度并存储
+        IdeaApi.getApiService()
+                .getLocation(user.getCity(),user.getCompanyAddr(),
+                        Constatns.AK,"json",Constatns.MCODE_DEBUG)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DefaultObserver<BasicResponse<BaiduLocation>>(LoginActivity.this,true) {
+                    @Override
+                    public void onSuccess(BasicResponse<BaiduLocation> response) {
+                        BaiduLocation results = response.getResults();
+                        BaiduLocation.LocationBean location = results.getLocation();
+                        SharedPreferencesUtils.saveLocation(LoginActivity.this,
+                                location.getLat(),location.getLng());
+                        startMainActivity(userBean);
+                    }
+                });
+    }
+
+    private UserBean getUser(){
+        List<UserBean> userBeen = DataSupport
+                .where("email=?", UserInfoTools.getEmail(this))
+                .find(UserBean.class);
+        return userBeen.get(0);
+    }
+
+    //  验证成功跳转到主页面
+    private void startMainActivity(UserBean userBean) {
+        SharedPreferencesUtils.saveLoginStatus(this, true);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("email", userBean.getEmail());
+        bundle.putString("password", userBean.getPassword());
+        intent.putExtras(bundle);
+        finish();
+        startActivity(intent);
     }
 
     public static void start(Context context, boolean isExit) {

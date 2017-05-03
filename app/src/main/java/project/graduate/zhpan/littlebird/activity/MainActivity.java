@@ -1,5 +1,6 @@
 package project.graduate.zhpan.littlebird.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,7 @@ import project.graduate.zhpan.littlebird.fragment.HomePageFragment;
 import project.graduate.zhpan.littlebird.fragment.MeFragment;
 import project.graduate.zhpan.littlebird.fragment.TopicFragment;
 import project.graduate.zhpan.littlebird.utils.DateUtils;
+import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 import project.graduate.zhpan.littlebird.utils.UserInfoTools;
 
 public class MainActivity extends BaseActivity {
@@ -71,6 +73,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void init() {
+
         initData();
         setData();
         setListener();
@@ -211,5 +214,9 @@ public class MainActivity extends BaseActivity {
     //  弹窗是否显示
     public boolean isPopWindowShow() {
         return mCheckBox.isChecked();
+    }
+
+    public static void start(Context context){
+        context.startActivity(new Intent(context,MainActivity.class));
     }
 }

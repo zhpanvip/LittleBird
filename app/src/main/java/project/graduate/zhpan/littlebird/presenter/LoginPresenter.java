@@ -19,14 +19,23 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Response;
 import project.graduate.zhpan.littlebird.activity.LoginActivity;
 import project.graduate.zhpan.littlebird.activity.MainActivity;
+import project.graduate.zhpan.littlebird.app.MainApplication;
+import project.graduate.zhpan.littlebird.bean.BaiduLocation;
 import project.graduate.zhpan.littlebird.bean.LoginBean;
 import project.graduate.zhpan.littlebird.bean.UserBean;
 import project.graduate.zhpan.littlebird.constants.CheckConstants;
+import project.graduate.zhpan.littlebird.constants.Constatns;
 import project.graduate.zhpan.littlebird.constants.UrlConstant;
+import project.graduate.zhpan.littlebird.net.BasicResponse;
+import project.graduate.zhpan.littlebird.net.DefaultObserver;
+import project.graduate.zhpan.littlebird.net.IdeaApi;
+import project.graduate.zhpan.littlebird.net.IdeaApiService;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 
 /**
@@ -115,39 +124,30 @@ public class LoginPresenter {
                 if (!userBeen.get(0).getImei().equals(getIMEI())) {      // 不是同一部手机
                     loginActivity.onIMEIError();
                 } else {   //    是同一部手机
-                    startLoginActivity(userBeen, loginActivity);
+                    //  获取公司位置经纬度
+                    loginActivity.loginSuccess();
                 }
             } else { //  第一次登陆 保存IMEI到数据库
                 userBeen.get(0).setImei(getIMEI());
                 userBeen.get(0).setNotFirstLogin(true);
                 userBeen.get(0).save();
-                startLoginActivity(userBeen, loginActivity);
+                loginActivity.loginSuccess();
+                //  获取公司位置经纬度
             }
         } else {    //  用户名或密码错误
             loginActivity.onPasswordError();
         }
 
     }
-    //  验证成功跳转到主页面
-    private void startLoginActivity(List<UserBean> userBeen, LoginActivity loginActivity) {
-        SharedPreferencesUtils.saveLoginStatus(activity, true);
-        String email = userBeen.get(0).getEmail();
-        String password = userBeen.get(0).getPassword();
-        Intent intent = new Intent(loginActivity, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("email", email);
-        bundle.putString("password", password);
-        intent.putExtras(bundle);
-        loginActivity.finish();
-        loginActivity.startActivity(intent);
-    }
+
 
     /**
      * 获取手机IMEI号
      */
     public String getIMEI() {
         String imei = "";
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
             // 判断是否需要解释获取权限原因
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.READ_PHONE_STATE)) {
@@ -159,10 +159,10 @@ public class LoginPresenter {
                         new String[]{Manifest.permission.READ_PHONE_STATE},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS 是自定义的常量，在回调方法中可以获取到
-
             }
         } else {
-            TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(activity.TELEPHONY_SERVICE);
+            TelephonyManager telephonyManager = (TelephonyManager) activity
+                    .getSystemService(activity.TELEPHONY_SERVICE);
             imei = telephonyManager.getDeviceId();
         }
         return imei;

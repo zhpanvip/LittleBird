@@ -77,7 +77,6 @@ public class IdeaApi {
                 LogUtils.d("Okhttp", "no network");
             }
 
-
             Response originalResponse = chain.proceed(request);
             if (NetworkUtils.isConnected()) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
@@ -88,7 +87,7 @@ public class IdeaApi {
                         .build();
             } else {
                 return originalResponse.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
+                        .header("Cache-Control", "public, only-if-cached, max-stale=10")
                         .removeHeader("Pragma")
                         .build();
             }

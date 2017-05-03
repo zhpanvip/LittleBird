@@ -34,6 +34,24 @@ public class UserBean extends DataSupport implements Serializable{
     private double averageYear;
     private String headPic;
     private boolean isNotFirstLogin;
+    private String city;    //  公司所在城市
+    private String companyAddr; //  公司详细地址
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCompanyAddr() {
+        return companyAddr;
+    }
+
+    public void setCompanyAddr(String companyAddr) {
+        this.companyAddr = companyAddr;
+    }
 
     public boolean isNotFirstLogin() {
         return isNotFirstLogin;

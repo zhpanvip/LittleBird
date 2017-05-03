@@ -49,8 +49,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".activity.SplashActivity"
             android:launchMode="singleInstance">
@@ -61,37 +61,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity
-            android:name=".activity.BaseActivity"
-            android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.SignActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.TaskActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.CheckActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.CheckTaskActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.RankActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.ProjectActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.NoticeActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.EditTaskActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".activity.SettingActivity"
-            android:launchMode="singleInstance" />
+        <activity android:name=".activity.SignActivity" />
+        <activity android:name=".activity.TaskActivity" />
+        <activity android:name=".activity.CheckActivity"/>
+        <activity android:name=".activity.CheckTaskActivity" />
+        <activity android:name=".activity.RankActivity"/>
+        <activity android:name=".activity.ProjectActivity" />
+        <activity android:name=".activity.NoticeActivity" />
+        <activity android:name=".activity.EditTaskActivity" />
+        <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.IntegralActivity" />
         <activity android:name=".activity.EncourageActivity" />

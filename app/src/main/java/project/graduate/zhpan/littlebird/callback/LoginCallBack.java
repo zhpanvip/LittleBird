@@ -19,4 +19,6 @@ public interface LoginCallBack {
      *  IMEI验证错误
      */
     void onIMEIError();
+
+    void loginSuccess();
 }

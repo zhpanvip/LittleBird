@@ -1,10 +1,12 @@
 package project.graduate.zhpan.littlebird.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -14,36 +16,37 @@ import android.widget.RelativeLayout;
 import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import project.graduate.zhpan.littlebird.R;
 import project.graduate.zhpan.littlebird.app.InitialData;
 import project.graduate.zhpan.littlebird.utils.SharedPreferencesUtils;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     @BindView(R.id.activity_splash)
     RelativeLayout mRelativeLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutId() {
+        return R.layout.activity_splash;
+    }
 
-        setStatusBarTransparent();
-        setMeizuStatusBarDarkIcon(this, true);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
-
-
-
+    @Override
+    protected void init() {
         initData();
-
         setAnimation();
-
-        timerControl();
-
+        finishActivity();
     }
 
     private void initData() {
+        mToolbar.setVisibility(View.GONE);
         //  初始化数据库
         new Thread() {
             @Override
@@ -115,16 +118,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     //  splash界面休眠3秒后销毁
-    private void timerControl() {
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                LoginActivity.start(SplashActivity.this, false);
-                finish();
-            }
-        };
-        timer.schedule(task, 3000);
+    private void finishActivity() {
+        Observable.timer(3000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((@NonNull Long aLong)-> {
+                        LoginActivity.start(SplashActivity.this,false);
+                        overridePendingTransition(0, android.R.anim.fade_out);
+                        finish();
+                });
     }
 
     /**
